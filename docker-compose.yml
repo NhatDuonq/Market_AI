@@ -1,0 +1,115 @@
+version: "3.8"
+
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: market-postgres
+    restart: always
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+    networks:
+      - market-network
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  redis:
+    image: redis:7-alpine
+    container_name: market-redis
+    restart: always
+
+    volumes:
+      - ./data/redis:/data
+
+    networks:
+      - market-network
+
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: market-n8n
+    restart: always
+
+    ports:
+      - "5678:5678"
+
+    environment:
+
+      DB_TYPE: postgresdb
+
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+
+
+      N8N_BASIC_AUTH_ACTIVE: true
+      N8N_BASIC_AUTH_USER: ${N8N_USER}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_PASSWORD}
+
+      N8N_SECURE_COOKIE: false
+      GENERIC_TIMEZONE: ${TZ}
+
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+
+    volumes:
+      - ./data/n8n:/home/node/.n8n
+
+
+    networks:
+      - market-network
+
+
+
+  adminer:
+
+    image: adminer
+    container_name: market-adminer
+
+    restart: always
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - market-network
+  crawler:
+
+    build:
+      context: ./crawler
+
+    container_name: market-crawler
+
+    restart: always
+
+    volumes:
+      - ./crawler:/app
+
+    networks:
+      - market-network
+
+    depends_on:
+      - postgres
+
+
+networks:
+
+  market-network:
+
+    external: true
