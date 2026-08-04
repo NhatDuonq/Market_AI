@@ -40,12 +40,18 @@ class AIAnalyzer:
         return os.path.join(CACHE_DIR, f"{data_hash}.json")
 
     def _generate_data_hash(self, provider_name: str, product_type: str, changes: dict) -> str:
-        """Hash chuẩn bao gồm provider_name, product_type, prompt_version để tránh nhầm cache giữa các đối thủ"""
+        """Tạo MD5 hash dựa trên dữ liệu đối soát ổn định (bỏ qua timestamp/url linh hoạt)"""
+        stable_changes = {
+            "cheaper_count": len(changes.get("longvan_summary", {}).get("cheaper_items", [])),
+            "expensive_count": len(changes.get("longvan_summary", {}).get("expensive_items", [])),
+            "price_changes": [{"tld": c.get("tld"), "old_price": c.get("old_price"), "new_price": c.get("new_price")} for c in changes.get("price_changes", [])],
+            "longvan_comparison": [{"tld": c.get("tld"), "field": c.get("field"), "comp_p": c.get("competitor_price"), "lv_p": c.get("longvan_price")} for c in changes.get("longvan_comparison", [])]
+        }
         cache_input = {
-            "provider_name": provider_name.lower(),
-            "product_type": product_type.lower(),
-            "changes": changes,
-            "prompt_version": "v3_schema"
+            "provider": provider_name.lower().strip(),
+            "product_type": product_type.lower().strip(),
+            "data": stable_changes,
+            "v": "v4_stable"
         }
         data_str = json.dumps(cache_input, sort_keys=True)
         return hashlib.md5(data_str.encode('utf-8')).hexdigest()

@@ -148,23 +148,38 @@ async function loadDashboard() {
   loadAiSummary(competitor);
 }
 
-async function loadAiSummary(competitor) {
+// In-memory Frontend AI Cache Map (lưu cache đánh giá AI theo từng đối thủ trên trình duyệt)
+const aiAnalysisCache = {};
+
+async function loadAiSummary(competitor, forceRefresh = false) {
   const container = document.getElementById('aiSummary');
   if (!container) return;
+
+  // 1. Nếu đã có trong Frontend Cache và không ép buộc nạp lại -> Render ngay lập tức (0ms)
+  if (!forceRefresh && aiAnalysisCache[competitor]) {
+    renderAiAnalysisHTML(container, aiAnalysisCache[competitor]);
+    return;
+  }
+
   container.innerHTML = '<p style="color:#94a3b8; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
 
   const res = await fetchJSON(`/api/ai-analysis/${competitor}`);
   if (res && res.analysis) {
-    let text = res.analysis;
-    // Format markdown to clean HTML for Dark Mode
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#38bdf8; font-weight:700;">$1</strong>');
-    text = text.replace(/\*(.*?)\*/g, '<strong style="color:#60a5fa; font-weight:600;">$1</strong>');
-    text = text.replace(/`([^`]+)`/g, '<code style="background:rgba(255,255,255,0.08); padding:2px 7px; border-radius:4px; font-family:monospace; color:#34d399; border:1px solid rgba(255,255,255,0.12);">$1</code>');
-    text = text.replace(/\n/g, '<br>');
-    container.innerHTML = `<div style="font-size:13px; line-height:1.8; color:#f1f5f9; background:rgba(15,23,42,0.4); padding:16px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">${text}</div>`;
+    aiAnalysisCache[competitor] = res.analysis; // Lưu cache trình duyệt
+    renderAiAnalysisHTML(container, res.analysis);
   } else {
     container.innerHTML = '<p style="color:#ef4444; font-size:13px;">⚠️ Chưa thể lấy phân tích AI lúc này.</p>';
   }
+}
+
+function renderAiAnalysisHTML(container, analysisText) {
+  let text = analysisText;
+  // Format markdown to clean HTML for Dark Mode
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#38bdf8; font-weight:700;">$1</strong>');
+  text = text.replace(/\*(.*?)\*/g, '<strong style="color:#60a5fa; font-weight:600;">$1</strong>');
+  text = text.replace(/`([^`]+)`/g, '<code style="background:rgba(255,255,255,0.08); padding:2px 7px; border-radius:4px; font-family:monospace; color:#34d399; border:1px solid rgba(255,255,255,0.12);">$1</code>');
+  text = text.replace(/\n/g, '<br>');
+  container.innerHTML = `<div style="font-size:13px; line-height:1.8; color:#f1f5f9; background:rgba(15,23,42,0.4); padding:16px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">${text}</div>`;
 }
 
 function toggleAiSummary() {
