@@ -80,39 +80,39 @@ class AIAnalyzer:
         lv_exclusive = tld_availability.get("longvan_exclusive", [])
         comp_exclusive = tld_availability.get("competitor_exclusive", [])
 
-        # Xây dựng Prompt phân tích chiến lược tự nhiên cho Gemini AI
+        # Xây dựng Prompt cung cấp TOÀN BỘ 100% dữ liệu cào được cho Gemini AI
         prompt = f"""
 Bạn là Giám đốc Chiến lược Giá & Thị Phần (Chief Commercial Officer) của LONG VÂN CLOUD SOLUTION (longvan.net) tại Việt Nam.
 Long Vân là nhà cung cấp hạ tầng Cloud Server, Cloud Hosting và Email Server doanh nghiệp uy tín hàng đầu.
 
-Nhiệm vụ của bạn: Hãy phân tích độc lập, tự nhiên, sắc bén dựa trên dữ liệu đối soát thực tế mới nhất giữa Long Vân và đối thủ cạnh tranh {provider_name.upper()}. tuyệt đối KHÔNG lặp lại các câu mẫu khuôn thước hay dập khuôn.
+Nhiệm vụ của bạn: Hãy phân tích độc lập, tự nhiên, sắc bén dựa trên TOÀN BỘ 100% dữ liệu đối soát cào được mới nhất giữa Long Vân và đối thủ cạnh tranh {provider_name.upper()}. Tuyệt đối KHÔNG lặp lại các câu mẫu khuôn thước hay dập khuôn.
 
-DỮ LIỆU ĐỐI SOÁT THỰC TẾ:
+TOÀN BỘ DỮ LIỆU ĐỐI SOÁT CÀO ĐƯỢC (FULL DATASET):
 1. Đợt biến động giá mới nhất của đối thủ ({provider_name}):
-{json.dumps(price_changes[:8], ensure_ascii=False, indent=2) if price_changes else "Không có đợt điều chỉnh giá niêm yết mới trong vòng quét này."}
+{json.dumps(price_changes, ensure_ascii=False, indent=2) if price_changes else "Không có đợt điều chỉnh giá niêm yết mới trong vòng quét này."}
 
 2. TLD mới ra mắt của đối thủ:
-{json.dumps(new_items[:8], ensure_ascii=False, indent=2) if new_items else "Chưa phát hiện TLD mới."}
+{json.dumps(new_items, ensure_ascii=False, indent=2) if new_items else "Chưa phát hiện TLD mới."}
 
-3. TLD đối thủ đang có giá thấp hơn Long Vân (Top 8):
-{json.dumps(cheaper_items[:8], ensure_ascii=False, indent=2)}
+3. TOÀN BỘ TLD đối thủ đang có giá thấp hơn Long Vân (Cheaper Items):
+{json.dumps(cheaper_items, ensure_ascii=False, indent=2)}
 
-4. TLD Long Vân đang có ưu thế giá thấp hơn đối thủ (Top 8):
-{json.dumps(expensive_items[:8], ensure_ascii=False, indent=2)}
+4. TOÀN BỘ TLD Long Vân đang có ưu thế giá thấp hơn đối thủ (Expensive/Better Items):
+{json.dumps(expensive_items, ensure_ascii=False, indent=2)}
 
-5. Độ phủ TLD:
-- TLD độc quyền chỉ Long Vân bán: {json.dumps(lv_exclusive[:10], ensure_ascii=False)} (Tổng {len(lv_exclusive)} TLD)
-- TLD đối thủ có nhưng Long Vân chưa bán: {json.dumps(comp_exclusive[:10], ensure_ascii=False)} (Tổng {len(comp_exclusive)} TLD)
+5. TOÀN BỘ Độ phủ TLD (TLD Availability):
+- TOÀN BỘ TLD độc quyền chỉ Long Vân bán (Tổng {len(lv_exclusive)} TLD): {json.dumps(lv_exclusive, ensure_ascii=False)}
+- TOÀN BỘ TLD đối thủ có nhưng Long Vân chưa bán (Tổng {len(comp_exclusive)} TLD): {json.dumps(comp_exclusive, ensure_ascii=False)}
 
-6. Mẫu đối soát chi tiết 2 năm (Top TLD .vn & quốc tế chính):
-{json.dumps(comparison_2yr[:10], ensure_ascii=False, indent=2)}
+6. TOÀN BỘ Bảng đối soát chi tiết 3 chiều (Đăng ký, Gia hạn, Chuyển đổi, Tổng chi phí 2 năm trên tất cả TLD):
+{json.dumps(longvan_comparison, ensure_ascii=False, indent=2)}
 
-YÊU CẦU PHÂN TÍCH THỰC TẾ:
-Phân tích tự nhiên, thẳng thắn, đưa ra nhận định kinh doanh thực tế. Trả về ĐÚNG định dạng JSON sau (không thêm văn bản ngoài JSON):
+YÊU CẦU PHÂN TÍCH THỰC TẾ TRÊN DỮ LIỆU ĐẦY ĐỦ:
+Phân tích tự nhiên, thẳng thắn, đưa ra nhận định kinh doanh thực tế dựa trên TOÀN BỘ bảng dữ liệu trên. Trả về ĐÚNG định dạng JSON sau (không thêm văn bản ngoài JSON):
 
 {{
     "danh_gia_tinh_huong": "Nhận định ngắn gọn về chiến lược giá hiện tại của {provider_name}. Phân tích cách họ phân bổ giá đăng ký năm 1 vs giá gia hạn từ năm 2 để bẫy khách hàng hoặc lấy thị phần.",
-    "vi_the_canh_tranh": "Phân tích thẳng thắn vị thế cạnh tranh của Long Vân. Nêu rõ Long Vân đang thắng ở đâu (ví dụ: các TLD chính như .vn, .com.vn) và đang bị ép ở đâu.",
+    "vi_the_canh_tranh": "Phân tích thẳng thắn vị thế cạnh tranh của Long Vân dựa trên toàn bộ bảng dữ liệu. Nêu rõ Long Vân đang thắng ở đâu (ví dụ: các TLD chính như .vn, .com.vn) và đang bị ép ở đâu.",
     "ke_hoach_hanh_dong_tung_buoc": [
         "Bước 1 [Chính sách Giá đối ứng]: Đề xuất hành động điều chỉnh giá hoặc phát voucher đối ứng cụ thể dựa trên các con số chênh lệch thực tế.",
         "Bước 2 [Truyền thông & Marketing]: Đề xuất thông điệp truyền thông sắc bén xoay quanh tổng chi phí 2 năm hoặc giá gia hạn dài hạn.",
