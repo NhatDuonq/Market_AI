@@ -228,7 +228,8 @@ app.get('/api/ai-analysis/:provider', (req, res) => {
   const provider = req.params.provider.toLowerCase();
   const providerName = provider === 'pavietnam' ? 'PA VIỆT NAM' : (provider === 'matbao' ? 'MẮT BÃO' : provider.toUpperCase());
   const { exec } = require('child_process');
-  const pythonCmd = `python -X utf8 -c "import json; from core.diff_engine import DiffEngine; from core.ai_analyzer import AIAnalyzer; de = DiffEngine(); snap = de.load_last_snapshot('${provider}_domain'); diff = de.compare_domain_data('${provider}_domain', snap.get('items', []), save=False); ai = AIAnalyzer(); print(json.dumps({'analysis': ai.analyze_market_changes('${providerName}', 'domain', diff)}, ensure_ascii=False))"`;
+  const pyScript = `import json; from core.diff_engine import DiffEngine; from core.ai_analyzer import AIAnalyzer; de = DiffEngine(); snap = de.load_last_snapshot('${provider}_domain'); diff = de.compare_domain_data('${provider}_domain', snap.get('items', []), save=False); ai = AIAnalyzer(); print(json.dumps({'analysis': ai.analyze_market_changes('${providerName}', 'domain', diff)}, ensure_ascii=False))`;
+  const pythonCmd = `python3 -X utf8 -c "${pyScript}" || python -X utf8 -c "${pyScript}"`;
   
   exec(pythonCmd, { cwd: path.join(__dirname, '..'), env: { ...process.env, PYTHONIOENCODING: 'utf-8' } }, (err, stdout) => {
     if (err) {
