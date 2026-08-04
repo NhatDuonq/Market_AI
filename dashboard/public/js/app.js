@@ -143,6 +143,28 @@ async function loadDashboard() {
   // Also update TLD page & detail table
   renderTLDPage(data, competitorName);
   renderFullTable(data, competitorName);
+
+  // Load AI Strategic Analysis
+  loadAiSummary(competitor);
+}
+
+async function loadAiSummary(competitor) {
+  const container = document.getElementById('aiSummary');
+  if (!container) return;
+  container.innerHTML = '<p style="color:#64748b; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
+
+  const res = await fetchJSON(`/api/ai-analysis/${competitor}`);
+  if (res && res.analysis) {
+    let text = res.analysis;
+    // Format markdown to clean HTML
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+    text = text.replace(/`([^`]+)`/g, '<code style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-family:monospace; color:#0f172a;">$1</code>');
+    text = text.replace(/\n/g, '<br>');
+    container.innerHTML = `<div style="font-size:13px; line-height:1.7; color:#1e293b;">${text}</div>`;
+  } else {
+    container.innerHTML = '<p style="color:#ef4444; font-size:13px;">⚠️ Chưa thể lấy phân tích AI lúc này.</p>';
+  }
 }
 
 function updateMetricView() {
