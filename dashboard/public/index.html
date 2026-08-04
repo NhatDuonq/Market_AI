@@ -107,14 +107,19 @@
 
       <!-- INSIGHTS CARD (AI RECOMMENDATIONS) -->
       <div class="card ai-card">
-        <div class="card-header-ai" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleAiSummary()">
-          <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="card-header-ai" style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="toggleAiSummary()">
             <h3 style="margin: 0;">🧠 Phân Tích & Đề Xuất Chiến Lược Từ Gemini AI</h3>
             <span class="badge-ai">AI Insights</span>
           </div>
-          <button id="btnToggleAi" type="button" style="background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); padding: 4px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
-            👁️ Thu gọn
-          </button>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button id="btnRefreshAi" type="button" onclick="forceRefreshAi(event)" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;" title="Bỏ qua Cache và yêu cầu Gemini AI phân tích lại tươi mới">
+              🔄 Phân tích lại
+            </button>
+            <button id="btnToggleAi" type="button" onclick="toggleAiSummary()" style="background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); padding: 4px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
+              👁️ Thu gọn
+            </button>
+          </div>
         </div>
         <div id="aiSummary" class="ai-body" style="margin-top: 14px;">
           <p class="text-muted">Đang tải phân tích AI...</p>
@@ -281,6 +286,6 @@
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="toast"></div>
 
-  <script src="/js/app.js?v=1.5"></script>
+  <script src="/js/app.js?v=1.6"></script>
 </body>
 </html>

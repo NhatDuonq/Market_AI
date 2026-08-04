@@ -56,10 +56,10 @@ class AIAnalyzer:
         data_str = json.dumps(cache_input, sort_keys=True)
         return hashlib.md5(data_str.encode('utf-8')).hexdigest()
 
-    def analyze_domain_changes(self, provider_name: str, changes: dict) -> str:
-        return self.analyze_market_changes(provider_name, "domain", changes)
+    def analyze_domain_changes(self, provider_name: str, changes: dict, force_refresh: bool = False) -> str:
+        return self.analyze_market_changes(provider_name, "domain", changes, force_refresh=force_refresh)
 
-    def analyze_market_changes(self, provider_name: str, product_type: str, changes: dict) -> str:
+    def analyze_market_changes(self, provider_name: str, product_type: str, changes: dict, force_refresh: bool = False) -> str:
         price_changes = changes.get("price_changes", [])
         new_items = changes.get("new_tlds", [])
         lv_summary = changes.get("longvan_summary", {})
@@ -68,10 +68,10 @@ class AIAnalyzer:
         tld_availability = changes.get("tld_availability", {})
         longvan_comparison = changes.get("longvan_comparison", [])
 
-        # 1. Kiểm tra Cache chuẩn
+        # 1. Kiểm tra Cache chuẩn (nếu không ép buộc làm mới)
         data_hash = self._generate_data_hash(provider_name, product_type, changes)
         cache_path = self._get_cache_path(data_hash)
-        if os.path.exists(cache_path):
+        if not force_refresh and os.path.exists(cache_path):
             try:
                 with open(cache_path, 'r', encoding='utf-8') as f:
                     cached_res = json.load(f)

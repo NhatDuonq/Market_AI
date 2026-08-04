@@ -163,13 +163,25 @@ async function loadAiSummary(competitor, forceRefresh = false) {
 
   container.innerHTML = '<p style="color:#94a3b8; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
 
-  const res = await fetchJSON(`/api/ai-analysis/${competitor}`);
+  const url = forceRefresh ? `/api/ai-analysis/${competitor}?force=true` : `/api/ai-analysis/${competitor}`;
+  const res = await fetchJSON(url);
   if (res && res.analysis) {
     aiAnalysisCache[competitor] = res.analysis; // Lưu cache trình duyệt
     renderAiAnalysisHTML(container, res.analysis);
   } else {
     container.innerHTML = '<p style="color:#ef4444; font-size:13px;">⚠️ Chưa thể lấy phân tích AI lúc này.</p>';
   }
+}
+
+async function forceRefreshAi(event) {
+  if (event) event.stopPropagation();
+  const competitor = getCompetitor();
+  const btn = document.getElementById('btnRefreshAi');
+  if (btn) btn.innerHTML = '⏳ Đang phân tích...';
+
+  await loadAiSummary(competitor, true);
+
+  if (btn) btn.innerHTML = '🔄 Phân tích lại';
 }
 
 function renderAiAnalysisHTML(container, analysisText) {
