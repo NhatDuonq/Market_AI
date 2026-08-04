@@ -146,12 +146,12 @@ class EmailNotifier:
                                 <td width="3.5%"></td>
                                 <td width="31%" style="background-color:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:16px; text-align:center;">
                                     <div style="font-size:24px; font-weight:800; color:#dc2626;">{twoyr_cheaper} TLD</div>
-                                    <div style="font-size:12px; font-weight:600; color:#991b1b; margin-top:4px;">Đối thủ RẺ hơn (Tổng 2 năm)</div>
+                                    <div style="font-size:12px; font-weight:600; color:#991b1b; margin-top:4px;">Đối thủ GIÁ THẤP HƠN (Tổng 2 năm)</div>
                                 </td>
                                 <td width="3.5%"></td>
                                 <td width="31%" style="background-color:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:16px; text-align:center;">
                                     <div style="font-size:24px; font-weight:800; color:#16a34a;">{twoyr_expensive} TLD</div>
-                                    <div style="font-size:12px; font-weight:600; color:#166534; margin-top:4px;">Long Vân RẺ hơn (Tổng 2 năm)</div>
+                                    <div style="font-size:12px; font-weight:600; color:#166534; margin-top:4px;">Long Vân GIÁ THẤP HƠN (Tổng 2 năm)</div>
                                 </td>
                             </tr>
                         </table>
@@ -194,8 +194,8 @@ class EmailNotifier:
         for idx, row in enumerate(filtered_comp):
             bg = "#ffffff" if idx % 2 == 0 else "#f8fafc"
             status = row.get("status")
-            status_html = '<span style="color:#dc2626; font-weight:700;">⚠️ Đối thủ rẻ hơn</span>' if status == "CHEAPER" \
-                else ('<span style="color:#16a34a; font-weight:700;">✅ LV rẻ hơn</span>' if status == "EXPENSIVE" else '<span style="color:#64748b;">⚖️ Bằng giá</span>')
+            status_html = '<span style="color:#dc2626; font-weight:700;">⚠️ Đối thủ giá thấp hơn</span>' if status == "CHEAPER" \
+                else ('<span style="color:#16a34a; font-weight:700;">✅ LV giá thấp hơn</span>' if status == "EXPENSIVE" else '<span style="color:#64748b;">⚖️ Bằng giá</span>')
 
             comp_p = row.get("competitor_price", 0)
             lv_p = row.get("longvan_price", 0)

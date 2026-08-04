@@ -165,8 +165,8 @@ function updateMetricView() {
   document.getElementById('kpiMissing').textContent = data.tld_availability?.competitor_exclusive?.length || 0;
 
   // KPI Tooltips
-  buildKpiTooltip('tooltipCheaper', '⚠️ Đối thủ rẻ hơn', ms.cheaper_tlds || [], true);
-  buildKpiTooltip('tooltipExpensive', '✅ Long Vân rẻ hơn', ms.expensive_tlds || [], false);
+  buildKpiTooltip('tooltipCheaper', '⚠️ Đối thủ giá thấp hơn', ms.cheaper_tlds || [], true);
+  buildKpiTooltip('tooltipExpensive', '✅ Long Vân giá thấp hơn', ms.expensive_tlds || [], false);
 
   // Chart titles
   document.getElementById('barChartTitle').textContent = `So Sánh ${metricLabel} Theo TLD`;
@@ -256,7 +256,7 @@ function renderBarChart(data, competitorName, metric) {
               const idx = tooltipItems[0].dataIndex;
               const item = items[idx];
               const diff = item.diff_amount;
-              const who = diff < 0 ? `Đối thủ rẻ hơn: ${formatVND(Math.abs(diff))}` : (diff > 0 ? `Long Vân rẻ hơn: ${formatVND(diff)}` : 'Bằng giá');
+              const who = diff < 0 ? `Đối thủ giá thấp hơn: ${formatVND(Math.abs(diff))}` : (diff > 0 ? `Long Vân giá thấp hơn: ${formatVND(diff)}` : 'Bằng giá');
               return [`Chênh lệch: ${who}`];
             },
             label: ctx => `${ctx.dataset.label}: ${formatVND(ctx.raw)}`,
@@ -312,7 +312,7 @@ function renderDonutChart(data, metric) {
   donutChartInstance = new Chart(canvas, {
     type: 'doughnut',
     data: {
-      labels: ['Đối thủ rẻ hơn', 'Long Vân rẻ hơn', 'Bằng giá'],
+      labels: ['Đối thủ giá thấp hơn', 'Long Vân giá thấp hơn', 'Bằng giá'],
       datasets: [{
         data: values,
         backgroundColor: [
@@ -347,8 +347,8 @@ function renderDonutChart(data, metric) {
   // Legend
   const legend = document.getElementById('donutLegend');
   legend.innerHTML = `
-    <span><span style="color:#f87171">●</span> Đối thủ rẻ hơn: ${tldCheaper}</span>
-    <span><span style="color:#34d399">●</span> LV rẻ hơn: ${tldExpensive}</span>
+    <span><span style="color:#f87171">●</span> Đối thủ giá thấp hơn: ${tldCheaper}</span>
+    <span><span style="color:#34d399">●</span> LV giá thấp hơn: ${tldExpensive}</span>
     <span><span style="color:#64748b">●</span> Bằng giá: ${tldEqual}</span>
   `;
 }
@@ -448,8 +448,8 @@ function renderFullTable(data, competitorName) {
 
   tbody.innerHTML = items.map(c => {
     const statusClass = c.status === 'CHEAPER' ? 'status-cheaper' : (c.status === 'EXPENSIVE' ? 'status-expensive' : 'status-equal');
-    const statusText = c.status === 'CHEAPER' ? '⚠️ Đối thủ rẻ hơn'
-      : (c.status === 'EXPENSIVE' ? '✅ LV rẻ hơn' : '⚖️ Bằng giá');
+    const statusText = c.status === 'CHEAPER' ? '⚠️ Đối thủ giá thấp hơn'
+      : (c.status === 'EXPENSIVE' ? '✅ LV giá thấp hơn' : '⚖️ Bằng giá');
 
     const fmtComp = c.competitor_price_original && c.competitor_price_original !== c.competitor_price
       ? `<del style="color:#64748b;font-size:11px">${formatVND(c.competitor_price_original)}</del><br>${formatVND(c.competitor_price)}`

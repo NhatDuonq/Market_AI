@@ -27,7 +27,7 @@ Hệ thống tích hợp trí tuệ nhân tạo **Gemini 2.5 Flash AI**, công n
 - 📐 **Động cơ Đối soát 3 Chiều (3-Way Diff Engine)**:
   - **Giá Đăng Ký (Năm 1)**.
   - **Giá Gia Hạn Hàng Năm (Từ năm 2)**.
-  - **Tổng Chi Phí 2 Năm (Năm 1 + Gia hạn)** — Tiêu chí vàng đánh giá độ đắt/rẻ thực tế của từng nhà cung cấp.
+  - **Tổng Chi Phí 2 Năm (Năm 1 + Gia hạn)** — Tiêu chí vàng đánh giá mức giá cao / thấp thực tế của từng nhà cung cấp.
   - **Độ phủ TLD (TLD Availability)**: Nhận diện TLD ngách độc quyền của Long Vân & TLD mà Long Vân đang bỏ lỡ so với đối thủ.
 - 🧠 **Gemini 2.5 Flash AI Analyzer**: Phân tích ý đồ đối thủ (Kích cầu cướp thị phần hay tăng giá tối ưu lợi nhuận) và xuất ra **Kế hoạch hành động 4 bước cụ thể (Step-by-Step Action Plan)** cho team Long Vân.
 - 📬 **Cảnh Báo Kép Thông Minh (Hybrid Multi-Channel)**:
@@ -89,7 +89,7 @@ Ví dụ thực tế TLD `.vn`:
 ### 2. Kế hoạch Hành động 4 Bước của AI (Step-by-Step Action Plan)
 Gemini AI nhận dữ liệu đối soát và trả về JSON chứa kế hoạch hành động:
 * **Bước 1 [Chính sách Giá đối ứng]**: Đề xuất mức voucher / giảm giá cho nhóm TLD bị đối thủ ép giá.
-* **Bước 2 [Chiến dịch Marketing]**: Đưa ra thông điệp truyền thông cốt lõi (Ví dụ: *"Gia hạn .vn tại Long Vân rẻ hơn đối thủ 52.000đ/năm"*).
+* **Bước 2 [Chiến dịch Marketing]**: Đưa ra thông điệp truyền thông cốt lõi (Ví dụ: *"Gia hạn .vn tại Long Vân giá thấp hơn đối thủ 52.000đ/năm"*).
 * **Bước 3 [Đóng gói Combo Dịch vụ]**: Tặng kèm Email Server Pro 1GB hoặc DNSSEC miễn phí.
 * **Bước 4 [Đo lường & Kiểm soát]**: Thời gian đánh giá tỷ lệ chuyển đổi sau 14 - 30 ngày.
 

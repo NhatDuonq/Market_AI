@@ -136,7 +136,7 @@ class TelegramNotifier:
                     lines.append(f"    ├─ Gia hạn: `{ren_p:,.0f}đ`")
                 if lv_reg > 0:
                     gap = reg_p - lv_reg
-                    badge = "⚠️ *ĐỐI THỦ RẺ HƠN*" if gap < 0 else "✅ *LONG VÂN RẺ HƠN*" if gap > 0 else "⚖️ *BẰNG GIÁ*"
+                    badge = "⚠️ *ĐỐI THỦ GIÁ THẤP HƠN*" if gap < 0 else "✅ *LONG VÂN GIÁ THẤP HƠN*" if gap > 0 else "⚖️ *BẰNG GIÁ*"
                     lines.append(f"    └─ Giá Long Vân: `{lv_reg:,.0f}đ` ({badge})")
             lines.append("")
 
@@ -160,7 +160,7 @@ class TelegramNotifier:
                 lines.append(f"    ├─ Chênh lệch: {arrow} *`{abs(diff):,.0f}đ`* ({pct:+.1f}%)")
                 if lv_p > 0:
                     lv_gap = new_p - lv_p
-                    lv_tag = "⚠️ *ĐỐI THỦ RẺ HƠN*" if lv_gap < 0 else "✅ *LONG VÂN RẺ HƠN*" if lv_gap > 0 else "⚖️ *BẰNG GIÁ*"
+                    lv_tag = "⚠️ *ĐỐI THỦ GIÁ THẤP HƠN*" if lv_gap < 0 else "✅ *LONG VÂN GIÁ THẤP HƠN*" if lv_gap > 0 else "⚖️ *BẰNG GIÁ*"
                     lines.append(f"    └─ Giá LV: `{lv_p:,.0f}đ` → Chênh: *`{abs(lv_gap):,.0f}đ`* ({lv_tag})")
             if len(price_changes) > 6:
                 lines.append(f"  ... và {len(price_changes) - 6} đợt biến động giá khác\n")
@@ -198,17 +198,17 @@ class TelegramNotifier:
             if total_tlds > 0:
                 lines.append(f"⚔️ *TỔNG QUAN VỊ THẾ GIÁ VS LONG VÂN (So sánh cùng TLD trên {total_tlds} đuôi tên miền):*")
                 lines.append(f" 📌 *Giá Đăng Ký Năm 1:*")
-                lines.append(f"    ├─ Đối thủ rẻ hơn: *{reg_cheap}* TLD ⚠️")
+                lines.append(f"    ├─ Đối thủ giá thấp hơn: *{reg_cheap}* TLD ⚠️")
                 lines.append(f"    ├─ Long Vân & Đối thủ BẰNG GIÁ: *{reg_eq}* TLD ⚖️")
-                lines.append(f"    └─ Long Vân rẻ hơn: *{reg_exp}* TLD ✅")
+                lines.append(f"    └─ Long Vân giá thấp hơn: *{reg_exp}* TLD ✅")
                 lines.append(f" 📌 *Giá Gia Hạn Hàng Năm (Từ năm 2):*")
-                lines.append(f"    ├─ Đối thủ rẻ hơn: *{renew_cheap}* TLD ⚠️")
+                lines.append(f"    ├─ Đối thủ giá thấp hơn: *{renew_cheap}* TLD ⚠️")
                 lines.append(f"    ├─ Long Vân & Đối thủ BẰNG GIÁ: *{renew_eq}* TLD ⚖️")
-                lines.append(f"    └─ Long Vân rẻ hơn: *{renew_exp}* TLD ✅")
+                lines.append(f"    └─ Long Vân giá thấp hơn: *{renew_exp}* TLD ✅")
                 lines.append(f" 📌 *Tổng Chi Phí 2 Năm (Năm 1 + Gia hạn):*")
-                lines.append(f"    ├─ Đối thủ rẻ hơn: *{twoyr_cheap}* TLD ⚠️")
+                lines.append(f"    ├─ Đối thủ giá thấp hơn: *{twoyr_cheap}* TLD ⚠️")
                 lines.append(f"    ├─ Long Vân & Đối thủ BẰNG GIÁ: *{twoyr_eq}* TLD ⚖️")
-                lines.append(f"    └─ Long Vân rẻ hơn: *{twoyr_exp}* TLD ✅")
+                lines.append(f"    └─ Long Vân giá thấp hơn: *{twoyr_exp}* TLD ✅")
                 lines.append("")
 
         try:

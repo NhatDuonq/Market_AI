@@ -90,12 +90,12 @@
         </div>
         <div class="kpi-card kpi-hoverable" id="kpiCardCheaper">
           <div class="kpi-value red" id="kpiCheaper">--</div>
-          <div class="kpi-label">Đối thủ rẻ hơn ⚠️</div>
+          <div class="kpi-label">Đối thủ giá thấp hơn ⚠️</div>
           <div class="kpi-tooltip" id="tooltipCheaper"></div>
         </div>
         <div class="kpi-card kpi-hoverable" id="kpiCardExpensive">
           <div class="kpi-value green" id="kpiExpensive">--</div>
-          <div class="kpi-label">Long Vân rẻ hơn ✅</div>
+          <div class="kpi-label">Long Vân giá thấp hơn ✅</div>
           <div class="kpi-tooltip" id="tooltipExpensive"></div>
         </div>
         <div class="kpi-card" id="kpiCardMissing">
@@ -104,6 +104,17 @@
         </div>
       </div>
       <div class="kpi-sublabel" id="kpiMetricSublabel">(Tiêu chí: Tổng Chi Phí 2 Năm)</div>
+
+      <!-- INSIGHTS CARD (AI RECOMMENDATIONS) -->
+      <div class="card ai-card">
+        <div class="card-header-ai">
+          <h3>🧠 Phân Tích & Đề Xuất Chiến Lược Từ Gemini AI</h3>
+          <span class="badge-ai">AI Insights</span>
+        </div>
+        <div id="aiSummary" class="ai-body">
+          <p class="text-muted">Đang tải phân tích AI...</p>
+        </div>
+      </div>
 
       <p class="update-time" id="updateTime"></p>
 
@@ -122,7 +133,7 @@
 
       <!-- TOP RISK TABLE -->
       <div class="card">
-        <h3>⚠️ Top TLD Đối Thủ Rẻ Hơn Long Vân (Rủi Ro Cạnh Tranh)</h3>
+        <h3>⚠️ Top TLD Đối Thủ Giá Thấp Hơn Long Vân</h3>
         <div class="table-wrapper">
           <table id="riskTable">
             <thead>
@@ -199,8 +210,8 @@
         </select>
         <select id="filterStatus" class="dropdown">
           <option value="all">Tất cả vị thế</option>
-          <option value="CHEAPER">⚠️ Đối thủ rẻ hơn</option>
-          <option value="EXPENSIVE">✅ Long Vân rẻ hơn</option>
+          <option value="CHEAPER">⚠️ Đối thủ giá thấp hơn</option>
+          <option value="EXPENSIVE">✅ Long Vân giá thấp hơn</option>
           <option value="EQUAL">⚖️ Bằng giá</option>
         </select>
         <input type="text" id="searchTLD" class="search-input" placeholder="Tìm kiếm TLD...">

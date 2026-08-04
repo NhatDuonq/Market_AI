@@ -100,8 +100,8 @@ DỮ LIỆU ĐỐI SOÁT CHI TIẾT:
 {json.dumps(new_items[:10], ensure_ascii=False, indent=2)}
 
 3. Vị thế giá (Long Vân vs {provider_name}):
-- TLD đối thủ RẺ hơn Long Vân: {json.dumps(cheaper_items[:10], ensure_ascii=False)}
-- TLD Long Vân RẺ hơn đối thủ: {json.dumps(expensive_items[:10], ensure_ascii=False)}
+- TLD đối thủ GIÁ THẤP HƠN Long Vân: {json.dumps(cheaper_items[:10], ensure_ascii=False)}
+- TLD Long Vân GIÁ THẤP HƠN đối thủ: {json.dumps(expensive_items[:10], ensure_ascii=False)}
 - So sánh Tổng Chi Phí 2 Năm (Đăng ký + Gia hạn): {json.dumps(comparison_2yr[:10], ensure_ascii=False)}
 {tld_avail_summary}
 
@@ -113,7 +113,7 @@ Hãy phân tích sắc bén, chính xác theo góc nhìn chuyên gia kinh doanh 
     "vi_the_canh_tranh": "Tóm tắt sắc bén vị thế Long Vân (Ví dụ: Long Vân đang thắng áp đảo ở .vn, .com.vn về tổng chi phí 2 năm nhưng bị ép ở các TLD ngách .pro.vn, .id.vn).",
     "ke_hoach_hanh_dong_tung_buoc": [
         "Bước 1 [Điều chỉnh giá/Ưu đãi]: (Nêu rõ hành động cụ thể, ví dụ giảm bao nhiêu % hoặc tặng voucher cho TLD nào)",
-        "Bước 2 [Truyền thông & Marketing]: (Nêu rõ thông điệp Marketing cần đánh mạnh, ví dụ nhấn mạnh gia hạn .vn rẻ hơn đối thủ 52k)",
+        "Bước 2 [Truyền thông & Marketing]: (Nêu rõ thông điệp Marketing cần đánh mạnh, ví dụ nhấn mạnh gia hạn .vn tại Long Vân giá thấp hơn đối thủ 52k)",
         "Bước 3 [Mở rộng danh mục/Dịch vụ]: (Gợi ý cụ thể TLD tiềm năng nên nhập về hoặc combo đi kèm)",
         "Bước 4 [Đo lường & Kiểm soát]: (Thời gian đánh giá lại hiệu quả)"
     ],
@@ -197,14 +197,14 @@ Hãy phân tích sắc bén, chính xác theo góc nhìn chuyên gia kinh doanh 
         insights.append("\n⚖️ *VỊ THẾ CẠNH TRANH CỦA LONG VÂN:*")
         if cheaper_items:
             cheaper_tlds = list(set([c.get('tld', c.get('plan_name', '')) for c in cheaper_items]))
-            insights.append(f"⚠️ Đối thủ đang có ưu thế giá hơn Long Vân ở nhóm: `{', '.join(cheaper_tlds[:8])}`.")
+            insights.append(f"⚠️ Đối thủ đang có ưu thế giá thấp hơn Long Vân ở nhóm: `{', '.join(cheaper_tlds[:8])}`.")
         if expensive_items:
             expensive_tlds = list(set([e.get('tld', e.get('plan_name', '')) for e in expensive_items]))
-            insights.append(f"✅ Long Vân giữ ưu thế giá gia hạn/tổng chi phí tốt hơn đối thủ tại nhóm: `{', '.join(expensive_tlds[:8])}`.")
+            insights.append(f"✅ Long Vân giữ ưu thế giá gia hạn/tổng chi phí thấp hơn đối thủ tại nhóm: `{', '.join(expensive_tlds[:8])}`.")
 
         insights.append("\n🗺️ *KẾ HOẠCH TỔNG THỂ & HƯỚNG ĐI TỪNG BƯỚC FOR LONG VÂN:*")
         insights.append("• **Bước 1 [Chính sách Giá đối ứng]**: Tung chương trình tặng Voucher 50.000đ khi đăng ký/gia hạn nhóm TLD đang chịu ép giá.")
-        insights.append("• **Bước 2 [Chiến dịch Marketing]**: Tập trung quảng bá thông điệp *'Gia hạn tên miền .vn tại Long Vân tiết kiệm 52.000đ/năm so với đối thủ'*. ")
+        insights.append("• **Bước 2 [Chiến dịch Marketing]**: Tập trung quảng bá thông điệp *'Gia hạn tên miền .vn tại Long Vân giá thấp hơn 52.000đ/năm so với đối thủ'*. ")
         insights.append("• **Bước 3 [Đóng gói Combo Dịch vụ]**: Tặng kèm Email Server Pro 1GB hoặc DNSSEC miễn phí để tăng giá trị cạnh tranh.")
         insights.append("• **Bước 4 [Đo lường & Kiểm soát]**: Đánh giá tỷ lệ chuyển đổi khách hàng đăng ký mới sau 14 ngày áp dụng.")
 
