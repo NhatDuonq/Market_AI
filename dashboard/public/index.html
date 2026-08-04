@@ -106,6 +106,16 @@
       <div class="kpi-sublabel" id="kpiMetricSublabel">(Tiêu chí: Tổng Chi Phí 2 Năm)</div>
 
       <!-- INSIGHTS CARD (AI RECOMMENDATIONS) -->
+      <style>
+        @keyframes spinIcon {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .spinning-icon {
+          animation: spinIcon 1s linear infinite;
+          display: inline-block;
+        }
+      </style>
       <div class="card ai-card">
         <div class="card-header-ai" style="display: flex; justify-content: space-between; align-items: center;">
           <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="toggleAiSummary()">
@@ -113,10 +123,11 @@
             <span class="badge-ai">AI Insights</span>
           </div>
           <div style="display: flex; gap: 8px; align-items: center;">
-            <button id="btnRefreshAi" type="button" onclick="forceRefreshAi(event)" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;" title="Bỏ qua Cache và yêu cầu Gemini AI phân tích lại tươi mới">
-              🔄 Phân tích lại
+            <button id="btnRefreshAi" type="button" onclick="forceRefreshAi(event)" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;" title="Bỏ qua Cache và yêu cầu Gemini AI phân tích lại tươi mới">
+              <span id="aiRefreshIcon" style="display: inline-block;">🔄</span>
+              <span id="aiRefreshText">Phân tích lại</span>
             </button>
-            <button id="btnToggleAi" type="button" onclick="toggleAiSummary()" style="background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); padding: 4px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
+            <button id="btnToggleAi" type="button" onclick="toggleAiSummary()" style="background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); padding: 5px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
               👁️ Thu gọn
             </button>
           </div>
@@ -286,6 +297,6 @@
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="toast"></div>
 
-  <script src="/js/app.js?v=1.6"></script>
+  <script src="/js/app.js?v=1.7"></script>
 </body>
 </html>

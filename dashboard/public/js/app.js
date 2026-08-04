@@ -175,13 +175,27 @@ async function loadAiSummary(competitor, forceRefresh = false) {
 
 async function forceRefreshAi(event) {
   if (event) event.stopPropagation();
-  const competitor = getCompetitor();
+
+  const competitorSelect = document.getElementById('competitorSelect');
+  const competitor = competitorSelect ? competitorSelect.value : 'matbao';
+
   const btn = document.getElementById('btnRefreshAi');
-  if (btn) btn.innerHTML = '⏳ Đang phân tích...';
+  const icon = document.getElementById('aiRefreshIcon');
+  const text = document.getElementById('aiRefreshText');
 
-  await loadAiSummary(competitor, true);
+  if (icon) icon.classList.add('spinning-icon');
+  if (text) text.textContent = 'Đang phân tích...';
+  if (btn) btn.disabled = true;
 
-  if (btn) btn.innerHTML = '🔄 Phân tích lại';
+  try {
+    await loadAiSummary(competitor, true);
+  } catch (err) {
+    console.error('Error force refreshing AI:', err);
+  } finally {
+    if (icon) icon.classList.remove('spinning-icon');
+    if (text) text.textContent = 'Phân tích lại';
+    if (btn) btn.disabled = false;
+  }
 }
 
 function renderAiAnalysisHTML(container, analysisText) {
