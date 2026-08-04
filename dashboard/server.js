@@ -13,10 +13,111 @@ const SNAPSHOTS_DIR = path.join(STORAGE_DIR, 'snapshots');
 const SCREENSHOTS_DIR = path.join(STORAGE_DIR, 'screenshots');
 const CONFIG_PATH = path.join(__dirname, '..', 'config', 'crawler_targets.json');
 
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'LONGVAN_MARKET_AI_JWS_SECRET_2026';
+
+function generateAccessToken(user) {
+  return jwt.sign({
+    id: user.id,
+    email: user.email,
+    full_name: user.full_name,
+    role: user.role || 'user'
+  }, JWT_SECRET, { algorithm: 'HS256', expiresIn: '7d' });
+}
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = (authHeader && authHeader.split(' ')[1]) || req.query.token;
+
+  if (!token) {
+    return res.status(401).json({ error: 'Chưa đăng nhập. Vui lòng đăng nhập bằng Email doanh nghiệp @longvan.net' });
+  }
+
+  jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] }, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại @longvan.net' });
+    }
+    req.user = user;
+    next();
+  });
+}
+
+function runAuthPy(method, argsObj, cb) {
+  const { exec } = require('child_process');
+  const pyCode = `import json; from core.auth_service import AuthService; auth = AuthService(); res = getattr(auth, '${method}')(**${JSON.stringify(argsObj)}); print(json.dumps(res, ensure_ascii=False))`;
+  const cmd = `python3 -X utf8 -c "${pyCode}" || python -X utf8 -c "${pyCode}"`;
+  exec(cmd, { cwd: path.join(__dirname, '..'), env: { ...process.env, PYTHONIOENCODING: 'utf-8' } }, (err, stdout) => {
+    if (err && !stdout) {
+      return cb(err, null);
+    }
+    try {
+      const jsonLine = (stdout || '').trim().split('\n').filter(l => l.trim().startsWith('{')).pop();
+      const parsed = JSON.parse(jsonLine);
+      cb(null, parsed);
+    } catch (e) {
+      cb(e, null);
+    }
+  });
+}
+
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/screenshots', express.static(SCREENSHOTS_DIR));
+
+// AUTHENTICATION API ROUTES
+app.post('/api/auth/register', (req, res) => {
+  const { email, full_name, password } = req.body;
+  runAuthPy('register', { email, full_name: full_name || 'Cán bộ Long Vân', password }, (err, result) => {
+    if (err || !result) return res.status(500).json({ error: 'Lỗi hệ thống khi đăng ký tài khoản.' });
+    if (result.error) return res.status(400).json(result);
+    res.json(result);
+  });
+});
+
+app.post('/api/auth/verify-otp', (req, res) => {
+  const { email, otp_code, otp_type } = req.body;
+  runAuthPy('verify_otp', { email, otp_code, otp_type: otp_type || 'REGISTRATION' }, (err, result) => {
+    if (err || !result) return res.status(500).json({ error: 'Lỗi xác thực mã OTP.' });
+    if (result.error) return res.status(400).json(result);
+    if (result.user) {
+      result.token = generateAccessToken(result.user);
+    }
+    res.json(result);
+  });
+});
+
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  runAuthPy('login', { email, password }, (err, result) => {
+    if (err || !result) return res.status(500).json({ error: 'Lỗi hệ thống khi đăng nhập.' });
+    if (result.error) return res.status(400).json(result);
+    result.token = generateAccessToken(result.user);
+    res.json(result);
+  });
+});
+
+app.post('/api/auth/forgot-password', (req, res) => {
+  const { email } = req.body;
+  runAuthPy('forgot_password', { email }, (err, result) => {
+    if (err || !result) return res.status(500).json({ error: 'Lỗi hệ thống khi yêu cầu quên mật khẩu.' });
+    if (result.error) return res.status(400).json(result);
+    res.json(result);
+  });
+});
+
+app.post('/api/auth/reset-password', (req, res) => {
+  const { email, otp_code, new_password } = req.body;
+  runAuthPy('reset_password', { email, otp_code, new_password }, (err, result) => {
+    if (err || !result) return res.status(500).json({ error: 'Lỗi hệ thống khi đặt lại mật khẩu.' });
+    if (result.error) return res.status(400).json(result);
+    res.json(result);
+  });
+});
+
+app.get('/api/auth/me', authenticateToken, (req, res) => {
+  res.json({ user: req.user });
+});
 
 // ============================================================
 // HELPER FUNCTIONS

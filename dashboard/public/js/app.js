@@ -85,9 +85,17 @@ function getCompetitorName() {
 // API HELPERS
 // ============================================================
 
-async function fetchJSON(url) {
+async function fetchJSON(url, options = {}) {
+  const token = localStorage.getItem('authToken');
+  const headers = options.headers || {};
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { ...options, headers });
+    if (res.status === 401 || res.status === 403) {
+      if (typeof showAuthModal === 'function') showAuthModal();
+    }
     return await res.json();
   } catch (e) {
     console.error(`API Error (${url}):`, e);
@@ -712,16 +720,232 @@ async function sendReport() {
   try {
     const res = await fetch('/api/send-report', { method: 'POST' });
     const data = await res.json();
-
-    if (data.error) {
-      showToast(`⚠️ ${data.error}`, 'error');
+    if (data.success) {
+      showToast(`✅ ${data.message}`, 'success');
     } else {
-      showToast('✅ Đã gửi báo cáo thành công!', 'success');
+      showToast(`❌ Lỗi gửi báo cáo: ${data.message || 'Thất bại'}`, 'error');
     }
   } catch (e) {
-    showToast('❌ Lỗi gửi báo cáo', 'error');
+    showToast('❌ Lỗi kết nối gửi báo cáo', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="btn-icon">📨</span> Gửi Báo Cáo';
+  }
+}
+
+// ============================================================
+// AUTHENTICATION & EXPORT PDF ENGINE
+// ============================================================
+
+function showAuthModal() {
+  const overlay = document.getElementById('authModalOverlay');
+  if (overlay) overlay.style.display = 'flex';
+  switchAuthForm('login');
+}
+
+function hideAuthModal() {
+  const overlay = document.getElementById('authModalOverlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function switchAuthForm(formType) {
+  const login = document.getElementById('formLogin');
+  const reg = document.getElementById('formRegister');
+  const otp = document.getElementById('formOtp');
+  const forgot = document.getElementById('formForgot');
+  const reset = document.getElementById('formReset');
+
+  const title = document.getElementById('authTitle');
+
+  if (login) login.style.display = formType === 'login' ? 'block' : 'none';
+  if (reg) reg.style.display = formType === 'register' ? 'block' : 'none';
+  if (otp) otp.style.display = formType === 'otp' ? 'block' : 'none';
+  if (forgot) forgot.style.display = formType === 'forgot' ? 'block' : 'none';
+  if (reset) reset.style.display = formType === 'reset' ? 'block' : 'none';
+
+  if (title) {
+    if (formType === 'login') title.textContent = 'Đăng Nhập Doanh Nghiệp';
+    if (formType === 'register') title.textContent = 'Đăng Ký Tài Khoản @longvan.net';
+    if (formType === 'otp') title.textContent = 'Xác Thực Mã OTP';
+    if (formType === 'forgot') title.textContent = 'Khôi Phục Mật Khẩu';
+    if (formType === 'reset') title.textContent = 'Đặt Lại Mật Khẩu Mới';
+  }
+}
+
+async function handleLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  if (!email || !email.endsWith('@longvan.net')) {
+    return showToast('⚠️ Vui lòng nhập Email doanh nghiệp Long Vân (@longvan.net)', 'error');
   }
 
-  btn.disabled = false;
-  btn.innerHTML = '<span class="btn-icon">📨</span> Gửi Báo Cáo';
+  const res = await fetchJSON('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+
+  if (res && res.token) {
+    localStorage.setItem('authToken', res.token);
+    localStorage.setItem('authUser', JSON.stringify(res.user));
+    hideAuthModal();
+    showToast(`✅ Xin chào ${res.user.full_name || res.user.email}!`, 'success');
+    loadDashboard();
+  } else if (res && res.error) {
+    showToast(`⚠️ ${res.error}`, 'error');
+  }
+}
+
+async function handleRegister() {
+  const full_name = document.getElementById('regFullName').value;
+  const email = document.getElementById('regEmail').value;
+  const password = document.getElementById('regPassword').value;
+
+  if (!email || !email.endsWith('@longvan.net')) {
+    return showToast('⚠️ Chỉ chấp nhận Email doanh nghiệp Long Vân (@longvan.net)', 'error');
+  }
+
+  const res = await fetchJSON('/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, full_name, password })
+  });
+
+  if (res && res.success) {
+    document.getElementById('otpTargetEmail').textContent = email;
+    switchAuthForm('otp');
+    showToast(`📩 ${res.message}`, 'info');
+  } else if (res && res.error) {
+    showToast(`⚠️ ${res.error}`, 'error');
+  }
+}
+
+async function handleVerifyOtp() {
+  const email = document.getElementById('otpTargetEmail').textContent || document.getElementById('regEmail').value;
+  const otp_code = document.getElementById('otpCode').value;
+
+  const res = await fetchJSON('/api/auth/verify-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, otp_code, otp_type: 'REGISTRATION' })
+  });
+
+  if (res && res.token) {
+    localStorage.setItem('authToken', res.token);
+    localStorage.setItem('authUser', JSON.stringify(res.user));
+    hideAuthModal();
+    showToast('🎉 Xác thực tài khoản thành công!', 'success');
+    loadDashboard();
+  } else if (res && res.error) {
+    showToast(`⚠️ ${res.error}`, 'error');
+  }
+}
+
+async function handleForgotPassword() {
+  const email = document.getElementById('forgotEmail').value;
+
+  if (!email || !email.endsWith('@longvan.net')) {
+    return showToast('⚠️ Vui lòng nhập Email doanh nghiệp Long Vân (@longvan.net)', 'error');
+  }
+
+  const res = await fetchJSON('/api/auth/forgot-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  });
+
+  if (res && res.success) {
+    switchAuthForm('reset');
+    showToast(`📩 ${res.message}`, 'info');
+  } else if (res && res.error) {
+    showToast(`⚠️ ${res.error}`, 'error');
+  }
+}
+
+async function handleResetPassword() {
+  const email = document.getElementById('forgotEmail').value;
+  const otp_code = document.getElementById('resetOtpCode').value;
+  const new_password = document.getElementById('resetNewPassword').value;
+
+  const res = await fetchJSON('/api/auth/reset-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, otp_code, new_password })
+  });
+
+  if (res && res.success) {
+    switchAuthForm('login');
+    showToast('🎉 Đặt lại mật khẩu thành công! Vui lòng đăng nhập.', 'success');
+  } else if (res && res.error) {
+    showToast(`⚠️ ${res.error}`, 'error');
+  }
+}
+
+async function exportExecutivePdf() {
+  const btn = document.getElementById('btnExportPdf');
+  if (btn) btn.innerHTML = '⏳ Đang tạo PDF...';
+
+  try {
+    const competitorName = getCompetitorName();
+    const aiSummaryEl = document.getElementById('aiSummary');
+    const aiText = aiSummaryEl ? aiSummaryEl.innerText : '';
+
+    const barCanvas = document.getElementById('barChart');
+    const donutCanvas = document.getElementById('donutChart');
+
+    const barImg = barCanvas ? barCanvas.toDataURL('image/png') : '';
+    const donutImg = donutCanvas ? donutCanvas.toDataURL('image/png') : '';
+
+    const element = document.createElement('div');
+    element.style.padding = '24px';
+    element.style.background = '#ffffff';
+    element.style.color = '#0f172a';
+    element.style.fontFamily = 'Segoe UI, Arial, sans-serif';
+
+    element.innerHTML = `
+      <div style="border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <span style="background: #0284c7; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;">LONG VÂN CLOUD SOLUTION</span>
+          <h1 style="font-size: 20px; color: #0f172a; margin: 6px 0 0 0;">BÁO CÁO CẠNH TRANH GIÁ TÊN MIỀN</h1>
+          <p style="font-size: 12px; color: #64748b; margin: 2px 0 0 0;">Đối thủ: <strong>${competitorName.toUpperCase()}</strong> | Ngày xuất: ${new Date().toLocaleDateString('vi-VN')}</p>
+        </div>
+      </div>
+
+      <div style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 14px; border-radius: 6px; margin-bottom: 20px;">
+        <h3 style="color: #0369a1; font-size: 14px; margin: 0 0 8px 0;">🧠 Phân Tích & Đề Xuất Chiến Lược Từ Gemini AI</h3>
+        <div style="font-size: 11px; line-height: 1.6; color: #1e3a8a; white-space: pre-wrap;">${aiText}</div>
+      </div>
+
+      <h3 style="font-size: 14px; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px;">📊 Biểu Đồ So Sánh Trực Quan</h3>
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        ${barImg ? `<div style="flex: 1; text-align: center;"><img src="${barImg}" style="max-width: 100%; height: auto; border: 1px solid #e2e8f0; border-radius: 6px;"></div>` : ''}
+        ${donutImg ? `<div style="flex: 1; text-align: center;"><img src="${donutImg}" style="max-width: 100%; height: auto; border: 1px solid #e2e8f0; border-radius: 6px;"></div>` : ''}
+      </div>
+
+      <p style="font-size: 10px; color: #94a3b8; text-align: center; margin-top: 30px;">
+        Báo cáo được khởi tạo tự động bởi Market AI Engine &bull; Long Vân Cloud Solution (https://khangthost.io.vn)
+      </p>
+    `;
+
+    const opt = {
+      margin: 10,
+      filename: `Market_AI_Bao_Cao_${getSelectedCompetitor()}_${new Date().toISOString().slice(0, 10)}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    if (window.html2pdf) {
+      await html2pdf().set(opt).from(element).save();
+      showToast('✅ Đã xuất báo cáo PDF thành công!');
+    } else {
+      showToast('⚠️ Thư viện PDF đang tải, vui lòng thử lại sau 2 giây.');
+    }
+  } catch (e) {
+    console.error('Lỗi xuất PDF:', e);
+    showToast('⚠️ Không thể xuất PDF: ' + e.message);
+  } finally {
+    if (btn) btn.innerHTML = '<span class="btn-icon">📄</span> Xuất PDF';
+  }
 }

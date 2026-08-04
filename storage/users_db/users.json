@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "email": "test@longvan.net",
+    "full_name": "Test User",
+    "password_hash": "975ec68adf9590bebff0c5936308bb1eb983e2c26338d314c7b80ab7d0700305",
+    "role": "user",
+    "is_verified": false,
+    "created_at": "2026-08-04 21:26:40",
+    "updated_at": "2026-08-04 21:26:40"
+  }
+]
