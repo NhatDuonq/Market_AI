@@ -90,7 +90,7 @@ Ví dụ thực tế TLD `.vn`:
 Gemini AI nhận dữ liệu đối soát và trả về JSON chứa kế hoạch hành động:
 * **Bước 1 [Chính sách Giá đối ứng]**: Đề xuất mức voucher / giảm giá cho nhóm TLD bị đối thủ ép giá.
 * **Bước 2 [Chiến dịch Marketing]**: Đưa ra thông điệp truyền thông cốt lõi (Ví dụ: *"Gia hạn .vn tại Long Vân giá thấp hơn đối thủ 52.000đ/năm"*).
-* **Bước 3 [Đóng gói Combo Dịch vụ]**: Tặng kèm Email Server Pro 1GB hoặc DNSSEC miễn phí.
+* **Bước 3 [Đóng gói Combo Dịch vụ]**: Tặng kèm Voucher Cloud Hosting / Email Server Pro 1GB.
 * **Bước 4 [Đo lường & Kiểm soát]**: Thời gian đánh giá tỷ lệ chuyển đổi sau 14 - 30 ngày.
 
 ---

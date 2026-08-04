@@ -205,7 +205,7 @@ Hãy phân tích sắc bén, chính xác theo góc nhìn chuyên gia kinh doanh 
         insights.append("\n🗺️ *KẾ HOẠCH TỔNG THỂ & HƯỚNG ĐI TỪNG BƯỚC FOR LONG VÂN:*")
         insights.append("• **Bước 1 [Chính sách Giá đối ứng]**: Tung chương trình tặng Voucher 50.000đ khi đăng ký/gia hạn nhóm TLD đang chịu ép giá.")
         insights.append("• **Bước 2 [Chiến dịch Marketing]**: Tập trung quảng bá thông điệp *'Gia hạn tên miền .vn tại Long Vân giá thấp hơn 52.000đ/năm so với đối thủ'*. ")
-        insights.append("• **Bước 3 [Đóng gói Combo Dịch vụ]**: Tặng kèm Email Server Pro 1GB hoặc DNSSEC miễn phí để tăng giá trị cạnh tranh.")
+        insights.append("• **Bước 3 [Đóng gói Combo Dịch vụ]**: Tặng kèm Voucher Cloud Hosting / Email Server Pro 1GB để gia tăng giá trị cạnh tranh hệ sinh thái Long Vân.")
         insights.append("• **Bước 4 [Đo lường & Kiểm soát]**: Đánh giá tỷ lệ chuyển đổi khách hàng đăng ký mới sau 14 ngày áp dụng.")
 
         if tld_availability and tld_availability.get("competitor_exclusive"):
