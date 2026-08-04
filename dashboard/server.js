@@ -325,16 +325,16 @@ app.post('/api/crawl', (req, res) => {
     return res.status(429).json({ error: 'Crawler đang chạy, vui lòng đợi...' });
   }
   crawlRunning = true;
-  const { execFile } = require('child_process');
-  const pythonPath = process.env.PYTHON_PATH || 'python';
+  const { exec } = require('child_process');
   const mainScript = path.join(__dirname, '..', 'main.py');
+  const cmd = `python3 "${mainScript}" --all --force || python "${mainScript}" --all --force`;
 
-  res.json({ status: 'started', message: 'Đang chạy crawler...' });
+  res.json({ status: 'started', message: 'Đang chạy crawler cho tất cả nhà cung cấp (bao gồm Long Vân)...' });
 
-  execFile(pythonPath, [mainScript, '--all', '--force'], {
+  exec(cmd, {
     cwd: path.join(__dirname, '..'),
     timeout: 300000, // 5 minutes max
-    env: { ...process.env },
+    env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
   }, (error, stdout, stderr) => {
     crawlRunning = false;
     if (error) {

@@ -179,9 +179,9 @@ class LongVanDomainProvider(BaseProvider):
         print(f"✅ [{self.provider_name.upper()}-DOMAIN] Đã thu thập {len(final_list)} đuôi tên miền.")
         return final_list, screenshot_path
 
-    def run(self):
+    def run(self, force_notify: bool = False):
         """
-        Luồng chính: Scrape -> Lưu snapshot Long Vân (Benchmark) -> Telegram Report
+        Luồng chính: Scrape -> Lưu snapshot Long Vân (Benchmark) -> Báo cáo Telegram/Email
         """
         domain_items, screenshot_path = self.scrape_domain_pricing()
 
@@ -191,29 +191,34 @@ class LongVanDomainProvider(BaseProvider):
 
         # Lưu snapshot Long Vân (làm benchmark cho các đối thủ khác)
         self.diff_engine.save_longvan_snapshot(domain_items, "domain", url=self.base_url)
+        print(f"✅ [{self.provider_name.upper()}-DOMAIN] Đã lưu snapshot benchmark Long Vân ({len(domain_items)} TLD).")
 
-        # Báo cáo Telegram
-        report_msg = (
-            f"🏠 *[MARKET-AI] CẬP NHẬT BẢNG GIÁ BENCHMARK - LONG VÂN (TÊN MIỀN)*\n"
-            f"⏰ *Thời gian:* `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
-            f"🌐 *Nguồn:* {self.base_url}\n"
-            f"📊 *Tổng số TLD:* {len(domain_items)} đuôi tên miền\n"
-            f"{'⎯' * 20}\n"
-        )
-        for item in domain_items[:10]:
-            report_msg += f"  • `{item['tld']}` — ĐK: `{item['register_price']:,.0f}đ` | GH: `{item['renew_price']:,.0f}đ`\n"
-        if len(domain_items) > 10:
-            report_msg += f"  ... và {len(domain_items) - 10} TLD khác\n"
-        report_msg += f"\n🤖 _Market AI Engine - Benchmark Long Vân đã cập nhật_"
+        should_notify = force_notify
 
-        print("\n--- NỘI DUNG BÁO CÁO TELEGRAM ---")
-        print(report_msg)
-        print("---------------------------------\n")
+        if should_notify:
+            report_msg = (
+                f"🏠 *[MARKET-AI] CẬP NHẬT BẢNG GIÁ BENCHMARK - LONG VÂN (TÊN MIỀN)*\n"
+                f"⏰ *Thời gian:* `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
+                f"🌐 *Nguồn:* {self.base_url}\n"
+                f"📊 *Tổng số TLD:* {len(domain_items)} đuôi tên miền\n"
+                f"{'⎯' * 20}\n"
+            )
+            for item in domain_items[:10]:
+                report_msg += f"  • `{item['tld']}` — ĐK: `{item['register_price']:,.0f}đ` | GH: `{item['renew_price']:,.0f}đ`\n"
+            if len(domain_items) > 10:
+                report_msg += f"  ... và {len(domain_items) - 10} TLD khác\n"
+            report_msg += f"\n🤖 _Market AI Engine - Benchmark Long Vân đã cập nhật_"
 
-        if self.telegram.is_configured():
-            self.telegram.send_message(report_msg)
-            if screenshot_path and os.path.exists(screenshot_path):
-                self.telegram.send_photo(screenshot_path, caption="📸 Screenshot bảng giá tên miền Long Vân (Benchmark)")
+            print("\n--- NỘI DUNG BÁO CÁO TELEGRAM ---")
+            print(report_msg)
+            print("---------------------------------\n")
+
+            if self.telegram.is_configured():
+                self.telegram.send_message(report_msg)
+                if screenshot_path and os.path.exists(screenshot_path):
+                    self.telegram.send_photo(screenshot_path, caption="📸 Screenshot bảng giá tên miền Long Vân (Benchmark)")
+        else:
+            print(f"🤫 [{self.provider_name.upper()}-DOMAIN] Silent Mode: Đã cập nhật snapshot Long Vân thành công.")
 
 
 if __name__ == "__main__":
