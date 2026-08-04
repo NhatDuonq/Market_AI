@@ -1,0 +1,14 @@
+{
+  "name": "market-ai",
+  "version": "1.0.0",
+  "description": "Market AI - Engine giám sát tên miền cạnh tranh Long Vân",
+  "main": "dashboard/server.js",
+  "scripts": {
+    "start": "node dashboard/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "dotenv": "^16.4.5",
+    "glob": "^10.4.5"
+  }
+}
