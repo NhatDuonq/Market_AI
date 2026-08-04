@@ -109,7 +109,7 @@ class TelegramNotifier:
 
     def format_diff_report(self, provider_name: str, product_type: str, changes: dict, is_demo: bool = False) -> str:
         """
-        Định dạng dữ liệu biến động sản phẩm Tên miền thành Telegram Markdown ngắn gọn, súc tích, không bị cắt bớt text.
+        Định dạng dữ liệu biến động sản phẩm Tên miền thành Telegram Markdown ngắn gọn, súc tích, đầy đủ thông tin chìa khóa.
         """
         lines = []
         clean_pname = provider_name.split("(")[0].strip().upper()
@@ -120,7 +120,7 @@ class TelegramNotifier:
 
         lines.append(f"🚨 *[MARKET-AI] BÁO CÁO CẠNH TRANH - {clean_pname} (TÊN MIỀN)*")
         lines.append(f"⏰ *Thời gian:* `{changes.get('timestamp', '')}`")
-        lines.append(f"🌐 *Nguồn dữ liệu:* {changes.get('url', '')}")
+        lines.append(f"🌐 *Nguồn:* {changes.get('url', '')}")
         lines.append("⎯" * 20)
 
         price_changes = changes.get("price_changes", [])
@@ -128,45 +128,67 @@ class TelegramNotifier:
         lv_summary = changes.get("longvan_summary", {})
         tld_availability = changes.get("tld_availability", {})
 
-        if new_items:
-            lines.append(f"✨ *PHÁT HIỆN {len(new_items)} TLD MỚI:*")
-            for item in new_items[:5]:
-                tld = item.get('tld', 'N/A')
-                reg_p = item.get('register_price', 0)
-                lines.append(f" 🆕 *{tld}*: `{reg_p:,.0f}đ`")
-            lines.append("")
-
+        # 1. BIẾN ĐỘNG GIÁ
         if price_changes:
-            lines.append(f"📈📉 *CHI TIẾT {len(price_changes)} ĐỢT BIẾN ĐỘNG GIÁ:*")
+            lines.append(f"📈📉 *PHÁT HIỆN {len(price_changes)} ĐỢT BIẾN ĐỘNG GIÁ:*")
             for item in price_changes[:5]:
                 item_name = item.get("tld", "")
                 field = item.get("field", "")
                 old_p = item.get("old_price", 0)
                 new_p = item.get("new_price", 0)
                 arrow = "🔻" if new_p < old_p else "🔺"
-                lines.append(f" {arrow} *{item_name}* (`{field}`): `{old_p:,.0f}đ` ➔ *`{new_p:,.0f}đ`*")
-            lines.append("")
+                lines.append(f"  {arrow} *{item_name}* (`{field}`): `{old_p:,.0f}đ` ➔ *`{new_p:,.0f}đ`*")
+            if len(price_changes) > 5:
+                lines.append(f"  ... và {len(price_changes) - 5} TLD đổi giá khác.")
+        else:
+            lines.append("📈 *BIẾN ĐỘNG GIÁ:* ✅ Bảng giá niêm yết giữ nguyên ổn định.")
 
+        lines.append("")
+
+        # 2. TLD MỚI RA MẮT
+        if new_items:
+            lines.append(f"✨ *PHÁT HIỆN {len(new_items)} TLD MỚI RA MẮT:*")
+            for item in new_items[:5]:
+                tld = item.get('tld', 'N/A')
+                reg_p = item.get('register_price', 0)
+                lines.append(f"  🆕 *{tld}*: Giá ĐK `{reg_p:,.0f}đ`")
+        else:
+            lines.append("🆕 *TLD MỚI:* ✅ Không phát hiện TLD mới ra mắt.")
+
+        lines.append("")
+
+        # 3. VỊ THẾ VS LONG VÂN (CHI TIẾT MỤC TIÊU CỤ THỂ)
         if lv_summary:
             total_tlds = lv_summary.get("total_tlds_compared", 0)
             twoyr_cheap = lv_summary.get("twoyr_cheaper_count", 0)
             twoyr_exp = lv_summary.get("twoyr_expensive_count", 0)
             twoyr_eq = lv_summary.get("twoyr_equal_count", 0)
 
-            lines.append(f"⚔️ *TỔNG QUAN VỊ THẾ VS LONG VÂN ({total_tlds} TLD):*")
-            lines.append(f" 📌 *Tổng Chi Phí 2 Năm:*")
-            lines.append(f"    ├─ Đối thủ giá thấp hơn: *{twoyr_cheap}* TLD ⚠️")
-            lines.append(f"    ├─ Bằng giá: *{twoyr_eq}* TLD ⚖️")
-            lines.append(f"    └─ Long Vân giá thấp hơn: *{twoyr_exp}* TLD ✅")
-            lines.append("")
+            cheaper_items = lv_summary.get("cheaper_items", [])
+            expensive_items = lv_summary.get("expensive_items", [])
 
+            cheap_tlds = list(set(c.get("tld") for c in cheaper_items if c.get("tld") and c.get("field") == "Tổng chi phí 2 năm"))
+            exp_tlds = list(set(e.get("tld") for e in expensive_items if e.get("tld") and e.get("field") == "Tổng chi phí 2 năm"))
+
+            lines.append(f"⚔️ *VỊ THẾ GIÁ 2 NĂM VS LONG VÂN ({total_tlds} TLD):*")
+            if exp_tlds:
+                exp_str = ", ".join(exp_tlds[:6]) + (f" (+{len(exp_tlds)-6})" if len(exp_tlds) > 6 else "")
+                lines.append(f"  ✅ *Long Vân giá tốt hơn ({twoyr_exp} TLD):* `{exp_str}`")
+            if cheap_tlds:
+                cheap_str = ", ".join(cheap_tlds[:6]) + (f" (+{len(cheap_tlds)-6})" if len(cheap_tlds) > 6 else "")
+                lines.append(f"  ⚠️ *Đối thủ giá thấp hơn ({twoyr_cheap} TLD):* `{cheap_str}`")
+            if twoyr_eq > 0:
+                lines.append(f"  ⚖️ *Bằng giá hai bên:* `{twoyr_eq} TLD`")
+
+        lines.append("")
+
+        # 4. ĐỘ PHỦ TLD MỞ RỘNG
         if tld_availability:
             comp_exclusive = tld_availability.get("competitor_exclusive", [])
             if comp_exclusive:
-                lines.append(f"🏷️ *THỊ PHẦN ĐỐI THỦ CÓ (LV chưa có {len(comp_exclusive)} TLD):* `{', '.join(comp_exclusive[:5])}`")
+                lines.append(f"🏷️ *THỊ PHẦN ĐỐI THỦ CÓ (LV chưa có {len(comp_exclusive)} TLD):*\n  `{', '.join(comp_exclusive[:8])}` (vẫn còn {len(comp_exclusive)-8} TLD khác)")
                 lines.append("")
 
         lines.append("⎯" * 20)
-        lines.append(f"🔗 *XEM ĐẦY ĐỦ BẢNG GIÁ & AI PHÂN TÍCH TẠI DASHBOARD:*")
-        lines.append(f"🌐 {dashboard_url}")
+        lines.append(f"🔗 *XEM ĐẦY ĐỦ BẢNG GIÁ & AI PHÂN TÍCH TẠI DASHBOARD:*\n🌐 {dashboard_url}")
         return "\n".join(lines)
