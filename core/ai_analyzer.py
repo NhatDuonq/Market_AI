@@ -2,8 +2,9 @@ import os
 import json
 import hashlib
 import requests
+import time
+import random
 import logging
-from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -24,8 +25,10 @@ class AIAnalyzer:
     """
     Module phân tích chiến lược thị trường tự động bằng Gemini AI cho Long Vân Cloud (longvan.net).
     - Tự động đánh giá ý đồ cạnh tranh của đối thủ dựa trên dữ liệu đối soát 3 chiều.
-    - Đề xuất chiến lược thương mại tự nhiên, cá nhân hóa theo đúng thế mạnh hạ tầng Long Vân.
-    - Hỗ trợ Dynamic Fallback tự tính toán theo số liệu thực tế khi không có API key.
+    - Hỗ trợ Retry & Exponential Backoff (429, 503, 408).
+    - Hỗ trợ Response Schema bắt buộc trả về đúng định dạng JSON.
+    - Tự động Pre-processing tính toán chỉ số trước khi gửi cho AI (tiết kiệm token & TPM).
+    - Sửa lỗi Hash Cache theo từng đối thủ & Kiểm tra chính xác dấu chênh lệch gia hạn .vn.
     """
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
@@ -36,16 +39,21 @@ class AIAnalyzer:
     def _get_cache_path(self, data_hash: str) -> str:
         return os.path.join(CACHE_DIR, f"{data_hash}.json")
 
-    def _generate_data_hash(self, data: dict) -> str:
-        hash_data = {k: v for k, v in data.items() if k not in ["timestamp", "url"]}
-        data_str = json.dumps(hash_data, sort_keys=True)
+    def _generate_data_hash(self, provider_name: str, product_type: str, changes: dict) -> str:
+        """Hash chuẩn bao gồm provider_name, product_type, prompt_version để tránh nhầm cache giữa các đối thủ"""
+        cache_input = {
+            "provider_name": provider_name.lower(),
+            "product_type": product_type.lower(),
+            "changes": changes,
+            "prompt_version": "v3_schema"
+        }
+        data_str = json.dumps(cache_input, sort_keys=True)
         return hashlib.md5(data_str.encode('utf-8')).hexdigest()
 
     def analyze_domain_changes(self, provider_name: str, changes: dict) -> str:
         return self.analyze_market_changes(provider_name, "domain", changes)
 
     def analyze_market_changes(self, provider_name: str, product_type: str, changes: dict) -> str:
-        prod_title = "Tên miền"
         price_changes = changes.get("price_changes", [])
         new_items = changes.get("new_tlds", [])
         lv_summary = changes.get("longvan_summary", {})
@@ -54,111 +62,151 @@ class AIAnalyzer:
         tld_availability = changes.get("tld_availability", {})
         longvan_comparison = changes.get("longvan_comparison", [])
 
-        # 1. Kiểm tra Cache
-        data_hash = self._generate_data_hash(changes)
+        # 1. Kiểm tra Cache chuẩn
+        data_hash = self._generate_data_hash(provider_name, product_type, changes)
         cache_path = self._get_cache_path(data_hash)
         if os.path.exists(cache_path):
             try:
                 with open(cache_path, 'r', encoding='utf-8') as f:
                     cached_res = json.load(f)
-                logger.info(f"AI Cache Hit: {data_hash}")
-                return self._format_ai_response(cached_res, provider_name, prod_title)
+                logger.info(f"AI Cache Hit for {provider_name}: {data_hash}")
+                return self._format_ai_response(cached_res, provider_name)
             except Exception as e:
                 logger.warning(f"Failed to read cache {data_hash}: {e}")
 
-        # 2. Gọi API hoặc fallback nếu thiếu cấu hình
-        if not self.is_configured():
-            logger.info("Gemini API Key missing, falling back to dynamic rule-based AI")
-            return self._fallback_rule_based(provider_name, prod_title, price_changes, new_items, cheaper_items, expensive_items, tld_availability, longvan_comparison)
+        # 2. Python Pre-Processing (Tính toán chỉ số & Tổng hợp thông minh trước khi gửi cho AI)
+        priority_tlds = [".vn", ".com.vn", ".com", ".net", ".edu.vn", ".org", ".info", ".biz"]
+        key_comparisons = [c for c in longvan_comparison if c.get("tld") in priority_tlds]
 
-        # Lọc ra các mục so sánh 3 chiều chính
-        comparison_2yr = [c for c in longvan_comparison if c.get("field") == "Tổng chi phí 2 năm"]
-        comparison_reg = [c for c in longvan_comparison if c.get("field") == "Giá đăng ký"]
-        comparison_renew = [c for c in longvan_comparison if c.get("field") == "Giá gia hạn"]
+        # Top TLD chênh lệch lớn nhất
+        top_cheaper = sorted(cheaper_items, key=lambda x: abs(x.get("diff_amount", 0)), reverse=True)[:8]
+        top_expensive = sorted(expensive_items, key=lambda x: abs(x.get("diff_amount", 0)), reverse=True)[:8]
 
-        # Trích xuất TLD độc quyền / bỏ lỡ
         lv_exclusive = tld_availability.get("longvan_exclusive", [])
         comp_exclusive = tld_availability.get("competitor_exclusive", [])
 
-        # Xây dựng Prompt cung cấp TOÀN BỘ 100% dữ liệu cào được cho Gemini AI
+        # 3. Dynamic Fallback nếu không có API Key
+        if not self.is_configured():
+            logger.info("Gemini API Key missing, using dynamic rule-based strategy engine")
+            return self._fallback_rule_based(provider_name, price_changes, new_items, cheaper_items, expensive_items, tld_availability, longvan_comparison)
+
+        # 4. Build Prompt tinh gọn với thông tin đã tính toán sẵn
         prompt = f"""
 Bạn là Giám đốc Chiến lược Giá & Thị Phần (Chief Commercial Officer) của LONG VÂN CLOUD SOLUTION (longvan.net) tại Việt Nam.
 Long Vân là nhà cung cấp hạ tầng Cloud Server, Cloud Hosting và Email Server doanh nghiệp uy tín hàng đầu.
 
-Nhiệm vụ của bạn: Hãy phân tích độc lập, tự nhiên, sắc bén dựa trên TOÀN BỘ 100% dữ liệu đối soát cào được mới nhất giữa Long Vân và đối thủ cạnh tranh {provider_name.upper()}. Tuyệt đối KHÔNG lặp lại các câu mẫu khuôn thước hay dập khuôn.
+Nhiệm vụ: Phân tích chiến lược giá và đưa ra nhận định kinh doanh thực tế đối soát với đối thủ {provider_name.upper()}.
 
-TOÀN BỘ DỮ LIỆU ĐỐI SOÁT CÀO ĐƯỢC (FULL DATASET):
-1. Đợt biến động giá mới nhất của đối thủ ({provider_name}):
-{json.dumps(price_changes, ensure_ascii=False, indent=2) if price_changes else "Không có đợt điều chỉnh giá niêm yết mới trong vòng quét này."}
+TÓM TẮT DỮ LIỆU ĐỐI SOÁT:
+- Đối thủ: {provider_name.upper()}
+- Số TLD đối thủ có giá thấp hơn Long Vân: {len(cheaper_items)} TLD
+- Số TLD Long Vân có giá thấp hơn đối thủ: {len(expensive_items)} TLD
+- Số TLD chỉ Long Vân bán: {len(lv_exclusive)} TLD ({json.dumps(lv_exclusive[:10], ensure_ascii=False)})
+- Số TLD chỉ đối thủ bán: {len(comp_exclusive)} TLD ({json.dumps(comp_exclusive[:10], ensure_ascii=False)})
 
-2. TLD mới ra mắt của đối thủ:
-{json.dumps(new_items, ensure_ascii=False, indent=2) if new_items else "Chưa phát hiện TLD mới."}
+CHI TIẾT MỤC QUAN TRỌNG:
+1. Đợt biến động giá mới nhất: {json.dumps(price_changes[:5], ensure_ascii=False) if price_changes else "Không có"}
+2. TLD mới đối thủ ra mắt: {json.dumps(new_items[:5], ensure_ascii=False) if new_items else "Không có"}
+3. Top TLD đối thủ giá thấp hơn: {json.dumps(top_cheaper, ensure_ascii=False)}
+4. Top TLD Long Vân ưu thế giá thấp hơn: {json.dumps(top_expensive, ensure_ascii=False)}
+5. Đối soát các TLD trọng điểm (.vn, .com.vn, .com...): {json.dumps(key_comparisons, ensure_ascii=False)}
 
-3. TOÀN BỘ TLD đối thủ đang có giá thấp hơn Long Vân (Cheaper Items):
-{json.dumps(cheaper_items, ensure_ascii=False, indent=2)}
-
-4. TOÀN BỘ TLD Long Vân đang có ưu thế giá thấp hơn đối thủ (Expensive/Better Items):
-{json.dumps(expensive_items, ensure_ascii=False, indent=2)}
-
-5. TOÀN BỘ Độ phủ TLD (TLD Availability):
-- TOÀN BỘ TLD độc quyền chỉ Long Vân bán (Tổng {len(lv_exclusive)} TLD): {json.dumps(lv_exclusive, ensure_ascii=False)}
-- TOÀN BỘ TLD đối thủ có nhưng Long Vân chưa bán (Tổng {len(comp_exclusive)} TLD): {json.dumps(comp_exclusive, ensure_ascii=False)}
-
-6. TOÀN BỘ Bảng đối soát chi tiết 3 chiều (Đăng ký, Gia hạn, Chuyển đổi, Tổng chi phí 2 năm trên tất cả TLD):
-{json.dumps(longvan_comparison, ensure_ascii=False, indent=2)}
-
-YÊU CẦU PHÂN TÍCH THỰC TẾ TRÊN DỮ LIỆU ĐẦY ĐỦ:
-Phân tích tự nhiên, thẳng thắn, đưa ra nhận định kinh doanh thực tế dựa trên TOÀN BỘ bảng dữ liệu trên. Trả về ĐÚNG định dạng JSON sau (không thêm văn bản ngoài JSON):
-
-{{
-    "danh_gia_tinh_huong": "Nhận định ngắn gọn về chiến lược giá hiện tại của {provider_name}. Phân tích cách họ phân bổ giá đăng ký năm 1 vs giá gia hạn từ năm 2 để bẫy khách hàng hoặc lấy thị phần.",
-    "vi_the_canh_tranh": "Phân tích thẳng thắn vị thế cạnh tranh của Long Vân dựa trên toàn bộ bảng dữ liệu. Nêu rõ Long Vân đang thắng ở đâu (ví dụ: các TLD chính như .vn, .com.vn) và đang bị ép ở đâu.",
-    "ke_hoach_hanh_dong_tung_buoc": [
-        "Bước 1 [Chính sách Giá đối ứng]: Đề xuất hành động điều chỉnh giá hoặc phát voucher đối ứng cụ thể dựa trên các con số chênh lệch thực tế.",
-        "Bước 2 [Truyền thông & Marketing]: Đề xuất thông điệp truyền thông sắc bén xoay quanh tổng chi phí 2 năm hoặc giá gia hạn dài hạn.",
-        "Bước 3 [Đóng gói Combo Dịch vụ Cloud]: Đề xuất combo đóng gói tên miền với sản phẩm thế mạnh của Long Vân (Cloud Server, Cloud Hosting, Email Server Pro).",
-        "Bước 4 [Đo lường & Kiểm soát]: Tần suất và tiêu chí đánh giá hiệu quả."
-    ],
-    "goi_y_tld_chi_tiet": "Chỉ ra 3-5 TLD cụ thể mà Long Vân cần can thiệp ngay (kèm lý do ngắn gọn dựa trên số liệu)."
-}}
+YÊU CẦU: Trả về JSON chứa đúng 4 trường được yêu cầu, phân tích thực tế, tự nhiên, không lặp lại câu mẫu.
 """
-        models_to_try = ["gemini-2.0-flash", "gemini-2.5-flash", "gemini-flash-latest", "gemini-2.0-flash-lite"]
+
+        # Structured Response Schema
+        json_schema = {
+            "type": "OBJECT",
+            "properties": {
+                "danh_gia_tinh_huong": {"type": "STRING"},
+                "vi_the_canh_tranh": {"type": "STRING"},
+                "ke_hoach_hanh_dong_tung_buoc": {
+                    "type": "ARRAY",
+                    "items": {"type": "STRING"}
+                },
+                "goi_y_tld_chi_tiet": {"type": "STRING"}
+            },
+            "required": [
+                "danh_gia_tinh_huong",
+                "vi_the_canh_tranh",
+                "ke_hoach_hanh_dong_tung_buoc",
+                "goi_y_tld_chi_tiet"
+            ]
+        }
+
+        # Model list hỗ trợ Stable & Lite Models
+        models_to_try = ["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-flash-latest", "gemini-3.6-flash"]
+
         for model in models_to_try:
-            try:
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={self.api_key}"
-                payload = {
-                    "contents": [{"parts": [{"text": prompt}]}],
-                    "generationConfig": {
-                        "responseMimeType": "application/json"
-                    }
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={self.api_key}"
+            payload = {
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {
+                    "responseMimeType": "application/json",
+                    "responseSchema": json_schema
                 }
-                res = requests.post(url, json=payload, timeout=20)
-                if res.status_code == 200:
-                    data = res.json()
-                    analysis_text = data['candidates'][0]['content']['parts'][0]['text'].strip()
+            }
 
-                    try:
-                        ai_json = json.loads(analysis_text)
+            # Retry với Exponential Backoff (1s -> 2s -> 4s + random jitter)
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    res = requests.post(url, json=payload, timeout=(5, 40))
 
-                        # Lưu vào Cache
-                        with open(cache_path, 'w', encoding='utf-8') as f:
-                            json.dump(ai_json, f, ensure_ascii=False, indent=4)
-                        logger.info(f"AI Cache Miss - Saved to cache: {data_hash}")
+                    if res.status_code == 200:
+                        data = res.json()
+                        text = self._extract_text_from_response(data)
+                        if not text:
+                            logger.warning(f"Model {model} returned empty response.")
+                            break
 
-                        return self._format_ai_response(ai_json, provider_name, prod_title)
-                    except json.JSONDecodeError:
-                        logger.error(f"Gemini returned invalid JSON: {analysis_text}")
-                        return self._fallback_rule_based(provider_name, prod_title, price_changes, new_items, cheaper_items, expensive_items, tld_availability, longvan_comparison)
-                else:
-                    logger.warning(f"Gemini API returned status {res.status_code}: {res.text}")
-            except Exception as e:
-                logger.error(f"Exception during Gemini API call ({model}): {e}")
+                        try:
+                            ai_json = json.loads(text)
+                            if all(k in ai_json for k in ["danh_gia_tinh_huong", "vi_the_canh_tranh", "ke_hoach_hanh_dong_tung_buoc", "goi_y_tld_chi_tiet"]):
+                                # Save to Cache
+                                with open(cache_path, 'w', encoding='utf-8') as f:
+                                    json.dump(ai_json, f, ensure_ascii=False, indent=4)
+                                logger.info(f"AI Analysis Successful ({model}) - Cached: {data_hash}")
+                                return self._format_ai_response(ai_json, provider_name)
+                            else:
+                                logger.warning(f"Model {model} JSON missing required keys: {text}")
+                                break
+                        except json.JSONDecodeError:
+                            logger.error(f"Model {model} output is not valid JSON: {text}")
+                            continue  # Thử tiếp model khác chứ không dừng ngay lập tức
 
-        logger.info("All Gemini models failed, falling back to dynamic rule-based AI")
-        return self._fallback_rule_based(provider_name, prod_title, price_changes, new_items, cheaper_items, expensive_items, tld_availability, longvan_comparison)
+                    elif res.status_code in [429, 503, 408]:
+                        wait_time = (2 ** attempt) + random.uniform(0.1, 0.5)
+                        logger.warning(f"Gemini API status {res.status_code} ({model}). Retrying in {wait_time:.1f}s...")
+                        time.sleep(wait_time)
+                        continue
 
-    def _format_ai_response(self, ai_json: dict, provider_name: str, prod_title: str) -> str:
-        """Định dạng JSON thành Markdown đẹp mắt"""
+                    else:
+                        logger.warning(f"Gemini API model {model} returned status {res.status_code}: {res.text[:200]}")
+                        break
+
+                except Exception as e:
+                    logger.error(f"Exception during Gemini API request ({model}): {e}")
+                    break
+
+        logger.info("All Gemini API models failed/exhausted, using dynamic rule-based fallback")
+        return self._fallback_rule_based(provider_name, price_changes, new_items, cheaper_items, expensive_items, tld_availability, longvan_comparison)
+
+    def _extract_text_from_response(self, data: dict) -> str:
+        """Trích xuất dữ liệu text an toàn từ Gemini response"""
+        try:
+            candidates = data.get("candidates", [])
+            if not candidates:
+                return ""
+            candidate = candidates[0]
+            parts = candidate.get("content", {}).get("parts", [])
+            text_parts = [p.get("text", "") for p in parts if p.get("text")]
+            return "".join(text_parts).strip()
+        except Exception as e:
+            logger.error(f"Error parsing Gemini response structure: {e}")
+            return ""
+
+    def _format_ai_response(self, ai_json: dict, provider_name: str) -> str:
         lines = []
         lines.append(f"🎯 *ĐÁNH GIÁ TÌNH HUỐNG THỊ TRƯỜNG ({provider_name.upper()}):*")
         lines.append(ai_json.get("danh_gia_tinh_huong", ""))
@@ -181,7 +229,7 @@ Phân tích tự nhiên, thẳng thắn, đưa ra nhận định kinh doanh th�
 
         return "\n".join(lines)
 
-    def _fallback_rule_based(self, provider_name, prod_title, price_changes, new_items, cheaper_items, expensive_items, tld_availability=None, longvan_comparison=None) -> str:
+    def _fallback_rule_based(self, provider_name, price_changes, new_items, cheaper_items, expensive_items, tld_availability=None, longvan_comparison=None) -> str:
         """Dynamic Fallback: Tự động tính toán số liệu chênh lệch thực tế mà không cần chuỗi tĩnh gượng ép"""
         insights = []
         insights.append(f"🎯 *ĐÁNH GIÁ TÌNH HUỐNG THỊ TRƯỜNG ({provider_name.upper()}):*")
@@ -191,7 +239,7 @@ Phân tích tự nhiên, thẳng thắn, đưa ra nhận định kinh doanh th�
             increases = [item for item in price_changes if item.get("new_price", 0) > item.get("old_price", 0)]
             if decreases:
                 item_names = ", ".join([d.get('tld', '') for d in decreases[:5]])
-                insights.append(f"• {provider_name} đang kích cầu giảm giá tại nhóm `{item_names}` nhằm thu hút lượt đăng ký mới.")
+                insights.append(f"• {provider_name} đang giảm giá tại nhóm `{item_names}` nhằm thu hút lượt đăng ký mới.")
             if increases:
                 item_names = ", ".join([i.get('tld', '') for i in increases[:5]])
                 insights.append(f"• {provider_name} điều chỉnh tăng giá tại nhóm `{item_names}` nhằm bù đắp chi phí gia hạn.")
@@ -206,13 +254,18 @@ Phân tích tự nhiên, thẳng thắn, đưa ra nhận định kinh doanh th�
             expensive_tlds = list(set([e.get('tld', '') for e in expensive_items if e.get('tld')]))
             insights.append(f"✅ Long Vân giữ ưu thế giá tốt hơn đối thủ tại {len(expensive_tlds)} TLD, tiêu biểu: `{', '.join(expensive_tlds[:6])}`.")
 
-        # Lấy chênh lệch thực tế của .vn nếu có
+        # Kiểm tra chính xác quy ước dấu của diff_amount:
+        # diff_amount = competitor_price - longvan_price
+        # diff > 0 => Giá đối thủ > Giá Long Vân (Long Vân thấp hơn diff_val)
+        # diff < 0 => Giá đối thủ < Giá Long Vân (Long Vân cao hơn abs(diff_val))
         vn_comp = [c for c in (longvan_comparison or []) if c.get("tld") == ".vn" and c.get("field") == "Giá gia hạn"]
         vn_diff_str = ""
         if vn_comp:
-            diff_val = abs(vn_comp[0].get("diff_amount", 0))
+            diff_val = vn_comp[0].get("diff_amount", 0)
             if diff_val > 0:
-                vn_diff_str = f" (Long Vân tốt hơn {diff_val:,.0f}đ/năm đối với tên miền .vn)"
+                vn_diff_str = f" (Long Vân có giá gia hạn thấp hơn đối thủ {diff_val:,.0f}đ/năm)"
+            elif diff_val < 0:
+                vn_diff_str = f" (Long Vân có giá gia hạn cao hơn đối thủ {abs(diff_val):,.0f}đ/năm)"
 
         insights.append("\n🗺️ *KẾ HOẠCH TỔNG THỂ & HƯỚNG ĐI TỪNG BƯỚC CỦA LONG VÂN:*")
         insights.append(f"• **Bước 1 [Chính sách Giá đối ứng]**: Rà soát lại biên lợi nhuận nhóm {len(cheaper_items)} TLD đang bị ép giá để xem xét tung Voucher đối ứng.")
