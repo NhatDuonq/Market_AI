@@ -20,7 +20,7 @@ class TelegramNotifier:
 
     def send_message(self, text: str, parse_mode: str = "Markdown") -> bool:
         """
-        Gửi tin nhắn văn bản đến Telegram Chat.
+        Gửi tin nhắn văn bản đến Telegram Chat (tự động fallback nếu Markdown lỗi syntax).
         """
         if not self.is_configured():
             print(f"[TelegramNotifier] ⚠️ Chưa cấu hình TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID. Nguồn tin nhắn:\n{text}")
@@ -40,8 +40,15 @@ class TelegramNotifier:
                 print("[TelegramNotifier] ✅ Đã gửi tin nhắn Telegram thành công.")
                 return True
             else:
-                print(f"[TelegramNotifier] ❌ Gửi tin nhắn thất bại ({res.status_code}): {res.text}")
-                return False
+                print(f"[TelegramNotifier] ⚠️ Gửi với parse_mode={parse_mode} thất bại ({res.status_code}): {res.text}. Thử lại gửi Plain Text...")
+                payload.pop("parse_mode", None)
+                res_fallback = requests.post(url, json=payload, timeout=10)
+                if res_fallback.status_code == 200:
+                    print("[TelegramNotifier] ✅ Đã gửi tin nhắn Telegram (Plain Text Fallback) thành công.")
+                    return True
+                else:
+                    print(f"[TelegramNotifier] ❌ Gửi tin nhắn thất bại ({res_fallback.status_code}): {res_fallback.text}")
+                    return False
         except Exception as e:
             print(f"[TelegramNotifier] ❌ Lỗi kết nối Telegram API: {e}")
             return False

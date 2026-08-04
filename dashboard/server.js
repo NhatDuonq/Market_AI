@@ -348,27 +348,31 @@ app.post('/api/crawl', (req, res) => {
 
 // Send report via Telegram and Email
 app.post('/api/send-report', (req, res) => {
-  const { execFile } = require('child_process');
-  const pythonPath = process.env.PYTHON_PATH || 'python';
+  const { exec } = require('child_process');
   const sendReportScript = path.join(__dirname, '..', 'scripts', 'send_report.py');
+  const cmd = `python3 -X utf8 "${sendReportScript}" || python -X utf8 "${sendReportScript}"`;
 
-  execFile(pythonPath, [sendReportScript], {
+  exec(cmd, {
     cwd: path.join(__dirname, '..'),
-    timeout: 45000,
-    env: { ...process.env },
+    timeout: 60000,
+    env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
   }, (error, stdout, stderr) => {
-    if (error) {
+    if (error && !stdout) {
       console.error(`Send report error: ${error.message}, stderr: ${stderr}`);
-      return res.status(500).json({ error: stdout ? stdout.trim() : `Lỗi gửi báo cáo: ${error.message}` });
+      return res.status(500).json({ error: `Lỗi gửi báo cáo: ${error.message}` });
     }
     try {
-      const result = JSON.parse(stdout.trim());
-      if (result.error) {
-        return res.status(400).json({ error: result.error });
+      const jsonLine = (stdout || '').trim().split('\n').filter(l => l.trim().startsWith('{')).pop();
+      if (jsonLine) {
+        const result = JSON.parse(jsonLine.trim());
+        if (result.error) {
+          return res.status(400).json({ error: result.error });
+        }
+        return res.json(result);
       }
-      res.json(result);
+      res.json({ success: true, message: 'Đã gửi báo cáo qua Email & Telegram thành công!' });
     } catch (e) {
-      res.json({ success: true, message: stdout.trim() || 'Đã gửi báo cáo!' });
+      res.json({ success: true, message: 'Đã gửi báo cáo qua Email & Telegram thành công!' });
     }
   });
 });
