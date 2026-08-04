@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Scratch / Probe scripts
+debug_*.py
+inspect_*.py
+test_*.py
+
+# Node.js
+node_modules/
+dashboard/node_modules/
+npm-debug.log*
+
+# Storage & Runtime Artifacts
+storage/screenshots/*.png
+storage/snapshots/history/*.json
+storage/ai_cache/*.json
+logs/
+*.log
+
+# Data volumes
+data/
+
+# Environment (chứa mật khẩu & API key)
+.env
+.env.local
+.env.*.local
+
+# IDE & OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

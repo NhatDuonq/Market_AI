@@ -1,0 +1,83 @@
+{
+  "updated_at": "2026-07-31 09:56:37",
+  "url": "https://inet.vn/domain/bang-gia-ten-mien",
+  "items": [
+    {
+      "tld": ".com",
+      "register_price": 249000,
+      "renew_price": 349000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".vn",
+      "register_price": 650000,
+      "renew_price": 480000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net",
+      "register_price": 289000,
+      "renew_price": 359000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org",
+      "register_price": 309000,
+      "renew_price": 369000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".info",
+      "register_price": 109000,
+      "renew_price": 389000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".co",
+      "register_price": 599000,
+      "renew_price": 699000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".io",
+      "register_price": 999000,
+      "renew_price": 1199000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".me",
+      "register_price": 399000,
+      "renew_price": 499000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ai",
+      "register_price": 1850000,
+      "renew_price": 1950000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tech",
+      "register_price": 89000,
+      "renew_price": 999000,
+      "transfer_price": 0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".online",
+      "register_price": 49000,
+      "renew_price": 799000,
+      "transfer_price": 0,
+      "promo_note": ""
+    }
+  ]
+}

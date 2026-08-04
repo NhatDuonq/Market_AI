@@ -1,0 +1,26 @@
+{
+  "updated_at": "2026-07-31 09:58:51",
+  "url": "https://vietnix.vn/vps-gia-re/",
+  "items": [
+    {
+      "plan_id": "vps-co-ban",
+      "name": "VPS Cơ Bản",
+      "monthly_price": 89000
+    },
+    {
+      "plan_id": "vps-pho-thong",
+      "name": "VPS Phổ Thông",
+      "monthly_price": 149000
+    },
+    {
+      "plan_id": "vps-cao-cap",
+      "name": "VPS Cao Cấp",
+      "monthly_price": 299000
+    },
+    {
+      "plan_id": "vps-pro",
+      "name": "VPS Pro",
+      "monthly_price": 500000
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "longvan": {
+    "name": "Long Vân (LongVan.net - Benchmark)",
+    "products": {
+      "domain": {
+        "name": "Tên miền",
+        "url": "https://longvan.net/domain#bang-gia-ten-mien",
+        "enabled": true
+      }
+    }
+  },
+  "matbao": {
+    "name": "Mắt Bão (MatBao.net)",
+    "products": {
+      "domain": {
+        "name": "Tên miền",
+        "url": "https://www.matbao.net/ten-mien/bang-gia-ten-mien",
+        "enabled": true
+      }
+    }
+  },
+  "pavietnam": {
+    "name": "PA Việt Nam (PAVietNam.vn)",
+    "products": {
+      "domain": {
+        "name": "Tên miền",
+        "url": "https://www.pavietnam.vn/vn/ten-mien-bang-gia.html",
+        "enabled": true
+      }
+    }
+  }
+}

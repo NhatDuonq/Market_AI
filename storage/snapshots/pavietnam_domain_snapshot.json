@@ -1,0 +1,4107 @@
+{
+  "updated_at": "2026-08-04 13:06:40",
+  "url": "https://www.pavietnam.vn/vn/ten-mien-bang-gia.html",
+  "items": [
+    {
+      "tld": ".vn",
+      "register_price": 450000.0,
+      "renew_price": 512000.0,
+      "transfer_price": 100150.0,
+      "promo_note": "",
+      "register_price_original": 700000.0
+    },
+    {
+      "tld": ".com.vn",
+      "register_price": 350000.0,
+      "renew_price": 412000.0,
+      "transfer_price": 0.0,
+      "promo_note": "",
+      "register_price_original": 600000.0
+    },
+    {
+      "tld": ".net.vn",
+      "register_price": 350000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 0.0,
+      "promo_note": "",
+      "register_price_original": 550000.0
+    },
+    {
+      "tld": ".edu.vn",
+      "register_price": 150000.0,
+      "renew_price": 208000.0,
+      "transfer_price": 0.0,
+      "promo_note": "",
+      "register_price_original": 350000.0
+    },
+    {
+      "tld": ".health.vn",
+      "register_price": 150000.0,
+      "renew_price": 208000.0,
+      "transfer_price": 0.0,
+      "promo_note": "",
+      "register_price_original": 350000.0
+    },
+    {
+      "tld": ".pro.vn",
+      "register_price": 60000.0,
+      "renew_price": 71600.0,
+      "transfer_price": 0.0,
+      "promo_note": "",
+      "register_price_original": 180000.0
+    },
+    {
+      "tld": ".id.vn",
+      "register_price": 60000.0,
+      "renew_price": 71600.0,
+      "transfer_price": 0.0,
+      "promo_note": "",
+      "register_price_original": 80000.0
+    },
+    {
+      "tld": ".name.vn",
+      "register_price": 30000.0,
+      "renew_price": 41600.0,
+      "transfer_price": 0.0,
+      "promo_note": "",
+      "register_price_original": 50000.0
+    },
+    {
+      "tld": ".com",
+      "register_price": 25000.0,
+      "renew_price": 429000.0,
+      "transfer_price": 322000.0,
+      "promo_note": "",
+      "register_price_original": 429000.0
+    },
+    {
+      "tld": ".net",
+      "register_price": 159000.0,
+      "renew_price": 439000.0,
+      "transfer_price": 358000.0,
+      "promo_note": "",
+      "register_price_original": 439000.0
+    },
+    {
+      "tld": ".asia",
+      "register_price": 49000.0,
+      "renew_price": 439000.0,
+      "transfer_price": 386000.0,
+      "promo_note": "",
+      "register_price_original": 439000.0
+    },
+    {
+      "tld": ".xyz",
+      "register_price": 39000.0,
+      "renew_price": 423000.0,
+      "transfer_price": 372000.0,
+      "promo_note": "",
+      "register_price_original": 423000.0
+    },
+    {
+      "tld": ".click",
+      "register_price": 55000.0,
+      "renew_price": 384000.0,
+      "transfer_price": 338000.0,
+      "promo_note": "",
+      "register_price_original": 384000.0
+    },
+    {
+      "tld": ".org",
+      "register_price": 189000.0,
+      "renew_price": 445000.0,
+      "transfer_price": 392000.0,
+      "promo_note": "",
+      "register_price_original": 445000.0
+    },
+    {
+      "tld": ".cloud",
+      "register_price": 44000.0,
+      "renew_price": 719000.0,
+      "transfer_price": 633000.0,
+      "promo_note": "",
+      "register_price_original": 719000.0
+    },
+    {
+      "tld": ".info",
+      "register_price": 138000.0,
+      "renew_price": 807000.0,
+      "transfer_price": 710000.0,
+      "promo_note": "",
+      "register_price_original": 807000.0
+    },
+    {
+      "tld": ".top",
+      "register_price": 48000.0,
+      "renew_price": 249000.0,
+      "transfer_price": 219000.0,
+      "promo_note": "",
+      "register_price_original": 249000.0
+    },
+    {
+      "tld": ".online",
+      "register_price": 39000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".site",
+      "register_price": 49000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".store",
+      "register_price": 39000.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": "",
+      "register_price_original": 1519.0
+    },
+    {
+      "tld": ".website",
+      "register_price": 49000.0,
+      "renew_price": 746000.0,
+      "transfer_price": 656000.0,
+      "promo_note": "",
+      "register_price_original": 746000.0
+    },
+    {
+      "tld": ".me",
+      "register_price": 723000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".work",
+      "register_price": 385000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".contact",
+      "register_price": 497000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".vip",
+      "register_price": 576000.0,
+      "renew_price": 576000.0,
+      "transfer_price": 507000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".club",
+      "register_price": 576000.0,
+      "renew_price": 576000.0,
+      "transfer_price": 507000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".pro",
+      "register_price": 129000.0,
+      "renew_price": 807000.0,
+      "transfer_price": 710000.0,
+      "promo_note": "",
+      "register_price_original": 807000.0
+    },
+    {
+      "tld": ".tv",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".link",
+      "register_price": 346000.0,
+      "renew_price": 346000.0,
+      "transfer_price": 304000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cam",
+      "register_price": 60000.0,
+      "renew_price": 538000.0,
+      "transfer_price": 473000.0,
+      "promo_note": "",
+      "register_price_original": 538000.0
+    },
+    {
+      "tld": ".co",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".today",
+      "register_price": 199000.0,
+      "renew_price": 796000.0,
+      "transfer_price": 700000.0,
+      "promo_note": "",
+      "register_price_original": 796000.0
+    },
+    {
+      "tld": ".company",
+      "register_price": 615000.0,
+      "renew_price": 615000.0,
+      "transfer_price": 541000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".host",
+      "register_price": 139000.0,
+      "renew_price": 2767000.0,
+      "transfer_price": 2435.0,
+      "promo_note": "",
+      "register_price_original": 2767.0
+    },
+    {
+      "tld": ".press",
+      "register_price": 139000.0,
+      "renew_price": 2172000.0,
+      "transfer_price": 1911.0,
+      "promo_note": "",
+      "register_price_original": 2172.0
+    },
+    {
+      "tld": ".space",
+      "register_price": 49000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": "",
+      "register_price_original": 904000.0
+    },
+    {
+      "tld": ".tech",
+      "register_price": 100000.0,
+      "renew_price": 1772000.0,
+      "transfer_price": 1559.0,
+      "promo_note": "",
+      "register_price_original": 1772.0
+    },
+    {
+      "tld": ".fun",
+      "register_price": 75000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".art",
+      "register_price": 79000.0,
+      "renew_price": 728000.0,
+      "transfer_price": 641000.0,
+      "promo_note": "",
+      "register_price_original": 728000.0
+    },
+    {
+      "tld": ".baby",
+      "register_price": 400000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".land",
+      "register_price": 479000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".icu",
+      "register_price": 99000.0,
+      "renew_price": 362000.0,
+      "transfer_price": 319000.0,
+      "promo_note": "",
+      "register_price_original": 362000.0
+    },
+    {
+      "tld": ".cyou",
+      "register_price": 79000.0,
+      "renew_price": 362000.0,
+      "transfer_price": 319000.0,
+      "promo_note": "",
+      "register_price_original": 362000.0
+    },
+    {
+      "tld": ".bond",
+      "register_price": 89000.0,
+      "renew_price": 362000.0,
+      "transfer_price": 319000.0,
+      "promo_note": "",
+      "register_price_original": 362000.0
+    },
+    {
+      "tld": ".one",
+      "register_price": 199000.0,
+      "renew_price": 730000.0,
+      "transfer_price": 642000.0,
+      "promo_note": "",
+      "register_price_original": 730000.0
+    },
+    {
+      "tld": ".study",
+      "register_price": 1153.0,
+      "renew_price": 1153000.0,
+      "transfer_price": 1015.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".music",
+      "register_price": 1338.0,
+      "renew_price": 1338000.0,
+      "transfer_price": 1177.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".monster",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".luxe",
+      "register_price": 576000.0,
+      "renew_price": 576000.0,
+      "transfer_price": 507000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".us",
+      "register_price": 294000.0,
+      "renew_price": 294000.0,
+      "transfer_price": 259000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".co.uk",
+      "register_price": 735000.0,
+      "renew_price": 736000.0,
+      "transfer_price": 647000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".biz",
+      "register_price": 690000.0,
+      "renew_price": 690000.0,
+      "transfer_price": 607000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".bz",
+      "register_price": 651000.0,
+      "renew_price": 651000.0,
+      "transfer_price": 573000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ws",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".agency",
+      "register_price": 299000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".bargains",
+      "register_price": 509000.0,
+      "renew_price": 832000.0,
+      "transfer_price": 732000.0,
+      "promo_note": "",
+      "register_price_original": 832000.0
+    },
+    {
+      "tld": ".cheap",
+      "register_price": 269000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".zone",
+      "register_price": 399000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".boutique",
+      "register_price": 199000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": "",
+      "register_price_original": 904000.0
+    },
+    {
+      "tld": ".pink",
+      "register_price": 399000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": "",
+      "register_price_original": 723000.0
+    },
+    {
+      "tld": ".blue",
+      "register_price": 509000.0,
+      "renew_price": 687000.0,
+      "transfer_price": 605000.0,
+      "promo_note": "",
+      "register_price_original": 687000.0
+    },
+    {
+      "tld": ".red",
+      "register_price": 329000.0,
+      "renew_price": 732000.0,
+      "transfer_price": 644000.0,
+      "promo_note": "",
+      "register_price_original": 732000.0
+    },
+    {
+      "tld": ".farm",
+      "register_price": 479000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".cc",
+      "register_price": 362000.0,
+      "renew_price": 362000.0,
+      "transfer_price": 319000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".viajes",
+      "register_price": 1266.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".limo",
+      "register_price": 1519.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".mobi",
+      "register_price": 239000.0,
+      "renew_price": 1446000.0,
+      "transfer_price": 1272.0,
+      "promo_note": "",
+      "register_price_original": 1446.0
+    },
+    {
+      "tld": ".codes",
+      "register_price": 319000.0,
+      "renew_price": 1989000.0,
+      "transfer_price": 1750.0,
+      "promo_note": "",
+      "register_price_original": 1989.0
+    },
+    {
+      "tld": ".partners",
+      "register_price": 669000.0,
+      "renew_price": 1989000.0,
+      "transfer_price": 1750.0,
+      "promo_note": "",
+      "register_price_original": 1989.0
+    },
+    {
+      "tld": ".ink",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".christmas",
+      "register_price": 1356.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".rest",
+      "register_price": 55000.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": "",
+      "register_price_original": 1130.0
+    },
+    {
+      "tld": ".services",
+      "register_price": 449000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".vision",
+      "register_price": 1266.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fish",
+      "register_price": 1229.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tools",
+      "register_price": 599000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".parts",
+      "register_price": 409000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".industries",
+      "register_price": 1266.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".pub",
+      "register_price": 1121.0,
+      "renew_price": 1121000.0,
+      "transfer_price": 986000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".community",
+      "register_price": 1266.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cleaning",
+      "register_price": 2097.0,
+      "renew_price": 2097000.0,
+      "transfer_price": 1845.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".catering",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cards",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".marketing",
+      "register_price": 299000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".holiday",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".buzz",
+      "register_price": 99000.0,
+      "renew_price": 1345000.0,
+      "transfer_price": 1184.0,
+      "promo_note": "",
+      "register_price_original": 1345.0
+    },
+    {
+      "tld": ".photo",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gift",
+      "register_price": 603000.0,
+      "renew_price": 603000.0,
+      "transfer_price": 531000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".guitars",
+      "register_price": 3390.0,
+      "renew_price": 3390000.0,
+      "transfer_price": 2983.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".pics",
+      "register_price": 45000.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": "",
+      "register_price_original": 1130.0
+    },
+    {
+      "tld": ".webcam",
+      "register_price": 375000.0,
+      "renew_price": 768000.0,
+      "transfer_price": 676000.0,
+      "promo_note": "",
+      "register_price_original": 768000.0
+    },
+    {
+      "tld": ".trade",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".bid",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".events",
+      "register_price": 479000.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": "",
+      "register_price_original": 1266.0
+    },
+    {
+      "tld": ".productions",
+      "register_price": 329000.0,
+      "renew_price": 1121000.0,
+      "transfer_price": 986000.0,
+      "promo_note": "",
+      "register_price_original": 1121.0
+    },
+    {
+      "tld": ".report",
+      "register_price": 329000.0,
+      "renew_price": 773000.0,
+      "transfer_price": 680000.0,
+      "promo_note": "",
+      "register_price_original": 773000.0
+    },
+    {
+      "tld": ".supply",
+      "register_price": 814000.0,
+      "renew_price": 814000.0,
+      "transfer_price": 716000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".supplies",
+      "register_price": 773000.0,
+      "renew_price": 773000.0,
+      "transfer_price": 680000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".futbol",
+      "register_price": 219000.0,
+      "renew_price": 588000.0,
+      "transfer_price": 517000.0,
+      "promo_note": "",
+      "register_price_original": 588000.0
+    },
+    {
+      "tld": ".reviews",
+      "register_price": 1736.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".wiki",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".eu",
+      "register_price": 480000.0,
+      "renew_price": 480000.0,
+      "transfer_price": 422000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".dance",
+      "register_price": 499000.0,
+      "renew_price": 759000.0,
+      "transfer_price": 668000.0,
+      "promo_note": "",
+      "register_price_original": 759000.0
+    },
+    {
+      "tld": ".exposed",
+      "register_price": 615000.0,
+      "renew_price": 615000.0,
+      "transfer_price": 541000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".democrat",
+      "register_price": 239000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": "",
+      "register_price_original": 904000.0
+    },
+    {
+      "tld": ".foundation",
+      "register_price": 382000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": "",
+      "register_price_original": 972000.0
+    },
+    {
+      "tld": ".ninja",
+      "register_price": 459000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".condos",
+      "register_price": 1627.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fo",
+      "register_price": 1701.0,
+      "renew_price": 1701000.0,
+      "transfer_price": 1497.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".saarland",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tel",
+      "register_price": 429000.0,
+      "renew_price": 429000.0,
+      "transfer_price": 378000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".in",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".name",
+      "register_price": 298000.0,
+      "renew_price": 298000.0,
+      "transfer_price": 262000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".maison",
+      "register_price": 1591.0,
+      "renew_price": 1591000.0,
+      "transfer_price": 1400.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.co",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.co",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tienda",
+      "register_price": 1663.0,
+      "renew_price": 1663000.0,
+      "transfer_price": 1463.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".flights",
+      "register_price": 1627.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tw",
+      "register_price": 1413.0,
+      "renew_price": 1414000.0,
+      "transfer_price": 1243.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.tw",
+      "register_price": 1413.0,
+      "renew_price": 1414000.0,
+      "transfer_price": 1243.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.tw",
+      "register_price": 1413.0,
+      "renew_price": 1414000.0,
+      "transfer_price": 1243.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org.tw",
+      "register_price": 1413.0,
+      "renew_price": 1414000.0,
+      "transfer_price": 1243.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".nom.co",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cruises",
+      "register_price": 1555.0,
+      "renew_price": 1555000.0,
+      "transfer_price": 1368.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".villas",
+      "register_price": 1663.0,
+      "renew_price": 1663000.0,
+      "transfer_price": 1463.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".properties",
+      "register_price": 569000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".social",
+      "register_price": 329000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".rentals",
+      "register_price": 359000.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": "",
+      "register_price_original": 1229.0
+    },
+    {
+      "tld": ".vacations",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".immobilien",
+      "register_price": 1049.0,
+      "renew_price": 1049000.0,
+      "transfer_price": 923000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".de",
+      "register_price": 510000.0,
+      "renew_price": 510000.0,
+      "transfer_price": 449000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".xxx",
+      "register_price": 5424.0,
+      "renew_price": 5424000.0,
+      "transfer_price": 4773.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".works",
+      "register_price": 269000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".expert",
+      "register_price": 379000.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": "",
+      "register_price_original": 1736.0
+    },
+    {
+      "tld": ".kiwi",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".watch",
+      "register_price": 199000.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": "",
+      "register_price_original": 1229.0
+    },
+    {
+      "tld": ".jp",
+      "register_price": 3108.0,
+      "renew_price": 3109000.0,
+      "transfer_price": 2735.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cool",
+      "register_price": 309000.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": "",
+      "register_price_original": 1266.0
+    },
+    {
+      "tld": ".build",
+      "register_price": 961000.0,
+      "renew_price": 962000.0,
+      "transfer_price": 846000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".pw",
+      "register_price": 814000.0,
+      "renew_price": 814000.0,
+      "transfer_price": 716000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cn",
+      "register_price": 859000.0,
+      "renew_price": 859000.0,
+      "transfer_price": 756000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".mn",
+      "register_price": 1446.0,
+      "renew_price": 1446000.0,
+      "transfer_price": 1272.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".photography",
+      "register_price": 429000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".technology",
+      "register_price": 379000.0,
+      "renew_price": 796000.0,
+      "transfer_price": 700000.0,
+      "promo_note": "",
+      "register_price_original": 796000.0
+    },
+    {
+      "tld": ".com.cn",
+      "register_price": 1424.0,
+      "renew_price": 1424000.0,
+      "transfer_price": 1253.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".markets",
+      "register_price": 239000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": "",
+      "register_price_original": 678000.0
+    },
+    {
+      "tld": ".guru",
+      "register_price": 159000.0,
+      "renew_price": 1193000.0,
+      "transfer_price": 1050.0,
+      "promo_note": "",
+      "register_price_original": 1193.0
+    },
+    {
+      "tld": ".photos",
+      "register_price": 459000.0,
+      "renew_price": 832000.0,
+      "transfer_price": 732000.0,
+      "promo_note": "",
+      "register_price_original": 832000.0
+    },
+    {
+      "tld": ".bike",
+      "register_price": 399000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".clothing",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".holdings",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".plumbing",
+      "register_price": 2025.0,
+      "renew_price": 2025000.0,
+      "transfer_price": 1782.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".singles",
+      "register_price": 299000.0,
+      "renew_price": 940000.0,
+      "transfer_price": 827000.0,
+      "promo_note": "",
+      "register_price_original": 940000.0
+    },
+    {
+      "tld": ".ventures",
+      "register_price": 599000.0,
+      "renew_price": 1663000.0,
+      "transfer_price": 1463.0,
+      "promo_note": "",
+      "register_price_original": 1663.0
+    },
+    {
+      "tld": ".camera",
+      "register_price": 1627.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".equipment",
+      "register_price": 796000.0,
+      "renew_price": 796000.0,
+      "transfer_price": 700000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".estate",
+      "register_price": 479000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".gallery",
+      "register_price": 796000.0,
+      "renew_price": 796000.0,
+      "transfer_price": 700000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".graphics",
+      "register_price": 651000.0,
+      "renew_price": 651000.0,
+      "transfer_price": 573000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".lighting",
+      "register_price": 732000.0,
+      "renew_price": 732000.0,
+      "transfer_price": 644000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".contractors",
+      "register_price": 976000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".construction",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".directory",
+      "register_price": 299000.0,
+      "renew_price": 759000.0,
+      "transfer_price": 668000.0,
+      "promo_note": "",
+      "register_price_original": 759000.0
+    },
+    {
+      "tld": ".kitchen",
+      "register_price": 379000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".diamonds",
+      "register_price": 1519.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".enterprises",
+      "register_price": 359000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": "",
+      "register_price_original": 976000.0
+    },
+    {
+      "tld": ".tips",
+      "register_price": 459000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".voyage",
+      "register_price": 1627.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".recipes",
+      "register_price": 319000.0,
+      "renew_price": 2170000.0,
+      "transfer_price": 1910.0,
+      "promo_note": "",
+      "register_price_original": 2170.0
+    },
+    {
+      "tld": ".careers",
+      "register_price": 1049.0,
+      "renew_price": 1989000.0,
+      "transfer_price": 1750.0,
+      "promo_note": "",
+      "register_price_original": 1989.0
+    },
+    {
+      "tld": ".tattoo",
+      "register_price": 1153.0,
+      "renew_price": 1153000.0,
+      "transfer_price": 1015.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".shoes",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".sexy",
+      "register_price": 1130.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".domains",
+      "register_price": 1193.0,
+      "renew_price": 1193000.0,
+      "transfer_price": 1050.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".systems",
+      "register_price": 569000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": "",
+      "register_price_original": 976000.0
+    },
+    {
+      "tld": ".management",
+      "register_price": 814000.0,
+      "renew_price": 814000.0,
+      "transfer_price": 716000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".center",
+      "register_price": 199000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": "",
+      "register_price_original": 904000.0
+    },
+    {
+      "tld": ".academy",
+      "register_price": 549000.0,
+      "renew_price": 1302000.0,
+      "transfer_price": 1146.0,
+      "promo_note": "",
+      "register_price_original": 1302.0
+    },
+    {
+      "tld": ".computer",
+      "register_price": 699000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".support",
+      "register_price": 759000.0,
+      "renew_price": 759000.0,
+      "transfer_price": 668000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".email",
+      "register_price": 239000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".solutions",
+      "register_price": 329000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".training",
+      "register_price": 479000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".builders",
+      "register_price": 976000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ca",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".repair",
+      "register_price": 399000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".camp",
+      "register_price": 1736.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".glass",
+      "register_price": 2025.0,
+      "renew_price": 2025000.0,
+      "transfer_price": 1782.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".education",
+      "register_price": 976000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".institute",
+      "register_price": 309000.0,
+      "renew_price": 949000.0,
+      "transfer_price": 835000.0,
+      "promo_note": "",
+      "register_price_original": 949000.0
+    },
+    {
+      "tld": ".ceo",
+      "register_price": 3074.0,
+      "renew_price": 3074000.0,
+      "transfer_price": 2705.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".menu",
+      "register_price": 1153.0,
+      "renew_price": 1153000.0,
+      "transfer_price": 1015.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".coffee",
+      "register_price": 509000.0,
+      "renew_price": 1193000.0,
+      "transfer_price": 1050.0,
+      "promo_note": "",
+      "register_price_original": 1193.0
+    },
+    {
+      "tld": ".florist",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".house",
+      "register_price": 599000.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": "",
+      "register_price_original": 1229.0
+    },
+    {
+      "tld": ".solar",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".international",
+      "register_price": 399000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".dating",
+      "register_price": 669000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".bar",
+      "register_price": 81000.0,
+      "renew_price": 1695000.0,
+      "transfer_price": 1492.0,
+      "promo_note": "",
+      "register_price_original": 1695.0
+    },
+    {
+      "tld": ".capital",
+      "register_price": 379000.0,
+      "renew_price": 1989000.0,
+      "transfer_price": 1750.0,
+      "promo_note": "",
+      "register_price_original": 1989.0
+    },
+    {
+      "tld": ".engineering",
+      "register_price": 549000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".exchange",
+      "register_price": 399000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".gripe",
+      "register_price": 832000.0,
+      "renew_price": 832000.0,
+      "transfer_price": 732000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".moda",
+      "register_price": 1157.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tax",
+      "register_price": 479000.0,
+      "renew_price": 1880000.0,
+      "transfer_price": 1654.0,
+      "promo_note": "",
+      "register_price_original": 1880.0
+    },
+    {
+      "tld": ".fund",
+      "register_price": 479000.0,
+      "renew_price": 1989000.0,
+      "transfer_price": 1750.0,
+      "promo_note": "",
+      "register_price_original": 1989.0
+    },
+    {
+      "tld": ".furniture",
+      "register_price": 949000.0,
+      "renew_price": 2893000.0,
+      "transfer_price": 2546.0,
+      "promo_note": "",
+      "register_price_original": 2893.0
+    },
+    {
+      "tld": ".claims",
+      "register_price": 569000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".finance",
+      "register_price": 669000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".insure",
+      "register_price": 2025.0,
+      "renew_price": 2025000.0,
+      "transfer_price": 1782.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".bayern",
+      "register_price": 1075.0,
+      "renew_price": 1075000.0,
+      "transfer_price": 946000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".lease",
+      "register_price": 1555.0,
+      "renew_price": 1555000.0,
+      "transfer_price": 1368.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".university",
+      "register_price": 1736.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".financial",
+      "register_price": 749000.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": "",
+      "register_price_original": 1627.0
+    },
+    {
+      "tld": ".healthcare",
+      "register_price": 2459.0,
+      "renew_price": 2459000.0,
+      "transfer_price": 2164.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".clinic",
+      "register_price": 589000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".dental",
+      "register_price": 2170.0,
+      "renew_price": 2170000.0,
+      "transfer_price": 1910.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".surgery",
+      "register_price": 1519.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cash",
+      "register_price": 399000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".discount",
+      "register_price": 832000.0,
+      "renew_price": 832000.0,
+      "transfer_price": 732000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fitness",
+      "register_price": 299000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".digital",
+      "register_price": 105000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".church",
+      "register_price": 459000.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": "",
+      "register_price_original": 1627.0
+    },
+    {
+      "tld": ".life",
+      "register_price": 99000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".guide",
+      "register_price": 1157.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".surf",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".beer",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".direct",
+      "register_price": 529000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".place",
+      "register_price": 692000.0,
+      "renew_price": 692000.0,
+      "transfer_price": 609000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".deals",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".associates",
+      "register_price": 549000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".media",
+      "register_price": 359000.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": "",
+      "register_price_original": 1266.0
+    },
+    {
+      "tld": ".kaufen",
+      "register_price": 832000.0,
+      "renew_price": 832000.0,
+      "transfer_price": 732000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".consulting",
+      "register_price": 699000.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": "",
+      "register_price_original": 1519.0
+    },
+    {
+      "tld": ".town",
+      "register_price": 299000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".toys",
+      "register_price": 569000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".nyc",
+      "register_price": 1130.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fail",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".limited",
+      "register_price": 1012.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".wtf",
+      "register_price": 249000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".care",
+      "register_price": 629000.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": "",
+      "register_price_original": 1229.0
+    },
+    {
+      "tld": ".cooking",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".country",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fishing",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".horse",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".rodeo",
+      "register_price": 385000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".vodka",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".republican",
+      "register_price": 239000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": "",
+      "register_price_original": 904000.0
+    },
+    {
+      "tld": ".vet",
+      "register_price": 1157.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".soy",
+      "register_price": 854000.0,
+      "renew_price": 854000.0,
+      "transfer_price": 752000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".investments",
+      "register_price": 409000.0,
+      "renew_price": 3616000.0,
+      "transfer_price": 3182.0,
+      "promo_note": "",
+      "register_price_original": 3616.0
+    },
+    {
+      "tld": ".credit",
+      "register_price": 429000.0,
+      "renew_price": 2893000.0,
+      "transfer_price": 2546.0,
+      "promo_note": "",
+      "register_price_original": 2893.0
+    },
+    {
+      "tld": ".accountants",
+      "register_price": 3254.0,
+      "renew_price": 3254000.0,
+      "transfer_price": 2864.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".loans",
+      "register_price": 709000.0,
+      "renew_price": 3254000.0,
+      "transfer_price": 2864.0,
+      "promo_note": "",
+      "register_price_original": 3254.0
+    },
+    {
+      "tld": ".schule",
+      "register_price": 796000.0,
+      "renew_price": 796000.0,
+      "transfer_price": 700000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gratis",
+      "register_price": 651000.0,
+      "renew_price": 651000.0,
+      "transfer_price": 573000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".city",
+      "register_price": 239000.0,
+      "renew_price": 796000.0,
+      "transfer_price": 700000.0,
+      "promo_note": "",
+      "register_price_original": 796000.0
+    },
+    {
+      "tld": ".reisen",
+      "register_price": 651000.0,
+      "renew_price": 651000.0,
+      "transfer_price": 573000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".hiphop",
+      "register_price": 3390.0,
+      "renew_price": 3390000.0,
+      "transfer_price": 2983.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".creditcard",
+      "register_price": 4520.0,
+      "renew_price": 4520000.0,
+      "transfer_price": 3978.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".global",
+      "register_price": 1390.0,
+      "renew_price": 2712000.0,
+      "transfer_price": 2387.0,
+      "promo_note": "",
+      "register_price_original": 2712.0
+    },
+    {
+      "tld": ".eco",
+      "register_price": 2018.0,
+      "renew_price": 3074000.0,
+      "transfer_price": 2705.0,
+      "promo_note": "",
+      "register_price_original": 3074.0
+    },
+    {
+      "tld": ".tokyo",
+      "register_price": 633000.0,
+      "renew_price": 633000.0,
+      "transfer_price": 557000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".yokohama",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".pictures",
+      "register_price": 488000.0,
+      "renew_price": 488000.0,
+      "transfer_price": 429000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".rocks",
+      "register_price": 329000.0,
+      "renew_price": 692000.0,
+      "transfer_price": 609000.0,
+      "promo_note": "",
+      "register_price_original": 692000.0
+    },
+    {
+      "tld": ".audio",
+      "register_price": 3390.0,
+      "renew_price": 3390000.0,
+      "transfer_price": 2983.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".juegos",
+      "register_price": 10170.0,
+      "renew_price": 10170000.0,
+      "transfer_price": 8950.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".actor",
+      "register_price": 509000.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": "",
+      "register_price_original": 1229.0
+    },
+    {
+      "tld": ".haus",
+      "register_price": 429000.0,
+      "renew_price": 940000.0,
+      "transfer_price": 827000.0,
+      "promo_note": "",
+      "register_price_original": 940000.0
+    },
+    {
+      "tld": ".scot",
+      "register_price": 1514.0,
+      "renew_price": 1514000.0,
+      "transfer_price": 1332.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".london",
+      "register_price": 1266.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".vegas",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".network",
+      "register_price": 976000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".sg",
+      "register_price": 1836.0,
+      "renew_price": 1836000.0,
+      "transfer_price": 1616.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".sex",
+      "register_price": 5424.0,
+      "renew_price": 5424000.0,
+      "transfer_price": 4773.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.sg",
+      "register_price": 1836.0,
+      "renew_price": 1836000.0,
+      "transfer_price": 1616.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.au",
+      "register_price": 972000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.au",
+      "register_price": 972000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".io",
+      "register_price": 1249.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".cymru",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".wales",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".business",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".rip",
+      "register_price": 732000.0,
+      "renew_price": 732000.0,
+      "transfer_price": 644000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".football",
+      "register_price": 723000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".run",
+      "register_price": 199000.0,
+      "renew_price": 759000.0,
+      "transfer_price": 668000.0,
+      "promo_note": "",
+      "register_price_original": 759000.0
+    },
+    {
+      "tld": ".diet",
+      "register_price": 3390.0,
+      "renew_price": 3390000.0,
+      "transfer_price": 2983.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".help",
+      "register_price": 81000.0,
+      "renew_price": 962000.0,
+      "transfer_price": 846000.0,
+      "promo_note": "",
+      "register_price_original": 961000.0
+    },
+    {
+      "tld": ".band",
+      "register_price": 609000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".video",
+      "register_price": 429000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".news",
+      "register_price": 449000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": "",
+      "register_price_original": 904000.0
+    },
+    {
+      "tld": ".world",
+      "register_price": 199000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".how",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gifts",
+      "register_price": 1012.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".sarl",
+      "register_price": 832000.0,
+      "renew_price": 832000.0,
+      "transfer_price": 732000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".market",
+      "register_price": 1229.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".engineer",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".hosting",
+      "register_price": 10509.0,
+      "renew_price": 10509000.0,
+      "transfer_price": 9248.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".property",
+      "register_price": 539000.0,
+      "renew_price": 3390000.0,
+      "transfer_price": 2983.0,
+      "promo_note": "",
+      "register_price_original": 3390.0
+    },
+    {
+      "tld": ".casa",
+      "register_price": 290000.0,
+      "renew_price": 290000.0,
+      "transfer_price": 255000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".yoga",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".immo",
+      "register_price": 976000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".auction",
+      "register_price": 1012.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".software",
+      "register_price": 599000.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": "",
+      "register_price_original": 1157.0
+    },
+    {
+      "tld": ".rehab",
+      "register_price": 1012.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gives",
+      "register_price": 382000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": "",
+      "register_price_original": 972000.0
+    },
+    {
+      "tld": ".forsale",
+      "register_price": 509000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".money",
+      "register_price": 509000.0,
+      "renew_price": 976000.0,
+      "transfer_price": 859000.0,
+      "promo_note": "",
+      "register_price_original": 976000.0
+    },
+    {
+      "tld": ".party",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".science",
+      "register_price": 385000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".flowers",
+      "register_price": 3390.0,
+      "renew_price": 3390000.0,
+      "transfer_price": 2983.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".chat",
+      "register_price": 359000.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": "",
+      "register_price_original": 1266.0
+    },
+    {
+      "tld": ".style",
+      "register_price": 509000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".school",
+      "register_price": 1012.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".wedding",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fashion",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".garden",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fit",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".plus",
+      "register_price": 499000.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": "",
+      "register_price_original": 1519.0
+    },
+    {
+      "tld": ".sale",
+      "register_price": 249000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".army",
+      "register_price": 549000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".navy",
+      "register_price": 1157.0,
+      "renew_price": 1157000.0,
+      "transfer_price": 1018.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".airforce",
+      "register_price": 2893.0,
+      "renew_price": 2893000.0,
+      "transfer_price": 2546.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".express",
+      "register_price": 379000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".cafe",
+      "register_price": 269000.0,
+      "renew_price": 1446000.0,
+      "transfer_price": 1272.0,
+      "promo_note": "",
+      "register_price_original": 1446.0
+    },
+    {
+      "tld": ".team",
+      "register_price": 239000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".show",
+      "register_price": 569000.0,
+      "renew_price": 1229000.0,
+      "transfer_price": 1082.0,
+      "promo_note": "",
+      "register_price_original": 1229.0
+    },
+    {
+      "tld": ".dog",
+      "register_price": 269000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".date",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".faith",
+      "register_price": 385000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".review",
+      "register_price": 385000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".love",
+      "register_price": 135000.0,
+      "renew_price": 994000.0,
+      "transfer_price": 875000.0,
+      "promo_note": "",
+      "register_price_original": 994000.0
+    },
+    {
+      "tld": ".accountant",
+      "register_price": 770000.0,
+      "renew_price": 770000.0,
+      "transfer_price": 678000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".download",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".loan",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".racing",
+      "register_price": 385000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".win",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".lol",
+      "register_price": 45000.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": "",
+      "register_price_original": 1130.0
+    },
+    {
+      "tld": ".quebec",
+      "register_price": 1356.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".attorney",
+      "register_price": 1736.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".lawyer",
+      "register_price": 1736.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".dentist",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".irish",
+      "register_price": 239000.0,
+      "renew_price": 692000.0,
+      "transfer_price": 609000.0,
+      "promo_note": "",
+      "register_price_original": 692000.0
+    },
+    {
+      "tld": ".mortgage",
+      "register_price": 1736.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".degree",
+      "register_price": 1446.0,
+      "renew_price": 1446000.0,
+      "transfer_price": 1272.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".restaurant",
+      "register_price": 669000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".ltd",
+      "register_price": 299000.0,
+      "renew_price": 868000.0,
+      "transfer_price": 764000.0,
+      "promo_note": "",
+      "register_price_original": 868000.0
+    },
+    {
+      "tld": ".delivery",
+      "register_price": 239000.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": "",
+      "register_price_original": 1736.0
+    },
+    {
+      "tld": ".pizza",
+      "register_price": 549000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".coach",
+      "register_price": 599000.0,
+      "renew_price": 2170000.0,
+      "transfer_price": 1910.0,
+      "promo_note": "",
+      "register_price_original": 2170.0
+    },
+    {
+      "tld": ".memorial",
+      "register_price": 1446.0,
+      "renew_price": 1446000.0,
+      "transfer_price": 1272.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".legal",
+      "register_price": 1989.0,
+      "renew_price": 1989000.0,
+      "transfer_price": 1750.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".poker",
+      "register_price": 379000.0,
+      "renew_price": 1880000.0,
+      "transfer_price": 1654.0,
+      "promo_note": "",
+      "register_price_original": 1880.0
+    },
+    {
+      "tld": ".design",
+      "register_price": 1730.0,
+      "renew_price": 1730000.0,
+      "transfer_price": 1522.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".apartments",
+      "register_price": 1591.0,
+      "renew_price": 1591000.0,
+      "transfer_price": 1400.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".bingo",
+      "register_price": 1483.0,
+      "renew_price": 1483000.0,
+      "transfer_price": 1305.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tennis",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".golf",
+      "register_price": 269000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".tours",
+      "register_price": 349000.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": "",
+      "register_price_original": 1736.0
+    },
+    {
+      "tld": ".jewelry",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".theater",
+      "register_price": 1808.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".taxi",
+      "register_price": 379000.0,
+      "renew_price": 1736000.0,
+      "transfer_price": 1528.0,
+      "promo_note": "",
+      "register_price_original": 1736.0
+    },
+    {
+      "tld": ".hockey",
+      "register_price": 1663.0,
+      "renew_price": 1663000.0,
+      "transfer_price": 1463.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".paris",
+      "register_price": 1880.0,
+      "renew_price": 1880000.0,
+      "transfer_price": 1654.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cricket",
+      "register_price": 770000.0,
+      "renew_price": 770000.0,
+      "transfer_price": 678000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".green",
+      "register_price": 499000.0,
+      "renew_price": 2242000.0,
+      "transfer_price": 1973.0,
+      "promo_note": "",
+      "register_price_original": 2242.0
+    },
+    {
+      "tld": ".bio",
+      "register_price": 349000.0,
+      "renew_price": 2025000.0,
+      "transfer_price": 1782.0,
+      "promo_note": "",
+      "register_price_original": 2025.0
+    },
+    {
+      "tld": ".physio",
+      "register_price": 2676.0,
+      "renew_price": 2676000.0,
+      "transfer_price": 2355.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".best",
+      "register_price": 690000.0,
+      "renew_price": 690000.0,
+      "transfer_price": 607000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".energy",
+      "register_price": 589000.0,
+      "renew_price": 3254000.0,
+      "transfer_price": 2864.0,
+      "promo_note": "",
+      "register_price_original": 3254.0
+    },
+    {
+      "tld": ".tires",
+      "register_price": 2531.0,
+      "renew_price": 2531000.0,
+      "transfer_price": 2227.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".adult",
+      "register_price": 5424.0,
+      "renew_price": 5424000.0,
+      "transfer_price": 4773.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".porn",
+      "register_price": 5424.0,
+      "renew_price": 5424000.0,
+      "transfer_price": 4773.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".archi",
+      "register_price": 629000.0,
+      "renew_price": 2893000.0,
+      "transfer_price": 2546.0,
+      "promo_note": "",
+      "register_price_original": 2893.0
+    },
+    {
+      "tld": ".gold",
+      "register_price": 349000.0,
+      "renew_price": 2893000.0,
+      "transfer_price": 2546.0,
+      "promo_note": "",
+      "register_price_original": 2893.0
+    },
+    {
+      "tld": ".reise",
+      "register_price": 2712.0,
+      "renew_price": 2712000.0,
+      "transfer_price": 2387.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".casino",
+      "register_price": 479000.0,
+      "renew_price": 5650000.0,
+      "transfer_price": 4972.0,
+      "promo_note": "",
+      "register_price_original": 5650.0
+    },
+    {
+      "tld": ".sucks",
+      "register_price": 9323.0,
+      "renew_price": 9324000.0,
+      "transfer_price": 8204.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".live",
+      "register_price": 105000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": "",
+      "register_price_original": 904000.0
+    },
+    {
+      "tld": ".college",
+      "register_price": 400000.0,
+      "renew_price": 1921000.0,
+      "transfer_price": 1690.0,
+      "promo_note": "",
+      "register_price_original": 1921.0
+    },
+    {
+      "tld": ".fans",
+      "register_price": 344000.0,
+      "renew_price": 344000.0,
+      "transfer_price": 303000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".rent",
+      "register_price": 400000.0,
+      "renew_price": 1921000.0,
+      "transfer_price": 1690.0,
+      "promo_note": "",
+      "register_price_original": 1921.0
+    },
+    {
+      "tld": ".wine",
+      "register_price": 1663.0,
+      "renew_price": 1663000.0,
+      "transfer_price": 1463.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".vin",
+      "register_price": 309000.0,
+      "renew_price": 1663000.0,
+      "transfer_price": 1463.0,
+      "promo_note": "",
+      "register_price_original": 1663.0
+    },
+    {
+      "tld": ".salon",
+      "register_price": 1591.0,
+      "renew_price": 1591000.0,
+      "transfer_price": 1400.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".feedback",
+      "register_price": 10170.0,
+      "renew_price": 10170000.0,
+      "transfer_price": 8950.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".tickets",
+      "register_price": 11865.0,
+      "renew_price": 11865000.0,
+      "transfer_price": 10441.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".game",
+      "register_price": 7500.0,
+      "renew_price": 10509000.0,
+      "transfer_price": 9248.0,
+      "promo_note": "",
+      "register_price_original": 10509.0
+    },
+    {
+      "tld": ".mom",
+      "register_price": 45000.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": "",
+      "register_price_original": 1130.0
+    },
+    {
+      "tld": ".theatre",
+      "register_price": 16950.0,
+      "renew_price": 16950000.0,
+      "transfer_price": 14916.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".car",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".auto",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".games",
+      "register_price": 940000.0,
+      "renew_price": 940000.0,
+      "transfer_price": 827000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".family",
+      "register_price": 1085.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".hiv",
+      "register_price": 6068.0,
+      "renew_price": 6068000.0,
+      "transfer_price": 5340.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".protection",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".reit",
+      "register_price": 33900.0,
+      "renew_price": 33900000.0,
+      "transfer_price": 29832.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".security",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cars",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".group",
+      "register_price": 723000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".observer",
+      "register_price": 407000.0,
+      "renew_price": 407000.0,
+      "transfer_price": 358000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".realty",
+      "register_price": 539000.0,
+      "renew_price": 9492000.0,
+      "transfer_price": 8353.0,
+      "promo_note": "",
+      "register_price_original": 9492.0
+    },
+    {
+      "tld": ".fm",
+      "register_price": 3842.0,
+      "renew_price": 3842000.0,
+      "transfer_price": 3381.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".men",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".stream",
+      "register_price": 150000.0,
+      "renew_price": 385000.0,
+      "transfer_price": 339000.0,
+      "promo_note": "",
+      "register_price_original": 385000.0
+    },
+    {
+      "tld": ".blog",
+      "register_price": 108000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": "",
+      "register_price_original": 723000.0
+    },
+    {
+      "tld": ".uk",
+      "register_price": 537000.0,
+      "renew_price": 537000.0,
+      "transfer_price": 473000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".eu.com",
+      "register_price": 667000.0,
+      "renew_price": 667000.0,
+      "transfer_price": 587000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cab",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".charity",
+      "register_price": 382000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": "",
+      "register_price_original": 972000.0
+    },
+    {
+      "tld": ".coupons",
+      "register_price": 199000.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": "",
+      "register_price_original": 1519.0
+    },
+    {
+      "tld": ".doctor",
+      "register_price": 499000.0,
+      "renew_price": 3254000.0,
+      "transfer_price": 2864.0,
+      "promo_note": "",
+      "register_price_original": 3254.0
+    },
+    {
+      "tld": ".fyi",
+      "register_price": 542000.0,
+      "renew_price": 542000.0,
+      "transfer_price": 477000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gmbh",
+      "register_price": 1266.0,
+      "renew_price": 1266000.0,
+      "transfer_price": 1114.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".hospital",
+      "register_price": 1591.0,
+      "renew_price": 1591000.0,
+      "transfer_price": 1400.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".jetzt",
+      "register_price": 732000.0,
+      "renew_price": 732000.0,
+      "transfer_price": 644000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".mba",
+      "register_price": 499000.0,
+      "renew_price": 1085000.0,
+      "transfer_price": 955000.0,
+      "promo_note": "",
+      "register_price_original": 1085.0
+    },
+    {
+      "tld": ".movie",
+      "register_price": 1799.0,
+      "renew_price": 9763000.0,
+      "transfer_price": 8591.0,
+      "promo_note": "",
+      "register_price_original": 9763.0
+    },
+    {
+      "tld": ".shopping",
+      "register_price": 832000.0,
+      "renew_price": 832000.0,
+      "transfer_price": 732000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".soccer",
+      "register_price": 814000.0,
+      "renew_price": 814000.0,
+      "transfer_price": 716000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".studio",
+      "register_price": 549000.0,
+      "renew_price": 1121000.0,
+      "transfer_price": 986000.0,
+      "promo_note": "",
+      "register_price_original": 1121.0
+    },
+    {
+      "tld": ".travel",
+      "register_price": 949000.0,
+      "renew_price": 4158000.0,
+      "transfer_price": 3659.0,
+      "promo_note": "",
+      "register_price_original": 4158.0
+    },
+    {
+      "tld": ".co.com",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".br.com",
+      "register_price": 1492.0,
+      "renew_price": 1492000.0,
+      "transfer_price": 1313.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cn.com",
+      "register_price": 1356.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ru.com",
+      "register_price": 2667.0,
+      "renew_price": 2667000.0,
+      "transfer_price": 2347.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".sa.com",
+      "register_price": 6735.0,
+      "renew_price": 6735000.0,
+      "transfer_price": 5927.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".jpn.com",
+      "register_price": 1356.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".za.com",
+      "register_price": 6735.0,
+      "renew_price": 6735000.0,
+      "transfer_price": 5927.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gb.net",
+      "register_price": 302000.0,
+      "renew_price": 302000.0,
+      "transfer_price": 266000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".uk.com",
+      "register_price": 983000.0,
+      "renew_price": 983000.0,
+      "transfer_price": 865000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".uk.net",
+      "register_price": 983000.0,
+      "renew_price": 983000.0,
+      "transfer_price": 865000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".us.com",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ae.org",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".us.org",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".se.net",
+      "register_price": 1227.0,
+      "renew_price": 1227000.0,
+      "transfer_price": 1080.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gr.com",
+      "register_price": 560000.0,
+      "renew_price": 560000.0,
+      "transfer_price": 493000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".hu.net",
+      "register_price": 1227.0,
+      "renew_price": 1227000.0,
+      "transfer_price": 1080.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".de.com",
+      "register_price": 667000.0,
+      "renew_price": 667000.0,
+      "transfer_price": 587000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.de",
+      "register_price": 192000.0,
+      "renew_price": 192000.0,
+      "transfer_price": 169000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".jp.net",
+      "register_price": 316000.0,
+      "renew_price": 316000.0,
+      "transfer_price": 278000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".in.net",
+      "register_price": 271000.0,
+      "renew_price": 271000.0,
+      "transfer_price": 238000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".mex.com",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.se",
+      "register_price": 371000.0,
+      "renew_price": 371000.0,
+      "transfer_price": 326000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".radio.fm",
+      "register_price": 542000.0,
+      "renew_price": 542000.0,
+      "transfer_price": 477000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".radio.am",
+      "register_price": 542000.0,
+      "renew_price": 542000.0,
+      "transfer_price": 477000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ooo",
+      "register_price": 723000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".storage",
+      "register_price": 17515.0,
+      "renew_price": 17515000.0,
+      "transfer_price": 15413.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".miami",
+      "register_price": 692000.0,
+      "renew_price": 692000.0,
+      "transfer_price": 609000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".law",
+      "register_price": 3075.0,
+      "renew_price": 3075000.0,
+      "transfer_price": 2706.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".abogado",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".boston",
+      "register_price": 690000.0,
+      "renew_price": 690000.0,
+      "transfer_price": 607000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gd",
+      "register_price": 1130.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".vg",
+      "register_price": 1130.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".fan",
+      "register_price": 1519.0,
+      "renew_price": 1519000.0,
+      "transfer_price": 1337.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ac",
+      "register_price": 1049.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": "",
+      "register_price_original": 1627.0
+    },
+    {
+      "tld": ".bet",
+      "register_price": 409000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": "",
+      "register_price_original": 723000.0
+    },
+    {
+      "tld": ".pet",
+      "register_price": 409000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": "",
+      "register_price_original": 723000.0
+    },
+    {
+      "tld": ".promo",
+      "register_price": 409000.0,
+      "renew_price": 773000.0,
+      "transfer_price": 680000.0,
+      "promo_note": "",
+      "register_price_original": 773000.0
+    },
+    {
+      "tld": ".llc",
+      "register_price": 429000.0,
+      "renew_price": 1193000.0,
+      "transfer_price": 1050.0,
+      "promo_note": "",
+      "register_price_original": 1193.0
+    },
+    {
+      "tld": ".ski",
+      "register_price": 849000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".lotto",
+      "register_price": 5399.0,
+      "renew_price": 52432000.0,
+      "transfer_price": 46140.0,
+      "promo_note": "",
+      "register_price_original": 52432.0
+    },
+    {
+      "tld": ".organic",
+      "register_price": 599000.0,
+      "renew_price": 2387000.0,
+      "transfer_price": 2101.0,
+      "promo_note": "",
+      "register_price_original": 2387.0
+    },
+    {
+      "tld": ".kim",
+      "register_price": 399000.0,
+      "renew_price": 732000.0,
+      "transfer_price": 644000.0,
+      "promo_note": "",
+      "register_price_original": 732000.0
+    },
+    {
+      "tld": ".black",
+      "register_price": 799000.0,
+      "renew_price": 1808000.0,
+      "transfer_price": 1591.0,
+      "promo_note": "",
+      "register_price_original": 1808.0
+    },
+    {
+      "tld": ".lgbt",
+      "register_price": 499000.0,
+      "renew_price": 2242000.0,
+      "transfer_price": 1973.0,
+      "promo_note": "",
+      "register_price_original": 2242.0
+    },
+    {
+      "tld": ".shiksha",
+      "register_price": 459000.0,
+      "renew_price": 1446000.0,
+      "transfer_price": 1272.0,
+      "promo_note": "",
+      "register_price_original": 1446.0
+    },
+    {
+      "tld": ".app",
+      "register_price": 570000.0,
+      "renew_price": 570000.0,
+      "transfer_price": 502000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".voto",
+      "register_price": 799000.0,
+      "renew_price": 2531000.0,
+      "transfer_price": 2227.0,
+      "promo_note": "",
+      "register_price_original": 2531.0
+    },
+    {
+      "tld": ".vote",
+      "register_price": 1079.0,
+      "renew_price": 2531000.0,
+      "transfer_price": 2227.0,
+      "promo_note": "",
+      "register_price_original": 2531.0
+    },
+    {
+      "tld": ".motorcycles",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".boats",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".autos",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".yachts",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".homes",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".gay",
+      "register_price": 1153.0,
+      "renew_price": 1153000.0,
+      "transfer_price": 1015.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".forum",
+      "register_price": 135000.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": "",
+      "register_price_original": 1356.0
+    },
+    {
+      "tld": ".beauty",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".hair",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".makeup",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".quest",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".skin",
+      "register_price": 45000.0,
+      "renew_price": 497000.0,
+      "transfer_price": 437000.0,
+      "promo_note": "",
+      "register_price_original": 497000.0
+    },
+    {
+      "tld": ".luxury",
+      "register_price": 1017.0,
+      "renew_price": 1017000.0,
+      "transfer_price": 895000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".coop",
+      "register_price": 2486.0,
+      "renew_price": 2486000.0,
+      "transfer_price": 2188.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".uno",
+      "register_price": 723000.0,
+      "renew_price": 723000.0,
+      "transfer_price": 636000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".cfd",
+      "register_price": 79000.0,
+      "renew_price": 475000.0,
+      "transfer_price": 418000.0,
+      "promo_note": "",
+      "register_price_original": 475000.0
+    },
+    {
+      "tld": ".it",
+      "register_price": 1017.0,
+      "renew_price": 1017000.0,
+      "transfer_price": 895000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".dev",
+      "register_price": 570000.0,
+      "renew_price": 570000.0,
+      "transfer_price": 502000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".qpon",
+      "register_price": 79000.0,
+      "renew_price": 902000.0,
+      "transfer_price": 794000.0,
+      "promo_note": "",
+      "register_price_original": 902000.0
+    },
+    {
+      "tld": ".spa",
+      "register_price": 814000.0,
+      "renew_price": 814000.0,
+      "transfer_price": 716000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".sh",
+      "register_price": 1290.0,
+      "renew_price": 1627000.0,
+      "transfer_price": 1432.0,
+      "promo_note": "",
+      "register_price_original": 1627.0
+    },
+    {
+      "tld": ".sbs",
+      "register_price": 79000.0,
+      "renew_price": 271000.0,
+      "transfer_price": 238000.0,
+      "promo_note": "",
+      "register_price_original": 271000.0
+    },
+    {
+      "tld": ".kids",
+      "register_price": 389000.0,
+      "renew_price": 732000.0,
+      "transfer_price": 644000.0,
+      "promo_note": "",
+      "register_price_original": 732000.0
+    },
+    {
+      "tld": ".giving",
+      "register_price": 382000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": "",
+      "register_price_original": 972000.0
+    },
+    {
+      "tld": ".lat",
+      "register_price": 45000.0,
+      "renew_price": 1130000.0,
+      "transfer_price": 994000.0,
+      "promo_note": "",
+      "register_price_original": 1130.0
+    },
+    {
+      "tld": ".dealer",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".inc",
+      "register_price": 67800.0,
+      "renew_price": 67800000.0,
+      "transfer_price": 59664.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".broker",
+      "register_price": 429000.0,
+      "renew_price": 1012000.0,
+      "transfer_price": 891000.0,
+      "promo_note": "",
+      "register_price_original": 1012.0
+    },
+    {
+      "tld": ".forex",
+      "register_price": 529000.0,
+      "renew_price": 2893000.0,
+      "transfer_price": 2546.0,
+      "promo_note": "",
+      "register_price_original": 2893.0
+    },
+    {
+      "tld": ".trading",
+      "register_price": 651000.0,
+      "renew_price": 651000.0,
+      "transfer_price": 573000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.sg",
+      "register_price": 1836.0,
+      "renew_price": 1836000.0,
+      "transfer_price": 1616.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org.au",
+      "register_price": 972000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".au",
+      "register_price": 972000.0,
+      "renew_price": 972000.0,
+      "transfer_price": 855000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org.sg",
+      "register_price": 1836.0,
+      "renew_price": 1836000.0,
+      "transfer_price": 1616.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ai",
+      "register_price": 3427.0,
+      "renew_price": 3427000.0,
+      "transfer_price": 8016.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.ai",
+      "register_price": 3427.0,
+      "renew_price": 3427000.0,
+      "transfer_price": 3016.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.ai",
+      "register_price": 3427.0,
+      "renew_price": 3427000.0,
+      "transfer_price": 3016.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org.ai",
+      "register_price": 3427.0,
+      "renew_price": 3427000.0,
+      "transfer_price": 3016.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.cn",
+      "register_price": 1424.0,
+      "renew_price": 1424000.0,
+      "transfer_price": 1253.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org.cn",
+      "register_price": 1424.0,
+      "renew_price": 1424000.0,
+      "transfer_price": 1253.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".lc",
+      "register_price": 814000.0,
+      "renew_price": 814000.0,
+      "transfer_price": 716000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org.uk",
+      "register_price": 735000.0,
+      "renew_price": 736000.0,
+      "transfer_price": 647000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".me.uk",
+      "register_price": 735000.0,
+      "renew_price": 736000.0,
+      "transfer_price": 647000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".id",
+      "register_price": 1153.0,
+      "renew_price": 1153000.0,
+      "transfer_price": 1015.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".hk",
+      "register_price": 1695.0,
+      "renew_price": 1695000.0,
+      "transfer_price": 1492.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".day",
+      "register_price": 520000.0,
+      "renew_price": 520000.0,
+      "transfer_price": 458000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".boo",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".page",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".rsvp",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".dad",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".foo",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ing",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".meme",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".mov",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".nexus",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".zip",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".esq",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".phd",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".prof",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".pr",
+      "register_price": 36160.0,
+      "renew_price": 36160000.0,
+      "transfer_price": 31821.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".sc",
+      "register_price": 2893.0,
+      "renew_price": 2893000.0,
+      "transfer_price": 2546.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".vc",
+      "register_price": 904000.0,
+      "renew_price": 904000.0,
+      "transfer_price": 796000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".watches",
+      "register_price": 2399.0,
+      "renew_price": 9040000.0,
+      "transfer_price": 7955.0,
+      "promo_note": "",
+      "register_price_original": 9040.0
+    },
+    {
+      "tld": ".co.in",
+      "register_price": 678000.0,
+      "renew_price": 678000.0,
+      "transfer_price": 597000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".compare",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".select",
+      "register_price": 960000.0,
+      "renew_price": 960000.0,
+      "transfer_price": 845000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".lifestyle",
+      "register_price": 69000.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": "",
+      "register_price_original": 1356.0
+    },
+    {
+      "tld": ".living",
+      "register_price": 69000.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": "",
+      "register_price_original": 1356.0
+    },
+    {
+      "tld": ".diy",
+      "register_price": 69000.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": "",
+      "register_price_original": 1356.0
+    },
+    {
+      "tld": ".food",
+      "register_price": 69000.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": "",
+      "register_price_original": 1356.0
+    },
+    {
+      "tld": ".it.com",
+      "register_price": 1300.0,
+      "renew_price": 1300000.0,
+      "transfer_price": 1144.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".off.ai",
+      "register_price": 3427.0,
+      "renew_price": 3427000.0,
+      "transfer_price": 3016.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".courses",
+      "register_price": 1153.0,
+      "renew_price": 1153000.0,
+      "transfer_price": 1015.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".health",
+      "register_price": 2305.0,
+      "renew_price": 2305000.0,
+      "transfer_price": 2028.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".new",
+      "register_price": 13560.0,
+      "renew_price": 13560000.0,
+      "transfer_price": 11933.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".channel",
+      "register_price": 452000.0,
+      "renew_price": 452000.0,
+      "transfer_price": 398000.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".co.id",
+      "register_price": 1695.0,
+      "renew_price": 1695000.0,
+      "transfer_price": 1492.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.hk",
+      "register_price": 1695.0,
+      "renew_price": 1695000.0,
+      "transfer_price": 1492.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.my",
+      "register_price": 1356.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".org.my",
+      "register_price": 1356.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".biz.my",
+      "register_price": 1356.0,
+      "renew_price": 1356000.0,
+      "transfer_price": 1193.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.my",
+      "register_price": 1311.0,
+      "renew_price": 1311000.0,
+      "transfer_price": 1154.0,
+      "promo_note": ""
+    }
+  ]
+}

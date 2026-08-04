@@ -1,0 +1,30 @@
+{
+  "updated_at": "2026-07-31 09:29:32",
+  "url": "https://www.matbao.net/cloud-vps.html",
+  "items": [
+    {
+      "plan_id": "vps_entry",
+      "name": "Cloud VPS Entry",
+      "v_cpu": "2 Core",
+      "ram_gb": "2 GB",
+      "ssd_gb": "40 GB",
+      "monthly_price": 135000.0
+    },
+    {
+      "plan_id": "vps_standard",
+      "name": "Cloud VPS Standard",
+      "v_cpu": "4 Core",
+      "ram_gb": "4 GB",
+      "ssd_gb": "80 GB",
+      "monthly_price": 250000.0
+    },
+    {
+      "plan_id": "vps_advanced",
+      "name": "Cloud VPS Advanced",
+      "v_cpu": "8 Core",
+      "ram_gb": "8 GB",
+      "ssd_gb": "160 GB",
+      "monthly_price": 480000.0
+    }
+  ]
+}

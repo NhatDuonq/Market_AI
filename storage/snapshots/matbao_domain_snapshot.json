@@ -1,0 +1,134 @@
+{
+  "updated_at": "2026-08-04 13:06:27",
+  "url": "https://www.matbao.net/ten-mien/bang-gia-ten-mien",
+  "items": [
+    {
+      "tld": ".vn",
+      "register_price": 558000.0,
+      "register_price_original": 666000.0,
+      "renew_price": 458000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".net.vn",
+      "register_price": 458000.0,
+      "register_price_original": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".biz.vn",
+      "register_price": 458000.0,
+      "register_price_original": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".com.vn",
+      "register_price": 458000.0,
+      "register_price_original": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".gov.vn",
+      "register_price": 258000.0,
+      "register_price_original": 258000.0,
+      "renew_price": 154000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".info.vn",
+      "register_price": 114000.0,
+      "register_price_original": 114000.0,
+      "renew_price": 104000.0,
+      "transfer_price": 0.0,
+      "promo_note": "KM giá đăng ký"
+    },
+    {
+      "tld": ".pro.vn",
+      "register_price": 114000.0,
+      "register_price_original": 114000.0,
+      "renew_price": 104000.0,
+      "transfer_price": 0.0,
+      "promo_note": "KM giá đăng ký"
+    },
+    {
+      "tld": ".org.vn",
+      "register_price": 258000.0,
+      "register_price_original": 258000.0,
+      "renew_price": 154000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".edu.vn",
+      "register_price": 258000.0,
+      "register_price_original": 258000.0,
+      "renew_price": 154000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".health.vn",
+      "register_price": 258000.0,
+      "register_price_original": 258000.0,
+      "renew_price": 154000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".ac.vn",
+      "register_price": 258000.0,
+      "register_price_original": 258000.0,
+      "renew_price": 154000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".name.vn",
+      "register_price": 51600.0,
+      "register_price_original": 51600.0,
+      "renew_price": 41600.0,
+      "transfer_price": 0.0,
+      "promo_note": "KM giá đăng ký"
+    },
+    {
+      "tld": ".int.vn",
+      "register_price": 258000.0,
+      "register_price_original": 258000.0,
+      "renew_price": 154000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".io.vn",
+      "register_price": 51600.0,
+      "register_price_original": 51600.0,
+      "renew_price": 41600.0,
+      "transfer_price": 0.0,
+      "promo_note": "KM giá đăng ký"
+    },
+    {
+      "tld": ".ai.vn",
+      "register_price": 458000.0,
+      "register_price_original": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 0.0,
+      "promo_note": ""
+    },
+    {
+      "tld": ".id.vn",
+      "register_price": 114000.0,
+      "register_price_original": 114000.0,
+      "renew_price": 104000.0,
+      "transfer_price": 0.0,
+      "promo_note": "KM giá đăng ký"
+    }
+  ]
+}

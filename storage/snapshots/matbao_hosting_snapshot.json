@@ -1,0 +1,27 @@
+{
+  "updated_at": "2026-07-31 09:29:31",
+  "url": "https://www.matbao.net/hosting.html",
+  "items": [
+    {
+      "plan_id": "hosting_basic",
+      "name": "Cloud Hosting Basic",
+      "disk_gb": "5 GB",
+      "ram_gb": "1 GB",
+      "monthly_price": 55000.0
+    },
+    {
+      "plan_id": "hosting_pro",
+      "name": "Cloud Hosting Pro",
+      "disk_gb": "15 GB",
+      "ram_gb": "2 GB",
+      "monthly_price": 95000.0
+    },
+    {
+      "plan_id": "hosting_business",
+      "name": "Cloud Hosting Business",
+      "disk_gb": "30 GB",
+      "ram_gb": "4 GB",
+      "monthly_price": 210000.0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "updated_at": "2026-07-31 09:59:42",
+  "url": "https://inet.vn/hosting/web-hosting",
+  "items": [
+    {
+      "plan_id": "hosting-a",
+      "name": "Hosting A",
+      "monthly_price": 49000
+    },
+    {
+      "plan_id": "hosting-b",
+      "name": "Hosting B",
+      "monthly_price": 99000
+    },
+    {
+      "plan_id": "hosting-c",
+      "name": "Hosting C",
+      "monthly_price": 149000
+    },
+    {
+      "plan_id": "business-hosting",
+      "name": "Business Hosting",
+      "monthly_price": 299000
+    }
+  ]
+}

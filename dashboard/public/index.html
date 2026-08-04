@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market AI - Giám Sát Tên Miền | Long Vân Cloud Solution</title>
+  <meta name="description" content="Hệ thống giám sát giá tên miền cạnh tranh tự động cho Long Vân Cloud Solution">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <img src="/assets/logo.svg" alt="Long Vân" class="logo">
+      <h2>Market AI</h2>
+      <span class="subtitle">Giám Sát Cạnh Tranh</span>
+    </div>
+
+    <div class="sidebar-section">
+      <label class="sidebar-label">Đối thủ so sánh</label>
+      <select id="competitorSelect" class="dropdown">
+        <option value="matbao">Mắt Bão</option>
+        <option value="pavietnam">PA Việt Nam</option>
+      </select>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">📊</span> Tổng Quan
+      </li>
+      <li class="nav-item" data-page="tld">
+        <span class="nav-icon">🔍</span> Độ Phủ TLD
+      </li>
+      <li class="nav-item" data-page="table">
+        <span class="nav-icon">📋</span> Bảng So Sánh Chi Tiết
+      </li>
+      <li class="nav-item" data-page="screenshots">
+        <span class="nav-icon">📸</span> Ảnh Đối Soát
+      </li>
+      <li class="nav-item" data-page="settings">
+        <span class="nav-icon">⚙️</span> Cấu Hình
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <span class="dot-live"></span> Hệ thống đang hoạt động
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+
+    <!-- PAGE: DASHBOARD -->
+    <section id="page-dashboard" class="page active">
+      <div class="page-header">
+        <div class="page-header-top">
+          <div>
+            <h1>Tổng Quan Cạnh Tranh</h1>
+            <p class="page-subtitle">So sánh giá tên miền <strong>Long Vân</strong> vs <span id="headerCompetitorName">Mắt Bão</span></p>
+          </div>
+          <div class="action-buttons">
+            <button id="btnCrawl" class="btn btn-primary" onclick="triggerCrawl()">
+              <span class="btn-icon">🔄</span> Crawler Ngay
+            </button>
+            <button id="btnReport" class="btn btn-secondary" onclick="sendReport()">
+              <span class="btn-icon">📨</span> Gửi Báo Cáo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- METRIC SELECTOR -->
+      <div class="metric-selector-row">
+        <label class="metric-label">Tiêu chí so sánh:</label>
+        <select id="metricSelect" class="dropdown metric-dropdown">
+          <option value="2yr">Tổng Chi Phí 2 Năm</option>
+          <option value="register">Giá Đăng Ký Năm 1</option>
+          <option value="renew">Giá Gia Hạn Hàng Năm</option>
+        </select>
+      </div>
+
+      <!-- KPI CARDS -->
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi-card" id="kpiCardTotal">
+          <div class="kpi-value blue" id="kpiTotalTLD">--</div>
+          <div class="kpi-label">TLD chung so sánh</div>
+        </div>
+        <div class="kpi-card kpi-hoverable" id="kpiCardCheaper">
+          <div class="kpi-value red" id="kpiCheaper">--</div>
+          <div class="kpi-label">Đối thủ rẻ hơn ⚠️</div>
+          <div class="kpi-tooltip" id="tooltipCheaper"></div>
+        </div>
+        <div class="kpi-card kpi-hoverable" id="kpiCardExpensive">
+          <div class="kpi-value green" id="kpiExpensive">--</div>
+          <div class="kpi-label">Long Vân rẻ hơn ✅</div>
+          <div class="kpi-tooltip" id="tooltipExpensive"></div>
+        </div>
+        <div class="kpi-card" id="kpiCardMissing">
+          <div class="kpi-value amber" id="kpiMissing">--</div>
+          <div class="kpi-label">TLD LV bỏ lỡ 🏷️</div>
+        </div>
+      </div>
+      <div class="kpi-sublabel" id="kpiMetricSublabel">(Tiêu chí: Tổng Chi Phí 2 Năm)</div>
+
+      <p class="update-time" id="updateTime"></p>
+
+      <!-- CHARTS ROW -->
+      <div class="charts-row">
+        <div class="chart-card chart-bar">
+          <h3 id="barChartTitle">So Sánh Giá Theo TLD</h3>
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-card chart-donut">
+          <h3 id="donutChartTitle">Vị Thế Giá</h3>
+          <canvas id="donutChart"></canvas>
+          <div class="donut-legend" id="donutLegend"></div>
+        </div>
+      </div>
+
+      <!-- TOP RISK TABLE -->
+      <div class="card">
+        <h3>⚠️ Top TLD Đối Thủ Rẻ Hơn Long Vân (Rủi Ro Cạnh Tranh)</h3>
+        <div class="table-wrapper">
+          <table id="riskTable">
+            <thead>
+              <tr>
+                <th>TLD</th>
+                <th>Hạng mục</th>
+                <th>Giá Đối thủ</th>
+                <th>Giá Long Vân</th>
+                <th>Chênh lệch</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: TLD AVAILABILITY -->
+    <section id="page-tld" class="page">
+      <div class="page-header">
+        <h1>🔍 Phân Tích Độ Phủ TLD</h1>
+        <p class="page-subtitle">Phát hiện lỗ hổng thị phần và lợi thế ngách của Long Vân</p>
+      </div>
+
+      <div class="kpi-grid kpi-grid-3">
+        <div class="kpi-card">
+          <div class="kpi-value blue" id="tldLvTotal">--</div>
+          <div class="kpi-label">Long Vân TLD</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value amber" id="tldCompTotal">--</div>
+          <div class="kpi-label" id="tldCompLabel">Đối thủ TLD</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value green" id="tldCommon">--</div>
+          <div class="kpi-label">TLD cùng bán</div>
+        </div>
+      </div>
+
+      <div class="tld-columns">
+        <div class="card tld-card-lv">
+          <h3>✅ Lợi Thế Ngách Long Vân</h3>
+          <p class="tld-card-desc">TLD chỉ Long Vân bán, đối thủ KHÔNG có</p>
+          <div class="badge-container" id="badgesLvExclusive"></div>
+        </div>
+        <div class="card tld-card-comp">
+          <h3>⚠️ Thị Phần Bỏ Lỡ</h3>
+          <p class="tld-card-desc">TLD đối thủ bán mà Long Vân KHÔNG có</p>
+          <div class="badge-container" id="badgesCompExclusive"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🤝 TLD Cùng Bán</h3>
+        <div class="badge-container" id="badgesCommon"></div>
+      </div>
+    </section>
+
+    <!-- PAGE: DETAILED TABLE -->
+    <section id="page-table" class="page">
+      <div class="page-header">
+        <h1>📋 Bảng So Sánh Chi Tiết</h1>
+        <p class="page-subtitle">Đối soát giá đầy đủ từng TLD giữa Long Vân và đối thủ</p>
+      </div>
+
+      <div class="table-controls">
+        <select id="filterField" class="dropdown">
+          <option value="all">Tất cả tiêu chí</option>
+          <option value="Giá đăng ký">Giá đăng ký</option>
+          <option value="Giá gia hạn">Giá gia hạn</option>
+          <option value="Giá chuyển đổi">Giá chuyển đổi</option>
+          <option value="Tổng chi phí 2 năm">Tổng chi phí 2 năm</option>
+        </select>
+        <select id="filterStatus" class="dropdown">
+          <option value="all">Tất cả vị thế</option>
+          <option value="CHEAPER">⚠️ Đối thủ rẻ hơn</option>
+          <option value="EXPENSIVE">✅ Long Vân rẻ hơn</option>
+          <option value="EQUAL">⚖️ Bằng giá</option>
+        </select>
+        <input type="text" id="searchTLD" class="search-input" placeholder="Tìm kiếm TLD...">
+      </div>
+
+      <div class="table-wrapper">
+        <table id="fullTable">
+          <thead>
+            <tr>
+              <th>TLD</th>
+              <th>Hạng mục</th>
+              <th>Giá Đối thủ</th>
+              <th>Giá Long Vân</th>
+              <th>Chênh lệch (VNĐ)</th>
+              <th>Chênh lệch (%)</th>
+              <th>Vị thế LV</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="table-count" id="tableCount"></p>
+    </section>
+
+    <!-- PAGE: SCREENSHOTS -->
+    <section id="page-screenshots" class="page">
+      <div class="page-header">
+        <h1>📸 Ảnh Chụp Đối Soát</h1>
+        <p class="page-subtitle">Ảnh được chụp tự động bằng Playwright mỗi lần crawler chạy</p>
+      </div>
+      <div class="screenshots-filter">
+        <select id="screenshotFilter" class="dropdown">
+          <option value="all">Tất cả nguồn</option>
+          <option value="longvan">Long Vân</option>
+          <option value="matbao">Mắt Bão</option>
+          <option value="pavietnam">PA Việt Nam</option>
+        </select>
+      </div>
+      <div class="screenshot-grid" id="screenshotGrid"></div>
+    </section>
+
+    <!-- PAGE: SETTINGS -->
+    <section id="page-settings" class="page">
+      <div class="page-header">
+        <h1>⚙️ Cấu Hình Hệ Thống</h1>
+        <p class="page-subtitle">Quản lý công tắc crawler và thông tin kết nối</p>
+      </div>
+
+      <div class="card">
+        <h3>🕷️ Công Tắc Cào Dữ Liệu</h3>
+        <div id="crawlerToggles"></div>
+      </div>
+
+      <div class="card">
+        <h3>🔐 Thông Tin Kết Nối</h3>
+        <div class="info-grid" id="systemInfo"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

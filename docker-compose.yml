@@ -1,115 +1,42 @@
 version: "3.8"
 
 services:
-
-  postgres:
-    image: postgres:16
-    container_name: market-postgres
-    restart: always
-
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
-
-    networks:
-      - market-network
-
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-
-  redis:
-    image: redis:7-alpine
-    container_name: market-redis
-    restart: always
-
-    volumes:
-      - ./data/redis:/data
-
-    networks:
-      - market-network
-
-
-  n8n:
-    image: n8nio/n8n:latest
-    container_name: market-n8n
-    restart: always
-
-    ports:
-      - "5678:5678"
-
-    environment:
-
-      DB_TYPE: postgresdb
-
-      DB_POSTGRESDB_HOST: postgres
-      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB}
-      DB_POSTGRESDB_USER: ${POSTGRES_USER}
-      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
-
-
-      N8N_BASIC_AUTH_ACTIVE: true
-      N8N_BASIC_AUTH_USER: ${N8N_USER}
-      N8N_BASIC_AUTH_PASSWORD: ${N8N_PASSWORD}
-
-      N8N_SECURE_COOKIE: false
-      GENERIC_TIMEZONE: ${TZ}
-
-
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-
-    volumes:
-      - ./data/n8n:/home/node/.n8n
-
-
-    networks:
-      - market-network
-
-
-
-  adminer:
-
-    image: adminer
-    container_name: market-adminer
-
-    restart: always
-
-    ports:
-      - "8080:8080"
-
-    networks:
-      - market-network
-  crawler:
-
+  dashboard:
     build:
-      context: ./crawler
-
-    container_name: market-crawler
-
-    restart: always
-
+      context: .
+      dockerfile: Dockerfile
+    container_name: market-dashboard
+    restart: unless-stopped
+    command: node dashboard/server.js
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
     volumes:
-      - ./crawler:/app
-
+      - ./storage:/app/storage
+      - ./config:/app/config
     networks:
       - market-network
 
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: market-scheduler
+    restart: unless-stopped
+    command: python scheduler.py
+    ports:
+      - "5001:5001"
+    env_file:
+      - .env
+    volumes:
+      - ./storage:/app/storage
+      - ./config:/app/config
     depends_on:
-      - postgres
-
+      - dashboard
+    networks:
+      - market-network
 
 networks:
-
   market-network:
-
-    external: true
+    driver: bridge

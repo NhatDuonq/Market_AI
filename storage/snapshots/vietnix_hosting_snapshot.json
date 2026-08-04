@@ -1,0 +1,26 @@
+{
+  "updated_at": "2026-07-31 09:58:47",
+  "url": "https://vietnix.vn/hosting-gia-re/",
+  "items": [
+    {
+      "plan_id": "hosting-thap",
+      "name": "Hosting Thấp",
+      "monthly_price": 55000
+    },
+    {
+      "plan_id": "hosting-trung",
+      "name": "Hosting Trung",
+      "monthly_price": 105000
+    },
+    {
+      "plan_id": "hosting-cao",
+      "name": "Hosting Cao",
+      "monthly_price": 155000
+    },
+    {
+      "plan_id": "business-hosting",
+      "name": "Business Hosting",
+      "monthly_price": 250000
+    }
+  ]
+}

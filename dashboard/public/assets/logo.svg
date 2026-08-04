@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" width="280" height="80">
+  <!-- Three hexagonal blobs (Long Van brand colors) -->
+  <!-- Dark blue blob (top center) -->
+  <ellipse cx="60" cy="30" rx="20" ry="20" fill="#2d3a6b" transform="rotate(-20 60 30)"/>
+  <!-- Blue blob (bottom left) -->
+  <ellipse cx="45" cy="48" rx="20" ry="20" fill="#4a7db5" transform="rotate(10 45 48)"/>
+  <!-- Green blob (bottom right) -->
+  <ellipse cx="72" cy="50" rx="20" ry="20" fill="#5aab6e" transform="rotate(-5 72 50)"/>
+
+  <!-- Text: LONG VAN -->
+  <text x="102" y="38" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#2d3a6b" letter-spacing="1">LONG VAN</text>
+
+  <!-- Text: Cloud Solution -->
+  <text x="103" y="56" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#7a8aaa" letter-spacing="0.5">Cloud Solution</text>
+</svg>
