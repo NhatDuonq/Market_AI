@@ -151,17 +151,17 @@ async function loadDashboard() {
 async function loadAiSummary(competitor) {
   const container = document.getElementById('aiSummary');
   if (!container) return;
-  container.innerHTML = '<p style="color:#64748b; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
+  container.innerHTML = '<p style="color:#94a3b8; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
 
   const res = await fetchJSON(`/api/ai-analysis/${competitor}`);
   if (res && res.analysis) {
     let text = res.analysis;
-    // Format markdown to clean HTML
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    text = text.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
-    text = text.replace(/`([^`]+)`/g, '<code style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-family:monospace; color:#0f172a;">$1</code>');
+    // Format markdown to clean HTML for Dark Mode
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#38bdf8; font-weight:700;">$1</strong>');
+    text = text.replace(/\*(.*?)\*/g, '<strong style="color:#60a5fa; font-weight:600;">$1</strong>');
+    text = text.replace(/`([^`]+)`/g, '<code style="background:rgba(255,255,255,0.08); padding:2px 7px; border-radius:4px; font-family:monospace; color:#34d399; border:1px solid rgba(255,255,255,0.12);">$1</code>');
     text = text.replace(/\n/g, '<br>');
-    container.innerHTML = `<div style="font-size:13px; line-height:1.7; color:#1e293b;">${text}</div>`;
+    container.innerHTML = `<div style="font-size:13px; line-height:1.8; color:#f1f5f9; background:rgba(15,23,42,0.4); padding:16px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">${text}</div>`;
   } else {
     container.innerHTML = '<p style="color:#ef4444; font-size:13px;">⚠️ Chưa thể lấy phân tích AI lúc này.</p>';
   }
