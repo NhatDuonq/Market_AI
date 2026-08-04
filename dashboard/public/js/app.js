@@ -167,6 +167,20 @@ async function loadAiSummary(competitor) {
   }
 }
 
+function toggleAiSummary() {
+  const summaryEl = document.getElementById('aiSummary');
+  const btn = document.getElementById('btnToggleAi');
+  if (!summaryEl || !btn) return;
+
+  if (summaryEl.style.display === 'none') {
+    summaryEl.style.display = 'block';
+    btn.innerHTML = '👁️ Thu gọn';
+  } else {
+    summaryEl.style.display = 'none';
+    btn.innerHTML = '👁️ Mở rộng';
+  }
+}
+
 function updateMetricView() {
   const data = currentData;
   if (!data) return;
