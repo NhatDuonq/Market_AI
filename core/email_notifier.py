@@ -244,11 +244,14 @@ class EmailNotifier:
                         </div>
             """
 
-        # FOOTER
+        # DASHBOARD BUTTON & LINK
+        dashboard_url = os.getenv("DASHBOARD_URL", "https://khangthost.io.vn")
         html += f"""
-                        <!-- DASHBOARD BUTTON -->
                         <div style="text-align:center; margin-top:28px; margin-bottom:12px;">
-                            <a href="http://localhost:3000" style="background-color:#2563eb; color:#ffffff; text-decoration:none; padding:12px 28px; border-radius:6px; font-size:14px; font-weight:700; display:inline-block;">🌐 Mở Live Dashboard Xem Chi Tiết</a>
+                            <a href="{dashboard_url}" style="background-color:#2563eb; color:#ffffff; text-decoration:none; padding:12px 28px; border-radius:6px; font-size:14px; font-weight:700; display:inline-block;">🌐 Mở Live Dashboard Xem Chi Tiết</a>
+                            <p style="margin-top:10px; font-size:12px; color:#64748b;">
+                                Link Dashboard: <a href="{dashboard_url}" style="color:#2563eb; font-weight:600;">{dashboard_url}</a>
+                            </p>
                         </div>
 
                     </td>
