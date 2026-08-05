@@ -297,9 +297,10 @@ body {
 
 .charts-row {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 20px;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .chart-card {
@@ -307,6 +308,8 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .chart-card h3 {
@@ -316,15 +319,25 @@ body {
   color: var(--text-secondary);
 }
 
-.chart-card canvas { max-height: 320px; }
+.chart-card canvas {
+  max-height: 320px;
+  max-width: 100%;
+}
 
 .donut-legend {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
   margin-top: 16px;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
+  text-align: center;
+}
+
+.donut-legend span {
+  white-space: nowrap;
 }
 
 /* ============================================================
