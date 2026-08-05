@@ -1196,51 +1196,24 @@ async function exportExecutivePdf() {
       </div>
     `;
 
-    // Detect mobile device
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-
-    // Attach to DOM offscreen for mobile Safari/Chrome to measure dimensions
-    element.style.position = 'absolute';
-    element.style.left = '-9999px';
-    element.style.top = '0';
-    document.body.appendChild(element);
-
     const opt = {
       margin: 0,
       filename: `Market_AI_Bao_Cao_${getSelectedCompetitor()}_${new Date().toISOString().slice(0, 10)}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: isMobile ? 2 : 3, // Dynamic scale: 2 for mobile to avoid memory limit, 3 for desktop
-        useCORS: true,
-        logging: false,
-        allowTaint: true
-      },
+      image: { type: 'jpeg', quality: 1.0 },
+      html2canvas: { scale: 4, useCORS: true, logging: false, dpi: 300 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
     if (window.html2pdf) {
-      const fileName = `Market_AI_Bao_Cao_${getSelectedCompetitor()}_${new Date().toISOString().slice(0, 10)}.pdf`;
-
-      if (isMobile) {
-        // Generate PDF Blob
-        const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
-        const blobUrl = URL.createObjectURL(pdfBlob);
-
-        // DIRECT LOCATION NAVIGATION: Bypasses iOS Safari / Android Popup Blockers 100%!
-        window.location.href = blobUrl;
-      } else {
-        await html2pdf().set(opt).from(element).save();
-        showToast('🎉 Đã xuất báo cáo PDF thành công!', 'success');
-      }
+      await html2pdf().set(opt).from(element).save();
+      showToast('✅ Đã xuất báo cáo PDF thành công!');
     } else {
-      showToast('⚠️ Thư viện PDF đang tải, vui lòng thử lại sau 2 giây.', 'warning');
+      showToast('⚠️ Thư viện PDF đang tải, vui lòng thử lại sau 2 giây.');
     }
   } catch (e) {
     console.error('Lỗi xuất PDF:', e);
-    showToast('⚠️ Không thể xuất PDF: ' + (e.message || 'Lỗi thiết bị di động'));
+    showToast('⚠️ Không thể xuất PDF: ' + e.message);
   } finally {
-    const el = document.querySelector('body > div[style*="-9999px"]');
-    if (el && el.parentNode) el.parentNode.removeChild(el);
     if (btn) btn.innerHTML = '<span class="btn-icon">📄</span> Xuất PDF';
   }
 }
