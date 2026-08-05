@@ -388,4 +388,8 @@ class AuthService:
         </body>
         </html>
         """
-        return self.email_notifier.send_report(subject, html_body)
+        try:
+            return self.email_notifier.send_report(subject, html_body, to_email=email)
+        except Exception as e:
+            logger.error(f"Lỗi gửi email OTP: {e}")
+            return False

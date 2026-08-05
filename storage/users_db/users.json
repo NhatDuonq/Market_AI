@@ -3,10 +3,30 @@
     "id": 1,
     "email": "test@longvan.net",
     "full_name": "Test User",
-    "password_hash": "975ec68adf9590bebff0c5936308bb1eb983e2c26338d314c7b80ab7d0700305",
+    "password_hash": "5b57ebd43eda0123c334a3ca3a8342c018fabac615ab3be1c2be6e6115207574",
     "role": "user",
     "is_verified": false,
     "created_at": "2026-08-04 21:26:40",
-    "updated_at": "2026-08-04 21:26:40"
+    "updated_at": "2026-08-05 09:23:24"
+  },
+  {
+    "id": 2,
+    "email": "test.user@longvan.net",
+    "full_name": "Test User",
+    "password_hash": "5b57ebd43eda0123c334a3ca3a8342c018fabac615ab3be1c2be6e6115207574",
+    "role": "user",
+    "is_verified": false,
+    "created_at": "2026-08-05 09:24:06",
+    "updated_at": "2026-08-05 09:24:06"
+  },
+  {
+    "id": 3,
+    "email": "duong.test@longvan.net",
+    "full_name": "Nhật Dương",
+    "password_hash": "5b57ebd43eda0123c334a3ca3a8342c018fabac615ab3be1c2be6e6115207574",
+    "role": "user",
+    "is_verified": false,
+    "created_at": "2026-08-05 09:24:28",
+    "updated_at": "2026-08-05 09:24:28"
   }
 ]

@@ -28,19 +28,21 @@ class EmailNotifier:
     def is_configured(self) -> bool:
         return bool(self.smtp_user and self.smtp_password and self.to_emails)
 
-    def send_report(self, subject: str, html_body: str, screenshot_paths: list = None) -> bool:
+    def send_report(self, subject: str, html_body: str, screenshot_paths: list = None, to_email: str = None) -> bool:
         """
         Gửi báo cáo HTML kèm ảnh chụp màn hình qua Email.
         """
-        if not self.is_configured():
-            print(f"[EmailNotifier] ⚠️ Chưa cấu hình SMTP. Bỏ qua gửi email.")
+        recipients = [to_email.strip()] if to_email else [e.strip() for e in os.getenv("EMAIL_TO", "").split(",") if e.strip()]
+        
+        if not self.smtp_user or not self.smtp_password or not recipients:
+            logger.warning("[EmailNotifier] Chưa cấu hình SMTP hoặc thiếu Email người nhận. Bỏ qua gửi email.")
             return False
 
         try:
             msg = MIMEMultipart("related")
             msg["Subject"] = subject
             msg["From"] = self.from_email
-            msg["To"] = ", ".join(self.to_emails)
+            msg["To"] = ", ".join(recipients)
 
             # Attach HTML body
             html_part = MIMEText(html_body, "html", "utf-8")
@@ -63,13 +65,12 @@ class EmailNotifier:
             with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
                 server.starttls()
                 server.login(self.smtp_user, self.smtp_password)
-                server.sendmail(self.from_email, self.to_emails, msg.as_string())
+                server.sendmail(self.from_email, recipients, msg.as_string())
 
-            print(f"[EmailNotifier] ✅ Đã gửi email báo cáo đến {', '.join(self.to_emails)}")
+            logger.info(f"[EmailNotifier] Đã gửi email đến {', '.join(recipients)}")
             return True
         except Exception as e:
-            print(f"[EmailNotifier] ❌ Lỗi gửi email: {e}")
-            logger.error(f"Email send failed: {e}")
+            logger.error(f"[EmailNotifier] Lỗi gửi email: {e}")
             return False
 
     def format_domain_report_html(self, provider_name: str, diff_data: dict, ai_analysis: str = "") -> str:

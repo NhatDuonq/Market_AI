@@ -54,7 +54,8 @@ function authenticateToken(req, res, next) {
 
 function runAuthPy(method, argsObj, cb) {
   const { exec } = require('child_process');
-  const pyCode = `import json; from core.auth_service import AuthService; auth = AuthService(); res = getattr(auth, '${method}')(**${JSON.stringify(argsObj)}); print(json.dumps(res, ensure_ascii=False))`;
+  const base64Args = Buffer.from(JSON.stringify(argsObj), 'utf-8').toString('base64');
+  const pyCode = `import json, base64; from core.auth_service import AuthService; auth = AuthService(); args = json.loads(base64.b64decode('${base64Args}').decode('utf-8')); res = getattr(auth, '${method}')(**args); print(json.dumps(res, ensure_ascii=False))`;
   const cmd = `python3 -X utf8 -c "${pyCode}" || python -X utf8 -c "${pyCode}"`;
   exec(cmd, { cwd: path.join(__dirname, '..'), env: { ...process.env, PYTHONIOENCODING: 'utf-8' } }, (err, stdout) => {
     if (err && !stdout) {
