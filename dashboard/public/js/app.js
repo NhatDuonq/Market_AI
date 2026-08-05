@@ -967,76 +967,169 @@ async function handleForgotPassword() {
   }
 }
 
-async function handleResetPassword() {
-  const email = document.getElementById('forgotEmail').value;
-  const otp_code = document.getElementById('resetOtpCode').value;
-  const new_password = document.getElementById('resetNewPassword').value;
-
-  const res = await fetchJSON('/api/auth/reset-password', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, otp_code, new_password })
-  });
-
-  if (res && res.success) {
-    switchAuthForm('login');
-    showToast('🎉 Đặt lại mật khẩu thành công! Vui lòng đăng nhập.', 'success');
-  } else if (res && res.error) {
-    showToast(`⚠️ ${res.error}`, 'error');
-  }
-}
-
 async function exportExecutivePdf() {
   const btn = document.getElementById('btnExportPdf');
   if (btn) btn.innerHTML = '⏳ Đang tạo PDF...';
 
   try {
     const competitorName = getCompetitorName();
+
+    // User details
+    const userStr = localStorage.getItem('authUser');
+    let userEmail = 'Cán bộ Long Vân';
+    if (userStr) {
+      try {
+        const u = JSON.parse(userStr);
+        userEmail = u.email || u.full_name || 'Cán bộ Long Vân';
+      } catch (e) {}
+    }
+
+    // AI Analysis - Extract top bullet points or clean text
     const aiSummaryEl = document.getElementById('aiSummary');
-    const aiText = aiSummaryEl ? aiSummaryEl.innerText : '';
+    let aiText = aiSummaryEl ? aiSummaryEl.innerText : '';
+    const aiLines = aiText.split('\n')
+      .map(l => l.trim())
+      .filter(l => l.length > 10 && !l.includes('⏳') && !l.includes('⚠️'))
+      .slice(0, 4);
 
     const barCanvas = document.getElementById('barChart');
     const donutCanvas = document.getElementById('donutChart');
 
-    const barImg = barCanvas ? barCanvas.toDataURL('image/png') : '';
-    const donutImg = donutCanvas ? donutCanvas.toDataURL('image/png') : '';
+    // High quality Base64 PNGs
+    const barImg = barCanvas ? barCanvas.toDataURL('image/png', 1.0) : '';
+    const donutImg = donutCanvas ? donutCanvas.toDataURL('image/png', 1.0) : '';
+
+    // Extract Overview Comparison Table Data (Top 12 TLDs)
+    const compList = (currentData && currentData.comparison) || [];
+    const topComp = compList.slice(0, 12);
+
+    const tableRowsHtml = topComp.map((item, idx) => {
+      const diff = item.diff_amount || 0;
+      const statusBadge = (item.status === 'CHEAPER')
+        ? `<span style="color:#ef4444; font-weight:700;">⚠️ Đối thủ giá thấp hơn (${formatVND(Math.abs(diff))})</span>`
+        : (item.status === 'EXPENSIVE')
+          ? `<span style="color:#10b981; font-weight:700;">✅ Long Vân giá thấp hơn (${formatVND(Math.abs(diff))})</span>`
+          : `<span style="color:#64748b; font-weight:600;">⚖️ Bằng giá</span>`;
+
+      return `
+        <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'}; border-bottom: 1px solid #e2e8f0; font-size: 11px;">
+          <td style="padding: 8px 12px; font-weight: 700; color: #0f172a;">${item.tld}</td>
+          <td style="padding: 8px 12px; text-align: right; color: #0284c7; font-weight: 700;">${formatVND(item.longvan_price)}</td>
+          <td style="padding: 8px 12px; text-align: right; color: #dc2626; font-weight: 700;">${formatVND(item.competitor_price)}</td>
+          <td style="padding: 8px 12px; text-align: right; font-weight: 700;">${diff > 0 ? '+' : ''}${formatVND(diff)}</td>
+          <td style="padding: 8px 12px; text-align: center;">${statusBadge}</td>
+        </tr>
+      `;
+    }).join('');
 
     const element = document.createElement('div');
-    element.style.padding = '24px';
+    element.style.width = '794px';
+    element.style.padding = '0';
     element.style.background = '#ffffff';
     element.style.color = '#0f172a';
     element.style.fontFamily = 'Segoe UI, Arial, sans-serif';
 
     element.innerHTML = `
-      <div style="border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <!-- PAGE 1: EXECUTIVE DASHBOARD & CHARTS -->
+      <div style="padding: 36px 40px; min-height: 1060px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
         <div>
-          <span style="background: #0284c7; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;">LONG VÂN CLOUD SOLUTION</span>
-          <h1 style="font-size: 20px; color: #0f172a; margin: 6px 0 0 0;">BÁO CÁO CẠNH TRANH GIÁ TÊN MIỀN</h1>
-          <p style="font-size: 12px; color: #64748b; margin: 2px 0 0 0;">Đối thủ: <strong>${competitorName.toUpperCase()}</strong> | Ngày xuất: ${new Date().toLocaleDateString('vi-VN')}</p>
+          <!-- BRAND HEADER -->
+          <div style="border-bottom: 3px solid #0284c7; padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+              <span style="background: #0284c7; color: #ffffff; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px;">LONG VÂN CLOUD SOLUTION</span>
+              <h1 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 8px 0 2px 0;">BÁO CÁO CHIẾN LƯỢC CẠNH TRANH GIÁ TÊN MIỀN</h1>
+              <p style="font-size: 11px; color: #64748b; margin: 0;">Đơn vị đối soát: <strong style="color: #0284c7;">${competitorName.toUpperCase()}</strong> | Ngày xuất: <strong>${new Date().toLocaleDateString('vi-VN')}</strong></p>
+            </div>
+            <div style="text-align: right; font-size: 10px; color: #64748b;">
+              <div>Cán bộ thực hiện:</div>
+              <div style="font-weight: 700; color: #0284c7; font-size: 11px;">${userEmail}</div>
+            </div>
+          </div>
+
+          <!-- EXECUTIVE SUMMARY HIGHLIGHTS -->
+          <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-left: 5px solid #0284c7; border-radius: 8px; padding: 14px; margin-bottom: 20px;">
+            <h3 style="color: #0369a1; font-size: 13px; font-weight: 700; margin: 0 0 8px 0;">
+              🧠 Tóm Tắt Khuyến Nghị Chiến Lược Từ Gemini AI
+            </h3>
+            <ul style="margin: 0; padding-left: 18px; font-size: 11px; line-height: 1.6; color: #0c4a6e;">
+              ${aiLines.length ? aiLines.map(line => `<li>${line}</li>`).join('') : '<li>Hệ thống đang tích lũy dữ liệu lịch sử để xuất khuyến nghị chiến lược tiếp theo.</li>'}
+            </ul>
+          </div>
+
+          <!-- HIGH RESOLUTION CHARTS -->
+          <h3 style="font-size: 13px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 12px;">
+            📊 Biểu Đồ So Sánh Trực Quan High-DPI
+          </h3>
+          
+          <div style="margin-bottom: 16px; text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; background: #fafafa;">
+            <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 8px;">So Sánh Chi Phí 2 Năm (Long Vân vs ${competitorName})</div>
+            ${barImg ? `<img src="${barImg}" style="width: 100%; max-height: 260px; object-fit: contain;">` : ''}
+          </div>
+
+          <div style="text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; background: #fafafa;">
+            <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 8px;">Biểu Đồ Vị Thế Cạnh Tranh Market Share</div>
+            ${donutImg ? `<img src="${donutImg}" style="width: 100%; max-height: 200px; object-fit: contain;">` : ''}
+          </div>
+        </div>
+
+        <!-- FOOTER PAGE 1 -->
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 10px; font-size: 10px; color: #94a3b8; display: flex; justify-content: space-between;">
+          <span>Market AI Engine &bull; Long Vân Cloud Solution (https://khangthost.io.vn)</span>
+          <span>Trang 1 / 2</span>
         </div>
       </div>
 
-      <div style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 14px; border-radius: 6px; margin-bottom: 20px;">
-        <h3 style="color: #0369a1; font-size: 14px; margin: 0 0 8px 0;">🧠 Phân Tích & Đề Xuất Chiến Lược Từ Gemini AI</h3>
-        <div style="font-size: 11px; line-height: 1.6; color: #1e3a8a; white-space: pre-wrap;">${aiText}</div>
-      </div>
+      <!-- PAGE BREAK -->
+      <div style="page-break-before: always;"></div>
 
-      <h3 style="font-size: 14px; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px;">📊 Biểu Đồ So Sánh Trực Quan</h3>
-      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-        ${barImg ? `<div style="flex: 1; text-align: center;"><img src="${barImg}" style="max-width: 100%; height: auto; border: 1px solid #e2e8f0; border-radius: 6px;"></div>` : ''}
-        ${donutImg ? `<div style="flex: 1; text-align: center;"><img src="${donutImg}" style="max-width: 100%; height: auto; border: 1px solid #e2e8f0; border-radius: 6px;"></div>` : ''}
-      </div>
+      <!-- PAGE 2: DETAILED OVERVIEW COMPARISON TABLE -->
+      <div style="padding: 36px 40px; min-height: 1060px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <!-- PAGE 2 HEADER -->
+          <div style="border-bottom: 2px solid #0284c7; padding-bottom: 10px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="font-size: 15px; font-weight: 800; color: #0f172a; margin: 0;">📋 BẢNG ĐỐI SOÁT GIÁ TÊN MIỀN TỔNG QUAN</h2>
+            <span style="font-size: 11px; color: #64748b;">Đối thủ: <strong>${competitorName.toUpperCase()}</strong></span>
+          </div>
 
-      <p style="font-size: 10px; color: #94a3b8; text-align: center; margin-top: 30px;">
-        Báo cáo được khởi tạo tự động bởi Market AI Engine &bull; Long Vân Cloud Solution (https://khangthost.io.vn)
-      </p>
+          <!-- COMPARISON TABLE -->
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
+            <thead>
+              <tr style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 700; text-align: left;">
+                <th style="padding: 8px 10px;">Tên TLD</th>
+                <th style="padding: 8px 10px; text-align: right;">Giá Long Vân (2 năm)</th>
+                <th style="padding: 8px 10px; text-align: right;">Giá ${competitorName} (2 năm)</th>
+                <th style="padding: 8px 10px; text-align: right;">Chênh Lệch</th>
+                <th style="padding: 8px 10px; text-align: center;">Đánh Giá Vị Thế</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRowsHtml}
+            </tbody>
+          </table>
+
+          <!-- NOTES CARD -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-size: 10px; color: #475569;">
+            <strong>📌 Ghi chú nghiệp vụ:</strong>
+            <ul style="margin: 4px 0 0 0; padding-left: 16px; line-height: 1.5;">
+              <li>Tất cả đơn giá đã bao gồm các khoản thuế VAT và phí dịch vụ nhà nước theo quy định hiện hành.</li>
+              <li>Vị thế giá được tính toán dựa trên tổng chi phí sở hữu 2 năm (Giá năm 1 + Giá năm 2).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- FOOTER PAGE 2 -->
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 10px; font-size: 10px; color: #94a3b8; display: flex; justify-content: space-between;">
+          <span>Xác thực bởi Market AI Engine &bull; https://khangthost.io.vn</span>
+          <span>Trang 2 / 2</span>
+        </div>
+      </div>
     `;
 
     const opt = {
-      margin: 10,
+      margin: 0,
       filename: `Market_AI_Bao_Cao_${getSelectedCompetitor()}_${new Date().toISOString().slice(0, 10)}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      image: { type: 'jpeg', quality: 1.0 },
+      html2canvas: { scale: 3, useCORS: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
