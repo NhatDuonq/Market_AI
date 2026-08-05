@@ -1030,3 +1030,142 @@ function handleLogout() {
   checkUserSession();
   showAuthModal();
 }
+
+// ============================================================
+// SMART DISPATCH SEND REPORT MODAL & CC MANAGEMENT
+// ============================================================
+
+let dispatchCcEmails = [];
+
+function sendReport() {
+  openSendReportModal();
+}
+
+function openSendReportModal() {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    showToast('⚠️ Vui lòng đăng nhập bằng Email @longvan.net trước khi gửi báo cáo!', 'warning');
+    showAuthModal();
+    return;
+  }
+
+  dispatchCcEmails = [];
+  renderCcBadges();
+  toggleCcInputForm(false);
+
+  const userStr = localStorage.getItem('authUser');
+  let primaryEmail = 'Cán bộ Long Vân';
+  if (userStr) {
+    try {
+      const user = JSON.parse(userStr);
+      primaryEmail = user.email || user.full_name || 'Cán bộ Long Vân';
+    } catch (e) {}
+  }
+
+  const primaryEl = document.getElementById('dispatchPrimaryEmail');
+  if (primaryEl) primaryEl.textContent = primaryEmail;
+
+  const overlay = document.getElementById('sendReportModalOverlay');
+  if (overlay) overlay.style.display = 'flex';
+}
+
+function closeSendReportModal() {
+  const overlay = document.getElementById('sendReportModalOverlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+function toggleCcInputForm(show) {
+  const inputBox = document.getElementById('dispatchCcInputBox');
+  if (inputBox) inputBox.style.display = show ? 'flex' : 'none';
+  if (show) {
+    const input = document.getElementById('dispatchCcEmailInput');
+    if (input) {
+      input.value = '';
+      input.focus();
+    }
+  }
+}
+
+function addCcEmailFromInput() {
+  const input = document.getElementById('dispatchCcEmailInput');
+  if (!input) return;
+  const email = (input.value || '').trim().toLowerCase();
+
+  if (!email) {
+    return showToast('⚠️ Vui lòng nhập địa chỉ Email CC', 'warning');
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return showToast('⚠️ Định dạng Email không hợp lệ!', 'error');
+  }
+
+  if (dispatchCcEmails.includes(email)) {
+    return showToast('⚠️ Email này đã có trong danh sách CC!', 'warning');
+  }
+
+  dispatchCcEmails.push(email);
+  renderCcBadges();
+  input.value = '';
+  toggleCcInputForm(false);
+  showToast(`✅ Đã thêm CC: ${email}`, 'success');
+}
+
+function removeCcEmail(email) {
+  dispatchCcEmails = dispatchCcEmails.filter(e => e !== email);
+  renderCcBadges();
+}
+
+function renderCcBadges() {
+  const container = document.getElementById('dispatchCcBadges');
+  if (!container) return;
+
+  if (dispatchCcEmails.length === 0) {
+    container.innerHTML = '<span style="font-size: 12px; color: #64748b; font-style: italic;">Chưa có Email CC bổ sung (Bấm ➕ Thêm CC)</span>';
+    return;
+  }
+
+  container.innerHTML = dispatchCcEmails.map(email => `
+    <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px;">
+      📧 ${email}
+      <button type="button" onclick="removeCcEmail('${email}')" style="background: transparent; border: none; color: #f87171; font-weight: bold; cursor: pointer; font-size: 12px; margin-left: 2px;">&times;</button>
+    </span>
+  `).join('');
+}
+
+async function executeSendReportDispatch() {
+  const btn = document.getElementById('btnConfirmSendReport');
+  const channel = document.getElementById('dispatchChannelSelect').value || 'all';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Đang phân phối báo cáo...';
+  }
+
+  try {
+    const res = await fetchJSON('/api/send-report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        channel,
+        cc_emails: dispatchCcEmails
+      })
+    });
+
+    if (res && res.success) {
+      showToast(`🎉 ${res.message}`, 'success');
+      closeSendReportModal();
+    } else if (res && res.error) {
+      showToast(`⚠️ ${res.error}`, 'error');
+    } else {
+      showToast('⚠️ Không thể gửi báo cáo lúc này.', 'error');
+    }
+  } catch (e) {
+    showToast('⚠️ Lỗi kết nối server khi gửi báo cáo.', 'error');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '🚀 XÁC NHẬN GỬI BÁO CÁO';
+    }
+  }
+}

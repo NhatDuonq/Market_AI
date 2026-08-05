@@ -28,11 +28,12 @@ class EmailNotifier:
     def is_configured(self) -> bool:
         return bool(self.smtp_user and self.smtp_password and self.to_emails)
 
-    def send_report(self, subject: str, html_body: str, screenshot_paths: list = None, to_email: str = None) -> bool:
+    def send_report(self, subject: str, html_body: str, screenshot_paths: list = None, to_email: str = None, cc_emails: list = None) -> bool:
         """
-        Gửi báo cáo HTML kèm ảnh chụp màn hình qua Email.
+        Gửi báo cáo HTML kèm ảnh chụp màn hình qua Email, hỗ trợ CC.
         """
         recipients = [to_email.strip()] if to_email else [e.strip() for e in os.getenv("EMAIL_TO", "").split(",") if e.strip()]
+        cc_list = [c.strip() for c in (cc_emails or []) if c.strip()]
         
         if not self.smtp_user or not self.smtp_password or not recipients:
             logger.warning("[EmailNotifier] Chưa cấu hình SMTP hoặc thiếu Email người nhận. Bỏ qua gửi email.")
@@ -43,6 +44,10 @@ class EmailNotifier:
             msg["Subject"] = subject
             msg["From"] = self.from_email
             msg["To"] = ", ".join(recipients)
+            if cc_list:
+                msg["Cc"] = ", ".join(cc_list)
+
+            all_to_send = list(set(recipients + cc_list))
 
             # Attach HTML body
             html_part = MIMEText(html_body, "html", "utf-8")
@@ -65,9 +70,10 @@ class EmailNotifier:
             with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
                 server.starttls()
                 server.login(self.smtp_user, self.smtp_password)
-                server.sendmail(self.from_email, recipients, msg.as_string())
+                server.sendmail(self.from_email, all_to_send, msg.as_string())
 
-            logger.info(f"[EmailNotifier] Đã gửi email đến {', '.join(recipients)}")
+            logger.info(f"[EmailNotifier] Đã gửi email đến {', '.join(recipients)} (CC: {', '.join(cc_list)})")
+            return True
             return True
         except Exception as e:
             logger.error(f"[EmailNotifier] Lỗi gửi email: {e}")

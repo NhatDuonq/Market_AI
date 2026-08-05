@@ -1,6 +1,9 @@
 import os
 import sys
 import json
+import glob
+import base64
+import argparse
 from datetime import datetime
 
 # Add project root to sys.path
@@ -17,16 +20,37 @@ from core.email_notifier import EmailNotifier
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Send market AI competitive report")
+    parser.add_argument("--channel", default="all", choices=["all", "email", "telegram"], help="Target channel")
+    parser.add_argument("--email", default=None, help="Target email recipient")
+    parser.add_argument("--cc", default="", help="Comma separated list of CC emails")
+    parser.add_argument("--payload", default=None, help="Base64 encoded JSON payload")
+
+    args = parser.parse_args()
+
+    target_channel = args.channel
+    target_email = args.email
+    cc_emails = [c.strip() for c in args.cc.split(",") if c.strip()]
+
+    if args.payload:
+        try:
+            decoded = json.loads(base64.b64decode(args.payload.encode('utf-8')).decode('utf-8'))
+            target_channel = decoded.get("channel", target_channel)
+            target_email = decoded.get("target_email", target_email)
+            cc_emails = decoded.get("cc_emails", cc_emails)
+        except Exception as e:
+            pass
+
     diff_engine = DiffEngine()
     telegram = TelegramNotifier()
     email_notifier = EmailNotifier()
 
-    tg_ready = telegram.is_configured()
-    email_ready = email_notifier.is_configured()
+    tg_ready = telegram.is_configured() and (target_channel in ["all", "telegram"])
+    email_ready = target_channel in ["all", "email"]
 
     if not tg_ready and not email_ready:
         print(json.dumps({
-            "error": "Chưa cấu hình kênh nhận báo cáo! Vui lòng điền TELEGRAM_BOT_TOKEN/CHAT_ID hoặc thông tin SMTP trong file .env"
+            "error": "Kênh nhận báo cáo được chọn chưa sẵn sàng hoặc chưa được cấu hình!"
         }, ensure_ascii=False))
         sys.exit(1)
 
@@ -35,8 +59,6 @@ def main():
     ss_dir = os.path.join(project_root, "storage", "screenshots")
     dashboard_url = os.getenv("DASHBOARD_URL", "https://khangthost.io.vn")
 
-    import glob
-
     for p in providers:
         pkey = f"{p}_domain"
         snap = diff_engine.load_last_snapshot(pkey)
@@ -44,7 +66,6 @@ def main():
             items = snap["items"]
             diff_res = diff_engine.compare_domain_data(pkey, items, url=snap.get("url", ""), save=False)
 
-            # Find latest screenshot for this provider
             pattern_ss = os.path.join(ss_dir, f"{p}_domain_*.png")
             files = glob.glob(pattern_ss)
             p_ss = max(files, key=os.path.getmtime) if files else None
@@ -67,15 +88,20 @@ def main():
                 email_notifier.send_report(
                     subject=f"[Market AI] Báo Cáo Cạnh Tranh Tên Miền - {p.upper()} - {datetime.now().strftime('%d/%m/%Y')}",
                     html_body=html_body,
-                    screenshot_paths=[p_ss] if (p_ss and os.path.exists(p_ss)) else []
+                    screenshot_paths=[p_ss] if (p_ss and os.path.exists(p_ss)) else [],
+                    to_email=target_email,
+                    cc_emails=cc_emails
                 )
                 if "Email" not in sent_channels:
                     sent_channels.append("Email")
 
     channels_str = " & ".join(sent_channels)
+    recipient_info = f" (Email: {target_email})" if target_email else ""
+    cc_info = f" [CC: {', '.join(cc_emails)}]" if cc_emails else ""
+
     print(json.dumps({
         "success": True,
-        "message": f"Đã gửi báo cáo riêng từng nhà cung cấp thành công qua {channels_str}!"
+        "message": f"Đã gửi báo cáo thị trường qua {channels_str}{recipient_info}{cc_info} thành công!"
     }, ensure_ascii=False))
 
 

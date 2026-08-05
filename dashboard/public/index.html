@@ -404,6 +404,65 @@
         </button>
       </div>
 
+  </div>
+
+  <!-- SMART DISPATCH SEND REPORT MODAL -->
+  <div id="sendReportModalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 10000; align-items: center; justify-content: center;">
+    <div style="background: #1e293b; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 28px; width: 90%; max-width: 520px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; color: #f8fafc;">
+      <button type="button" onclick="closeSendReportModal()" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;">&times;</button>
+      
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span style="font-size: 32px;">📤</span>
+        <h2 style="font-size: 18px; font-weight: 700; margin-top: 6px; color: #f8fafc;">Gửi Báo Cáo Phân Tích Thị Trường</h2>
+        <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Tùy chọn kênh phân phối báo cáo & đồng gửi CC doanh nghiệp</p>
+      </div>
+
+      <!-- CHANNEL SELECT -->
+      <div style="margin-bottom: 18px;">
+        <label style="display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">Kênh Nhận Báo Cáo:</label>
+        <select id="dispatchChannelSelect" style="width: 100%; padding: 10px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #38bdf8; font-size: 13px; font-weight: 600; outline: none;">
+          <option value="all">🌐 Tất cả các kênh (Email + Telegram)</option>
+          <option value="email">📧 Chỉ gửi Email cá nhân</option>
+          <option value="telegram">💬 Chỉ gửi Kênh Telegram Công ty</option>
+        </select>
+      </div>
+
+      <!-- PRIMARY RECIPIENT DISPLAY -->
+      <div style="margin-bottom: 18px; background: rgba(15, 23, 42, 0.4); padding: 12px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.2);">
+        <label style="display: block; font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 4px;">Hòm Thư Người Nhận Chính (Đang Đăng Nhập):</label>
+        <div id="dispatchPrimaryEmail" style="font-size: 13px; font-weight: 700; color: #38bdf8;">--</div>
+      </div>
+
+      <!-- CC EMAIL SECTION -->
+      <div style="margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <label style="font-size: 12px; font-weight: 600; color: #cbd5e1;">Danh Sách CC Đồng Nghiệp / Quản Lý:</label>
+          <button type="button" onclick="toggleCcInputForm(true)" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px;">
+            <span>➕</span> Thêm CC
+          </button>
+        </div>
+
+        <!-- BADGES LIST FOR CC -->
+        <div id="dispatchCcBadges" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; min-height: 24px;"></div>
+
+        <!-- INPUT FORM FOR CC (HIDDEN BY DEFAULT) -->
+        <div id="dispatchCcInputBox" style="display: none; gap: 8px; margin-top: 8px;">
+          <input type="email" id="dispatchCcEmailInput" placeholder="dongnghiep@longvan.net" style="flex: 1; padding: 8px 12px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff; font-size: 12px; outline: none;">
+          <button type="button" onclick="addCcEmailFromInput()" style="background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">Thêm</button>
+          <button type="button" onclick="toggleCcInputForm(false)" style="background: rgba(255,255,255,0.1); color: #cbd5e1; border: none; padding: 8px 10px; border-radius: 6px; font-size: 12px; cursor: pointer;">Hủy</button>
+        </div>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div style="display: flex; gap: 10px; margin-top: 24px;">
+        <button type="button" onclick="closeSendReportModal()" style="flex: 1; background: rgba(255,255,255,0.1); color: #cbd5e1; border: none; padding: 11px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px;">
+          Hủy
+        </button>
+        <button type="button" id="btnConfirmSendReport" onclick="executeSendReportDispatch()" style="flex: 2; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); color: #fff; border: none; padding: 11px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);">
+          🚀 XÁC NHẬN GỬI BÁO CÁO
+        </button>
+      </div>
+
     </div>
   </div>
 

@@ -94,7 +94,7 @@ app.post('/api/auth/verify-otp', (req, res) => {
     if (result.user) {
       const accessToken = generateAccessToken(result.user);
       const refreshToken = generateRefreshToken(result.user);
-      runAuthPy('save_refresh_token', { email: result.user.email, token: refreshToken }, () => {});
+      runAuthPy('save_refresh_token', { email: result.user.email, token: refreshToken }, () => { });
       result.token = accessToken;
       result.accessToken = accessToken;
       result.refreshToken = refreshToken;
@@ -110,7 +110,7 @@ app.post('/api/auth/login', (req, res) => {
     if (result.error) return res.status(400).json(result);
     const accessToken = generateAccessToken(result.user);
     const refreshToken = generateRefreshToken(result.user);
-    runAuthPy('save_refresh_token', { email: result.user.email, token: refreshToken }, () => {});
+    runAuthPy('save_refresh_token', { email: result.user.email, token: refreshToken }, () => { });
     result.token = accessToken;
     result.accessToken = accessToken;
     result.refreshToken = refreshToken;
@@ -147,7 +147,7 @@ app.post('/api/auth/refresh', (req, res) => {
 app.post('/api/auth/logout', (req, res) => {
   const { refreshToken } = req.body;
   if (refreshToken) {
-    runAuthPy('revoke_refresh_token', { token: refreshToken }, () => {});
+    runAuthPy('revoke_refresh_token', { token: refreshToken }, () => { });
   }
   res.json({ success: true, message: 'Đã đăng xuất thành công' });
 });
@@ -387,7 +387,7 @@ app.get('/api/ai-analysis/:provider', authenticateToken, (req, res) => {
   const { exec } = require('child_process');
   const pyScript = `import json; from core.diff_engine import DiffEngine; from core.ai_analyzer import AIAnalyzer; de = DiffEngine(); snap = de.load_last_snapshot('${provider}_domain'); diff = de.compare_domain_data('${provider}_domain', snap.get('items', []), save=False); ai = AIAnalyzer(); print(json.dumps({'analysis': ai.analyze_market_changes('${providerName}', 'domain', diff, force_refresh=${force})}, ensure_ascii=False))`;
   const pythonCmd = `python3 -X utf8 -c "${pyScript}" || python -X utf8 -c "${pyScript}"`;
-  
+
   exec(pythonCmd, { cwd: path.join(__dirname, '..'), env: { ...process.env, PYTHONIOENCODING: 'utf-8' } }, (err, stdout) => {
     if (err) {
       console.error('Lỗi gọi AI Analyzer:', err);
@@ -502,11 +502,22 @@ app.post('/api/crawl', authenticateToken, (req, res) => {
   });
 });
 
-// Send report via Telegram and Email
+// Send report via Telegram and Email (Smart Dispatch)
 app.post('/api/send-report', authenticateToken, (req, res) => {
   const { exec } = require('child_process');
   const sendReportScript = path.join(__dirname, '..', 'scripts', 'send_report.py');
-  const cmd = `python3 -X utf8 "${sendReportScript}" || python -X utf8 "${sendReportScript}"`;
+
+  const channel = req.body.channel || 'all';
+  const cc_emails = req.body.cc_emails || [];
+  const target_email = (req.user && req.user.email) || '';
+
+  const payloadObj = {
+    channel,
+    target_email,
+    cc_emails
+  };
+  const base64Payload = Buffer.from(JSON.stringify(payloadObj), 'utf-8').toString('base64');
+  const cmd = `python3 -X utf8 "${sendReportScript}" --payload "${base64Payload}" || python -X utf8 "${sendReportScript}" --payload "${base64Payload}"`;
 
   exec(cmd, {
     cwd: path.join(__dirname, '..'),
@@ -526,9 +537,9 @@ app.post('/api/send-report', authenticateToken, (req, res) => {
         }
         return res.json(result);
       }
-      res.json({ success: true, message: 'Đã gửi báo cáo qua Email & Telegram thành công!' });
+      res.json({ success: true, message: 'Đã gửi báo cáo thị trường thành công!' });
     } catch (e) {
-      res.json({ success: true, message: 'Đã gửi báo cáo qua Email & Telegram thành công!' });
+      res.json({ success: true, message: 'Đã gửi báo cáo thị trường thành công!' });
     }
   });
 });
