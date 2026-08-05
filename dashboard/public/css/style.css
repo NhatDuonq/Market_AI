@@ -186,8 +186,12 @@ body {
 #main-content {
   flex: 1;
   margin-left: 260px;
+  width: calc(100% - 260px);
+  max-width: calc(100% - 260px);
+  min-width: 0;
   padding: 32px 36px;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .page { display: none; animation: fadeIn 0.3s ease; }
@@ -778,7 +782,7 @@ tr:hover td { background: var(--bg-card-hover); }
 }
 
 #main-content {
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Sidebar Collapsed State (Desktop Icon Mode) */
@@ -788,6 +792,8 @@ body.sidebar-collapsed #sidebar {
 
 body.sidebar-collapsed #main-content {
   margin-left: 76px;
+  width: calc(100% - 76px);
+  max-width: calc(100% - 76px);
 }
 
 body.sidebar-collapsed .sidebar-header .logo,

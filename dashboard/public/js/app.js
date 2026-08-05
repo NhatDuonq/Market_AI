@@ -59,6 +59,11 @@ function toggleSidebar() {
   const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
   localStorage.setItem('sidebarCollapsed', isCollapsed ? 'true' : 'false');
   updateSidebarIcon(isCollapsed);
+
+  // Trigger chart resize event after sidebar transition completes
+  setTimeout(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, 320);
 }
 
 function updateSidebarIcon(isCollapsed) {
