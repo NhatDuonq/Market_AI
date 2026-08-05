@@ -28,5 +28,15 @@
     "is_verified": false,
     "created_at": "2026-08-05 09:24:28",
     "updated_at": "2026-08-05 09:24:28"
+  },
+  {
+    "id": 4,
+    "email": "admin@longvan.net",
+    "full_name": "Admin Long Vân",
+    "password_hash": "c15e17eac32efe887e51138fe985a20f9bfef9f2658c852f03a877865ffa941b",
+    "role": "admin",
+    "is_verified": true,
+    "created_at": "2026-08-05 14:16:00",
+    "updated_at": "2026-08-05 14:16:00"
   }
 ]
