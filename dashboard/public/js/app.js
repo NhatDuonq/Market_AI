@@ -34,8 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMetricSelect();
   setupTableFilters();
   setupScreenshotFilter();
-  checkUserSession();
-  loadDashboard();
+  const isAuthenticated = checkUserSession();
+  if (isAuthenticated) {
+    loadDashboard();
+  } else {
+    showAuthModal();
+  }
 });
 
 // ============================================================
@@ -767,6 +771,11 @@ function showAuthModal() {
 }
 
 function hideAuthModal() {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    showToast('⚠️ Vui lòng đăng nhập bằng Email @longvan.net để sử dụng hệ thống!', 'warning');
+    return;
+  }
   const overlay = document.getElementById('authModalOverlay');
   if (overlay) overlay.style.display = 'none';
 }
@@ -992,15 +1001,17 @@ function checkUserSession() {
       if (badge) badge.style.display = 'block';
       if (openBtn) openBtn.style.display = 'none';
       if (headerAuthBtn) headerAuthBtn.innerHTML = `👤 ${user.email || user.full_name}`;
+      return true;
     } catch (e) {
       localStorage.removeItem('authToken');
       localStorage.removeItem('authUser');
     }
-  } else {
-    if (badge) badge.style.display = 'none';
-    if (openBtn) openBtn.style.display = 'flex';
-    if (headerAuthBtn) headerAuthBtn.innerHTML = `🔑 Đăng nhập @longvan.net`;
   }
+
+  if (badge) badge.style.display = 'none';
+  if (openBtn) openBtn.style.display = 'flex';
+  if (headerAuthBtn) headerAuthBtn.innerHTML = `🔑 Đăng nhập @longvan.net`;
+  return false;
 }
 
 function handleLogout() {
@@ -1017,4 +1028,5 @@ function handleLogout() {
   localStorage.removeItem('authUser');
   showToast('👋 Đã đăng xuất tài khoản!', 'info');
   checkUserSession();
+  showAuthModal();
 }

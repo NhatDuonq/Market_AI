@@ -368,18 +368,18 @@ function compareDomainData(providerKey) {
 }
 
 // ============================================================
-// API ROUTES
+// API ROUTES (AUTHENTICATION PROTECTED)
 // ============================================================
 
 // Get comparison data for a competitor
-app.get('/api/compare/:provider', (req, res) => {
+app.get('/api/compare/:provider', authenticateToken, (req, res) => {
   const providerKey = `${req.params.provider}_domain`;
   const result = compareDomainData(providerKey);
   res.json(result);
 });
 
 // Get AI Analysis for a provider
-app.get('/api/ai-analysis/:provider', (req, res) => {
+app.get('/api/ai-analysis/:provider', authenticateToken, (req, res) => {
   const provider = req.params.provider.toLowerCase();
   const force = req.query.force === 'true' ? 'True' : 'False';
   const providerName = provider === 'pavietnam' ? 'PA VIỆT NAM' : (provider === 'matbao' ? 'MẮT BÃO' : provider.toUpperCase());
@@ -402,17 +402,17 @@ app.get('/api/ai-analysis/:provider', (req, res) => {
 });
 
 // Get Long Van benchmark snapshot
-app.get('/api/longvan', (req, res) => {
+app.get('/api/longvan', authenticateToken, (req, res) => {
   res.json(loadLongvanSnapshot());
 });
 
 // Get provider snapshot
-app.get('/api/snapshot/:provider', (req, res) => {
+app.get('/api/snapshot/:provider', authenticateToken, (req, res) => {
   res.json(loadSnapshot(`${req.params.provider}_domain`));
 });
 
 // List screenshots
-app.get('/api/screenshots', (req, res) => {
+app.get('/api/screenshots', authenticateToken, (req, res) => {
   try {
     if (!fs.existsSync(SCREENSHOTS_DIR)) {
       return res.json([]);
@@ -433,12 +433,12 @@ app.get('/api/screenshots', (req, res) => {
 });
 
 // Get crawler config
-app.get('/api/config', (req, res) => {
+app.get('/api/config', authenticateToken, (req, res) => {
   res.json(readJSON(CONFIG_PATH) || {});
 });
 
 // Update crawler config
-app.post('/api/config', (req, res) => {
+app.post('/api/config', authenticateToken, (req, res) => {
   if (writeJSON(CONFIG_PATH, req.body)) {
     res.json({ success: true });
   } else {
@@ -447,7 +447,7 @@ app.post('/api/config', (req, res) => {
 });
 
 // Price history
-app.get('/api/history/:provider', (req, res) => {
+app.get('/api/history/:provider', authenticateToken, (req, res) => {
   const historyDir = path.join(SNAPSHOTS_DIR, 'history');
   if (!fs.existsSync(historyDir)) return res.json([]);
 
@@ -476,7 +476,7 @@ app.get('/api/history/:provider', (req, res) => {
 
 // Trigger crawler
 let crawlRunning = false;
-app.post('/api/crawl', (req, res) => {
+app.post('/api/crawl', authenticateToken, (req, res) => {
   if (crawlRunning) {
     return res.status(429).json({ error: 'Crawler đang chạy, vui lòng đợi...' });
   }
@@ -502,7 +502,7 @@ app.post('/api/crawl', (req, res) => {
 });
 
 // Send report via Telegram and Email
-app.post('/api/send-report', (req, res) => {
+app.post('/api/send-report', authenticateToken, (req, res) => {
   const { exec } = require('child_process');
   const sendReportScript = path.join(__dirname, '..', 'scripts', 'send_report.py');
   const cmd = `python3 -X utf8 "${sendReportScript}" || python -X utf8 "${sendReportScript}"`;
@@ -533,7 +533,7 @@ app.post('/api/send-report', (req, res) => {
 });
 
 // Crawler status (check if running)
-app.get('/api/crawl/status', (req, res) => {
+app.get('/api/crawl/status', authenticateToken, (req, res) => {
   res.json({ running: crawlRunning });
 });
 
