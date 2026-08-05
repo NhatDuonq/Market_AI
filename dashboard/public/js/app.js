@@ -984,7 +984,7 @@ async function exportExecutivePdf() {
       } catch (e) {}
     }
 
-    // AI Analysis - Extract top bullet points or clean text
+    // AI Analysis
     const aiSummaryEl = document.getElementById('aiSummary');
     let aiText = aiSummaryEl ? aiSummaryEl.innerText : '';
     const aiLines = aiText.split('\n')
@@ -999,25 +999,25 @@ async function exportExecutivePdf() {
     const barImg = barCanvas ? barCanvas.toDataURL('image/png', 1.0) : '';
     const donutImg = donutCanvas ? donutCanvas.toDataURL('image/png', 1.0) : '';
 
-    // Extract Overview Comparison Table Data (Top 12 TLDs)
+    // Extract Comparison Table Data
     const compList = (currentData && currentData.comparison) || [];
-    const topComp = compList.slice(0, 12);
+    const topComp = compList.slice(0, 15);
 
     const tableRowsHtml = topComp.map((item, idx) => {
       const diff = item.diff_amount || 0;
       const statusBadge = (item.status === 'CHEAPER')
-        ? `<span style="color:#ef4444; font-weight:700;">⚠️ Đối thủ giá thấp hơn (${formatVND(Math.abs(diff))})</span>`
+        ? `<span style="color:#dc2626; font-weight:700;">⚠️ Đối thủ rẻ hơn (${formatVND(Math.abs(diff))})</span>`
         : (item.status === 'EXPENSIVE')
-          ? `<span style="color:#10b981; font-weight:700;">✅ Long Vân giá thấp hơn (${formatVND(Math.abs(diff))})</span>`
-          : `<span style="color:#64748b; font-weight:600;">⚖️ Bằng giá</span>`;
+          ? `<span style="color:#16a34a; font-weight:700;">✅ Long Vân rẻ hơn (${formatVND(Math.abs(diff))})</span>`
+          : `<span style="color:#475569; font-weight:600;">⚖️ Bằng giá</span>`;
 
       return `
-        <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'}; border-bottom: 1px solid #e2e8f0; font-size: 11px;">
-          <td style="padding: 8px 12px; font-weight: 700; color: #0f172a;">${item.tld}</td>
-          <td style="padding: 8px 12px; text-align: right; color: #0284c7; font-weight: 700;">${formatVND(item.longvan_price)}</td>
-          <td style="padding: 8px 12px; text-align: right; color: #dc2626; font-weight: 700;">${formatVND(item.competitor_price)}</td>
-          <td style="padding: 8px 12px; text-align: right; font-weight: 700;">${diff > 0 ? '+' : ''}${formatVND(diff)}</td>
-          <td style="padding: 8px 12px; text-align: center;">${statusBadge}</td>
+        <tr style="background: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'}; border-bottom: 1px solid #cbd5e1; font-size: 11px;">
+          <td style="padding: 7px 10px; font-weight: 700; color: #0f172a;">${item.tld}</td>
+          <td style="padding: 7px 10px; text-align: right; color: #0284c7; font-weight: 700;">${formatVND(item.longvan_price)}</td>
+          <td style="padding: 7px 10px; text-align: right; color: #dc2626; font-weight: 700;">${formatVND(item.competitor_price)}</td>
+          <td style="padding: 7px 10px; text-align: right; font-weight: 700; color: #0f172a;">${diff > 0 ? '+' : ''}${formatVND(diff)}</td>
+          <td style="padding: 7px 10px; text-align: center;">${statusBadge}</td>
         </tr>
       `;
     }).join('');
@@ -1027,43 +1027,45 @@ async function exportExecutivePdf() {
     element.style.padding = '0';
     element.style.background = '#ffffff';
     element.style.color = '#0f172a';
-    element.style.fontFamily = 'Segoe UI, Arial, sans-serif';
+    element.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 
     element.innerHTML = `
       <!-- PAGE 1: EXECUTIVE DASHBOARD & CHARTS -->
-      <div style="padding: 36px 40px; min-height: 1060px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+      <div style="padding: 40px 44px; height: 1120px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff;">
         <div>
           <!-- BRAND HEADER -->
-          <div style="border-bottom: 3px solid #0284c7; padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div style="border-bottom: 3px solid #0284c7; padding-bottom: 14px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end;">
             <div>
-              <span style="background: #0284c7; color: #ffffff; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px;">LONG VÂN CLOUD SOLUTION</span>
-              <h1 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 8px 0 2px 0;">BÁO CÁO CHIẾN LƯỢC CẠNH TRANH GIÁ TÊN MIỀN</h1>
-              <p style="font-size: 11px; color: #64748b; margin: 0;">Đơn vị đối soát: <strong style="color: #0284c7;">${competitorName.toUpperCase()}</strong> | Ngày xuất: <strong>${new Date().toLocaleDateString('vi-VN')}</strong></p>
+              <span style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px;">LONG VÂN CLOUD SOLUTION</span>
+              <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin: 8px 0 3px 0; letter-spacing: -0.3px;">BÁO CÁO CHIẾN LƯỢC CẠNH TRANH GIÁ TÊN MIỀN</h1>
+              <p style="font-size: 12px; color: #475569; margin: 0; font-weight: 600;">Đơn vị đối soát: <strong style="color: #0284c7;">${competitorName.toUpperCase()}</strong> | Ngày xuất: <strong>${new Date().toLocaleDateString('vi-VN')}</strong></p>
             </div>
-            <div style="text-align: right; font-size: 10px; color: #64748b;">
+            <div style="text-align: right; font-size: 11px; color: #475569;">
               <div>Cán bộ thực hiện:</div>
-              <div style="font-weight: 700; color: #0284c7; font-size: 11px;">${userEmail}</div>
+              <div style="font-weight: 700; color: #0284c7; font-size: 12px;">${userEmail}</div>
             </div>
           </div>
 
-          <!-- HIGH RESOLUTION CHARTS -->
-          <h3 style="font-size: 13px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 14px;">
-            📊 Biểu Đồ So Sánh Trực Quan High-DPI
-          </h3>
+          <!-- HIGH RESOLUTION CHARTS SECTION -->
+          <div style="font-size: 14px; font-weight: 800; color: #0f172a; border-bottom: 2px solid #0284c7; padding-bottom: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+            <span>📊</span> Biểu Đồ So Sánh Trực Quan Số Liệu
+          </div>
           
-          <div style="margin-bottom: 18px; text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; background: #fafafa;">
-            <div style="font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 10px;">So Sánh Chi Phí 2 Năm (Long Vân vs ${competitorName})</div>
-            ${barImg ? `<img src="${barImg}" style="width: 100%; max-height: 280px; object-fit: contain;">` : ''}
+          <!-- BAR CHART CONTAINER -->
+          <div style="margin-bottom: 24px; border: 1px solid #cbd5e1; border-radius: 10px; padding: 16px; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px; text-align: center;">So Sánh Chi Phí 2 Năm (Long Vân vs ${competitorName})</div>
+            ${barImg ? `<img src="${barImg}" style="width: 100%; height: 320px; object-fit: contain; display: block; margin: 0 auto;">` : ''}
           </div>
 
-          <div style="text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; background: #fafafa;">
-            <div style="font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 10px;">Biểu Đồ Vị Thế Cạnh Tranh Market Share</div>
-            ${donutImg ? `<img src="${donutImg}" style="width: 100%; max-height: 240px; object-fit: contain;">` : ''}
+          <!-- DONUT CHART CONTAINER (FIXED ASPECT RATIO SO IT REMAINS A PERFECT CIRCLE) -->
+          <div style="border: 1px solid #cbd5e1; border-radius: 10px; padding: 16px; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.04); text-align: center;">
+            <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Biểu Đồ Vị Thế Cạnh Tranh Thị Phần (Market Share)</div>
+            ${donutImg ? `<div style="width: 340px; height: 340px; margin: 0 auto;"><img src="${donutImg}" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>` : ''}
           </div>
         </div>
 
         <!-- FOOTER PAGE 1 -->
-        <div style="border-top: 1px solid #e2e8f0; padding-top: 10px; font-size: 10px; color: #94a3b8; display: flex; justify-content: space-between;">
+        <div style="border-top: 1px solid #cbd5e1; padding-top: 12px; font-size: 11px; color: #64748b; font-weight: 600; display: flex; justify-content: space-between;">
           <span>Market AI Engine &bull; Long Vân Cloud Solution (https://khangthost.io.vn)</span>
           <span>Trang 1 / 2</span>
         </div>
@@ -1073,23 +1075,23 @@ async function exportExecutivePdf() {
       <div style="page-break-before: always;"></div>
 
       <!-- PAGE 2: DETAILED OVERVIEW COMPARISON TABLE & AI INSIGHTS -->
-      <div style="padding: 36px 40px; min-height: 1060px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+      <div style="padding: 40px 44px; height: 1120px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff;">
         <div>
           <!-- PAGE 2 HEADER -->
-          <div style="border-bottom: 2px solid #0284c7; padding-bottom: 10px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="font-size: 15px; font-weight: 800; color: #0f172a; margin: 0;">📋 BẢNG ĐỐI SOÁT GIÁ TÊN MIỀN TỔNG QUAN</h2>
-            <span style="font-size: 11px; color: #64748b;">Đối thủ: <strong>${competitorName.toUpperCase()}</strong></span>
+          <div style="border-bottom: 3px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 0;">📋 BẢNG ĐỐI SOÁT GIÁ TÊN MIỀN TỔNG QUAN</h2>
+            <span style="font-size: 12px; color: #475569; font-weight: 700;">Đối thủ: <strong style="color: #0284c7;">${competitorName.toUpperCase()}</strong></span>
           </div>
 
           <!-- COMPARISON TABLE -->
-          <table style="width: 100%; border-collapse: collapse; margin-bottom: 18px; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
             <thead>
-              <tr style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 700; text-align: left;">
-                <th style="padding: 8px 10px;">Tên TLD</th>
-                <th style="padding: 8px 10px; text-align: right;">Giá Long Vân (2 năm)</th>
-                <th style="padding: 8px 10px; text-align: right;">Giá ${competitorName} (2 năm)</th>
-                <th style="padding: 8px 10px; text-align: right;">Chênh Lệch</th>
-                <th style="padding: 8px 10px; text-align: center;">Đánh Giá Vị Thế</th>
+              <tr style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 800; text-align: left;">
+                <th style="padding: 10px; width: 15%;">TLD</th>
+                <th style="padding: 10px; text-align: right; width: 22%;">Giá Long Vân (2 năm)</th>
+                <th style="padding: 10px; text-align: right; width: 22%;">Giá ${competitorName} (2 năm)</th>
+                <th style="padding: 10px; text-align: right; width: 18%;">Chênh Lệch</th>
+                <th style="padding: 10px; text-align: center; width: 23%;">Đánh Giá Vị Thế</th>
               </tr>
             </thead>
             <tbody>
@@ -1098,23 +1100,23 @@ async function exportExecutivePdf() {
           </table>
 
           <!-- NOTES CARD -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 10px; color: #475569; margin-bottom: 18px;">
-            <strong>📌 Ghi chú nghiệp vụ:</strong> Tất cả đơn giá đã bao gồm thuế VAT & phí nhà nước. Vị thế dựa trên tổng chi phí sở hữu 2 năm.
+          <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px 16px; font-size: 11px; color: #334155; margin-bottom: 20px;">
+            <strong style="color: #0f172a;">📌 Ghi chú nghiệp vụ:</strong> Tất cả đơn giá đã bao gồm các khoản thuế VAT & phí dịch vụ nhà nước. Vị thế được tính trên tổng chi phí sở hữu 2 năm.
           </div>
 
-          <!-- EXECUTIVE SUMMARY HIGHLIGHTS (MOVED TO BOTTOM OF PAGE 2) -->
-          <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-left: 5px solid #0284c7; border-radius: 8px; padding: 14px;">
-            <h3 style="color: #0369a1; font-size: 13px; font-weight: 700; margin: 0 0 8px 0;">
+          <!-- EXECUTIVE SUMMARY HIGHLIGHTS -->
+          <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-left: 5px solid #0284c7; border-radius: 10px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+            <h3 style="color: #0369a1; font-size: 14px; font-weight: 800; margin: 0 0 10px 0;">
               🧠 Tóm Tắt Khuyến Nghị Chiến Lược Từ Gemini AI
             </h3>
-            <ul style="margin: 0; padding-left: 18px; font-size: 11px; line-height: 1.6; color: #0c4a6e;">
+            <ul style="margin: 0; padding-left: 20px; font-size: 11px; line-height: 1.7; color: #0c4a6e; font-weight: 600;">
               ${aiLines.length ? aiLines.map(line => `<li>${line}</li>`).join('') : '<li>Hệ thống đang tích lũy dữ liệu lịch sử để xuất khuyến nghị chiến lược tiếp theo.</li>'}
             </ul>
           </div>
         </div>
 
         <!-- FOOTER PAGE 2 -->
-        <div style="border-top: 1px solid #e2e8f0; padding-top: 10px; font-size: 10px; color: #94a3b8; display: flex; justify-content: space-between;">
+        <div style="border-top: 1px solid #cbd5e1; padding-top: 12px; font-size: 11px; color: #64748b; font-weight: 600; display: flex; justify-content: space-between;">
           <span>Xác thực bởi Market AI Engine &bull; https://khangthost.io.vn</span>
           <span>Trang 2 / 2</span>
         </div>
@@ -1125,7 +1127,7 @@ async function exportExecutivePdf() {
       margin: 0,
       filename: `Market_AI_Bao_Cao_${getSelectedCompetitor()}_${new Date().toISOString().slice(0, 10)}.pdf`,
       image: { type: 'jpeg', quality: 1.0 },
-      html2canvas: { scale: 3, useCORS: true, logging: false },
+      html2canvas: { scale: 4, useCORS: true, logging: false, dpi: 300 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
