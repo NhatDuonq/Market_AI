@@ -579,7 +579,7 @@ function renderRiskTable(data, competitorName) {
     .slice(0, 10);
 
   if (!risks.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:24px;">✅ Long Vân không có rủi ro cạnh tranh nào! Tuyệt vời!</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:24px;">Long Vân không có rủi ro cạnh tranh nào! Tuyệt vời!</td></tr>';
     return;
   }
 
@@ -590,8 +590,8 @@ function renderRiskTable(data, competitorName) {
     <tr>
       <td><strong>${r.tld}</strong></td>
       <td>${r.field}</td>
-      <td><a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="color:#f87171; text-decoration:underline; font-weight:700;" title="Nhấp để tự động cuộn tô vàng vị trí ${r.tld} trên web ${competitorName}">${formatVND(r.competitor_price)} ↗</a></td>
-      <td><a href="${lvDeepLink}" target="_blank" rel="noopener noreferrer" style="color:#34d399; text-decoration:underline; font-weight:700;" title="Nhấp để xem vị trí ${r.tld} trên web Long Vân">${formatVND(r.longvan_price)} ↗</a></td>
+      <td><a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="color:#f87171; text-decoration:underline; font-weight:700;" title="Nhấp để tự động cuộn tô vàng vị trí ${r.tld} trên web ${competitorName}">${formatVND(r.competitor_price)}</a></td>
+      <td><a href="${lvDeepLink}" target="_blank" rel="noopener noreferrer" style="color:#34d399; text-decoration:underline; font-weight:700;" title="Nhấp để xem vị trí ${r.tld} trên web Long Vân">${formatVND(r.longvan_price)}</a></td>
       <td class="status-cheaper">${formatVND(r.diff_amount)}</td>
       <td class="status-cheaper">${formatPct(r.diff_pct)}</td>
     </tr>
@@ -688,10 +688,10 @@ function renderFullTable(data, competitorName) {
       <td class="${statusClass}">${formatPct(c.diff_pct)}</td>
       <td style="text-align: center;">
         <a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 4px;" title="Nhấp để tự động cuộn tô vàng vị trí ${c.tld} trên web ${competitorName}">
-          🔗 ${competitorName} (${c.tld}) ↗
+          ${competitorName} (${c.tld})
         </a>
         <a href="${lvDeepLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Nhấp để xem vị trí ${c.tld} trên web Long Vân">
-          🏢 Long Vân (${c.tld}) ↗
+          Long Vân (${c.tld})
         </a>
       </td>
     </tr>`;
@@ -814,16 +814,16 @@ async function triggerCrawl() {
   const btn = document.getElementById('btnCrawl');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Đang cào...';
-  showToast('🔄 Đang chạy crawler, vui lòng chờ...', 'info');
+  showToast('Đang chạy crawler, vui lòng chờ...', 'info');
 
   try {
     const res = await fetch('/api/crawl', { method: 'POST' });
     const data = await res.json();
 
     if (res.status === 429) {
-      showToast('⚠️ Crawler đang chạy, vui lòng đợi!', 'error');
+      showToast('Crawler đang chạy, vui lòng đợi!', 'error');
       btn.disabled = false;
-      btn.innerHTML = '<span class="btn-icon">🔄</span> Crawler Ngay';
+      btn.innerHTML = 'Crawler Ngay';
       return;
     }
 
@@ -833,8 +833,8 @@ async function triggerCrawl() {
       if (status && !status.running) {
         clearInterval(pollInterval);
         btn.disabled = false;
-        btn.innerHTML = '<span class="btn-icon">🔄</span> Crawler Ngay';
-        showToast('✅ Crawler hoàn tất! Đang cập nhật dữ liệu...', 'success');
+        btn.innerHTML = 'Crawler Ngay';
+        showToast('Crawler hoàn tất! Đang cập nhật dữ liệu...', 'success');
         // Auto-refresh dashboard
         await loadDashboard();
       }
@@ -844,13 +844,13 @@ async function triggerCrawl() {
     setTimeout(() => {
       clearInterval(pollInterval);
       btn.disabled = false;
-      btn.innerHTML = '<span class="btn-icon">🔄</span> Crawler Ngay';
+      btn.innerHTML = 'Crawler Ngay';
     }, 300000);
 
   } catch (e) {
-    showToast('❌ Lỗi kết nối crawler', 'error');
+    showToast('Lỗi kết nối crawler', 'error');
     btn.disabled = false;
-    btn.innerHTML = '<span class="btn-icon">🔄</span> Crawler Ngay';
+    btn.innerHTML = 'Crawler Ngay';
   }
 }
 
@@ -888,7 +888,7 @@ function showAuthModal() {
 function hideAuthModal() {
   const token = localStorage.getItem('authToken');
   if (!token) {
-    showToast('⚠️ Vui lòng đăng nhập bằng Email @longvan.net để sử dụng hệ thống!', 'warning');
+    showToast('Vui lòng đăng nhập bằng Email @longvan.net để sử dụng hệ thống!', 'warning');
     return;
   }
   const overlay = document.getElementById('authModalOverlay');
@@ -924,7 +924,7 @@ async function handleLogin() {
   const password = document.getElementById('loginPassword').value;
 
   if (!email || !email.endsWith('@longvan.net')) {
-    return showToast('⚠️ Vui lòng nhập Email doanh nghiệp Long Vân (@longvan.net)', 'error');
+    return showToast('Vui lòng nhập Email doanh nghiệp Long Vân (@longvan.net)', 'error');
   }
 
   const res = await fetchJSON('/api/auth/login', {
@@ -939,10 +939,10 @@ async function handleLogin() {
     localStorage.setItem('authUser', JSON.stringify(res.user));
     hideAuthModal();
     checkUserSession();
-    showToast(`✅ Xin chào ${res.user.full_name || res.user.email}!`, 'success');
+    showToast(`Xin chào ${res.user.full_name || res.user.email}!`, 'success');
     loadDashboard();
   } else if (res && res.error) {
-    showToast(`⚠️ ${res.error}`, 'error');
+    showToast(`${res.error}`, 'error');
   }
 }
 
@@ -952,7 +952,7 @@ async function handleRegister() {
   const password = document.getElementById('regPassword').value;
 
   if (!email || !email.endsWith('@longvan.net')) {
-    return showToast('⚠️ Chỉ chấp nhận Email doanh nghiệp Long Vân (@longvan.net)', 'error');
+    return showToast('Chỉ chấp nhận Email doanh nghiệp Long Vân (@longvan.net)', 'error');
   }
 
   const res = await fetchJSON('/api/auth/register', {
@@ -964,9 +964,9 @@ async function handleRegister() {
   if (res && res.success) {
     document.getElementById('otpTargetEmail').textContent = email;
     switchAuthForm('otp');
-    showToast(`📩 ${res.message}`, 'info');
+    showToast(`${res.message}`, 'info');
   } else if (res && res.error) {
-    showToast(`⚠️ ${res.error}`, 'error');
+    showToast(`${res.error}`, 'error');
   }
 }
 
@@ -983,10 +983,10 @@ async function handleVerifyOtp() {
   if ((res && res.token) || (res && res.success)) {
     // Sau khi xác thực OTP đăng ký thành công → ép quay lại form Đăng Nhập
     // KHÔNG tự động đăng nhập để đảm bảo quy trình bảo mật
-    showToast('🎉 Xác thực tài khoản thành công! Vui lòng đăng nhập để tiếp tục.', 'success');
+    showToast('Xác thực tài khoản thành công! Vui lòng đăng nhập để tiếp tục.', 'success');
     switchAuthForm('login');
   } else if (res && res.error) {
-    showToast(`⚠️ ${res.error}`, 'error');
+    showToast(`${res.error}`, 'error');
   }
 }
 
