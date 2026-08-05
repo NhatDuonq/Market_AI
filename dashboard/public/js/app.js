@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMetricSelect();
   setupTableFilters();
   setupScreenshotFilter();
+  checkUserSession();
   loadDashboard();
 });
 
@@ -790,6 +791,7 @@ async function handleLogin() {
     localStorage.setItem('authToken', res.token);
     localStorage.setItem('authUser', JSON.stringify(res.user));
     hideAuthModal();
+    checkUserSession();
     showToast(`✅ Xin chào ${res.user.full_name || res.user.email}!`, 'success');
     loadDashboard();
   } else if (res && res.error) {
@@ -948,4 +950,38 @@ async function exportExecutivePdf() {
   } finally {
     if (btn) btn.innerHTML = '<span class="btn-icon">📄</span> Xuất PDF';
   }
+}
+
+function checkUserSession() {
+  const token = localStorage.getItem('authToken');
+  const userStr = localStorage.getItem('authUser');
+
+  const badge = document.getElementById('userProfileBadge');
+  const openBtn = document.getElementById('btnOpenAuth');
+  const headerAuthBtn = document.getElementById('headerAuthBtn');
+  const emailDisplay = document.getElementById('userEmailDisplay');
+
+  if (token && userStr) {
+    try {
+      const user = JSON.parse(userStr);
+      if (emailDisplay) emailDisplay.textContent = user.email || user.full_name;
+      if (badge) badge.style.display = 'block';
+      if (openBtn) openBtn.style.display = 'none';
+      if (headerAuthBtn) headerAuthBtn.innerHTML = `👤 ${user.email || user.full_name}`;
+    } catch (e) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('authUser');
+    }
+  } else {
+    if (badge) badge.style.display = 'none';
+    if (openBtn) openBtn.style.display = 'flex';
+    if (headerAuthBtn) headerAuthBtn.innerHTML = `🔑 Đăng nhập @longvan.net`;
+  }
+}
+
+function handleLogout() {
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('authUser');
+  showToast('👋 Đã đăng xuất tài khoản!', 'info');
+  checkUserSession();
 }

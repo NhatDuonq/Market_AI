@@ -45,8 +45,20 @@
       </li>
     </ul>
 
-    <div class="sidebar-footer">
-      <span class="dot-live"></span> Hệ thống đang hoạt động
+    <div class="sidebar-footer" style="padding: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <div id="userProfileBadge" style="display: none; margin-bottom: 10px; background: rgba(15,23,42,0.6); padding: 10px; border-radius: 8px; border: 1px solid rgba(56,189,248,0.2);">
+        <div style="font-size: 11px; color: #94a3b8;">Đang đăng nhập:</div>
+        <div id="userEmailDisplay" style="font-size: 12px; font-weight: 700; color: #38bdf8; word-break: break-all; margin: 2px 0 6px 0;"></div>
+        <button type="button" onclick="handleLogout()" style="width: 100%; background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
+          🚪 Đăng xuất
+        </button>
+      </div>
+      <button id="btnOpenAuth" type="button" onclick="showAuthModal()" style="width: 100%; background: #0284c7; color: #fff; border: none; padding: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        🔑 Đăng nhập / Đăng ký
+      </button>
+      <div style="margin-top: 8px; font-size: 11px; color: #64748b; text-align: center;">
+        <span class="dot-live"></span> Hệ thống đang hoạt động
+      </div>
     </div>
   </nav>
 
@@ -62,6 +74,9 @@
             <p class="page-subtitle">So sánh giá tên miền <strong>Long Vân</strong> vs <span id="headerCompetitorName">Mắt Bão</span></p>
           </div>
           <div class="action-buttons">
+            <button id="headerAuthBtn" type="button" onclick="showAuthModal()" class="btn btn-secondary" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">
+              🔑 Đăng nhập @longvan.net
+            </button>
             <button id="btnExportPdf" class="btn btn-secondary" onclick="exportExecutivePdf()" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">
               <span class="btn-icon">📄</span> Xuất PDF
             </button>
@@ -397,6 +412,6 @@
 
   <!-- LIBRARIES FOR PDF EXPORT & APP JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="/js/app.js?v=2.0"></script>
+  <script src="/js/app.js?v=2.1"></script>
 </body>
 </html>
