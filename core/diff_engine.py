@@ -24,6 +24,52 @@ class DiffEngine:
         return os.path.join(self.snapshot_dir, f"{provider_key}_snapshot.json")
 
     def load_last_snapshot(self, provider_key: str) -> dict:
+        # Try loading from MongoDB first
+        from core.db_mongo import db_mongo
+        if db_mongo.is_connected():
+            try:
+                parts = provider_key.split("_")
+                provider_code = parts[0]
+                category = parts[1] if len(parts) > 1 else "domain"
+                cursor = db_mongo.normalized_products.find({
+                    "provider_code": provider_code,
+                    "category": category
+                })
+                docs = list(cursor)
+                if docs:
+                    items = []
+                    url = docs[0].get("target_url", "")
+                    updated_at = docs[0].get("scraped_at", "")
+                    for d in docs:
+                        attr = d.get("attributes", {})
+                        if category == "domain":
+                            items.append({
+                                "tld": attr.get("tld") or d.get("product_key"),
+                                "register_price": attr.get("reg_price"),
+                                "renew_price": attr.get("renew_price"),
+                                "transfer_price": attr.get("transfer_price"),
+                                "promo_note": attr.get("promo_note")
+                            })
+                        elif category in ["vps", "hosting"]:
+                            items.append({
+                                "plan_id": d.get("product_key"),
+                                "name": attr.get("package_name"),
+                                "v_cpu": attr.get("cpu"),
+                                "ram_gb": attr.get("ram"),
+                                "ssd_gb": attr.get("disk"),
+                                "monthly_price": attr.get("price_monthly")
+                            })
+                        else:
+                            items.append(attr)
+                    return {
+                        "updated_at": updated_at,
+                        "url": url,
+                        "items": items
+                    }
+            except Exception as e:
+                print(f"[DiffEngine] ⚠️ Lỗi đọc từ MongoDB cho {provider_key}: {e}")
+
+        # JSON File Fallback
         filepath = self._get_snapshot_filepath(provider_key)
         if os.path.exists(filepath):
             try:
@@ -48,6 +94,38 @@ class DiffEngine:
             print(f"[DiffEngine] 💾 Đã cập nhật snapshot mới cho {provider_key} tại {filepath} và {history_filepath}")
         except Exception as e:
             print(f"[DiffEngine] ❌ Lỗi ghi snapshot {filepath}: {e}")
+
+        # Save to MongoDB
+        from core.db_mongo import db_mongo
+        if db_mongo.is_connected():
+            try:
+                parts = provider_key.split("_")
+                provider_code = parts[0]
+                category = parts[1] if len(parts) > 1 else "domain"
+                items = data.get("items", [])
+                for item in items:
+                    product_key = item.get("tld") or item.get("plan_id") or item.get("name")
+                    if not product_key:
+                        continue
+                    db_mongo.normalized_products.update_one(
+                        {
+                            "provider_code": provider_code,
+                            "category": category,
+                            "product_key": product_key
+                        },
+                        {"$set": {
+                            "provider_code": provider_code,
+                            "category": category,
+                            "product_key": product_key,
+                            "attributes": item,
+                            "target_url": data.get("url", ""),
+                            "scraped_at": data.get("updated_at", get_vn_now().strftime("%Y-%m-%d %H:%M:%S"))
+                        }},
+                        upsert=True
+                    )
+                print(f"[DiffEngine] 🍃 Đã đồng bộ {len(items)} items sang MongoDB collection `normalized_products`.")
+            except Exception as e:
+                print(f"[DiffEngine] ⚠️ Lỗi đồng bộ MongoDB cho {provider_key}: {e}")
 
     def load_longvan_snapshot(self, product_type: str = "domain") -> dict:
         filepath = os.path.join(self.snapshot_dir, f"longvan_{product_type}_snapshot.json")

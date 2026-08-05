@@ -18,3 +18,5 @@ streamlit==1.40.0
 pandas==2.2.3
 altair==5.4.1
 pytest==8.3.3
+pymongo==4.10.0
+motor==3.6.0
