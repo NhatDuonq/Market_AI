@@ -560,8 +560,10 @@ function getCompetitorDeepLink(providerKey, tld = '') {
 function getLongvanDeepLink(tld = '') {
   const baseUrl = PROVIDER_BASE_URLS.longvan;
   if (!tld) return baseUrl;
-  // Long Vân dùng text fragment đơn (không range) để highlight chính xác TLD
-  return `${baseUrl}#:~:text=${encodeURIComponent(tld)}`;
+  // Kết hợp anchor #bang-gia-ten-mien + text fragment để:
+  // 1. Anchor giữ trang tại bảng giá (tránh JS autofocus kéo về đầu trang)
+  // 2. Text fragment highlight chính xác TLD
+  return `${baseUrl}#bang-gia-ten-mien:~:text=${encodeURIComponent(tld)}`;
 }
 
 // ============================================================
