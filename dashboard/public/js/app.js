@@ -538,8 +538,26 @@ function renderDonutChart(data, metric) {
 // RISK TABLE (Top items where competitor is cheaper)
 // ============================================================
 
+const PROVIDER_BASE_URLS = {
+  matbao: 'https://www.matbao.net/ten-mien/bang-gia-ten-mien.html',
+  pavietnam: 'https://www.pavietnam.vn/vn/bang-gia-ten-mien.html',
+  longvan: 'https://longvan.net/ten-mien-viet-nam.html',
+};
+
+function getCompetitorDeepLink(providerKey, tld = '') {
+  const baseUrl = PROVIDER_BASE_URLS[providerKey] || PROVIDER_BASE_URLS.matbao;
+  if (!tld) return baseUrl;
+  // W3C Text Fragment URL: #:~:text=.vn or #:~:text=.com.vn
+  return `${baseUrl}#:~:text=${encodeURIComponent(tld)}`;
+}
+
+// ============================================================
+// RISK TABLE (Top items where competitor is cheaper)
+// ============================================================
+
 function renderRiskTable(data, competitorName) {
   const tbody = document.querySelector('#riskTable tbody');
+  const compKey = getSelectedCompetitor();
   const risks = data.comparison
     .filter(c => c.status === 'CHEAPER')
     .sort((a, b) => a.diff_amount - b.diff_amount)
@@ -550,16 +568,19 @@ function renderRiskTable(data, competitorName) {
     return;
   }
 
-  tbody.innerHTML = risks.map(r => `
+  tbody.innerHTML = risks.map(r => {
+    const deepLink = getCompetitorDeepLink(compKey, r.tld);
+    return `
     <tr>
       <td><strong>${r.tld}</strong></td>
       <td>${r.field}</td>
-      <td>${formatVND(r.competitor_price)}</td>
+      <td><a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="color:#f87171; text-decoration:underline; font-weight:700;" title="Nhấp để tự động cuộn tô vàng vị trí ${r.tld} trên web ${competitorName}">${formatVND(r.competitor_price)} ↗</a></td>
       <td>${formatVND(r.longvan_price)}</td>
       <td class="status-cheaper">${formatVND(r.diff_amount)}</td>
       <td class="status-cheaper">${formatPct(r.diff_pct)}</td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 }
 
 // ============================================================
@@ -612,6 +633,7 @@ function renderFullTable(data, competitorName) {
   const filterField = document.getElementById('filterField').value;
   const filterStatus = document.getElementById('filterStatus').value;
   const search = document.getElementById('searchTLD').value.toLowerCase();
+  const compKey = getSelectedCompetitor();
 
   let items = data.comparison;
 
@@ -622,7 +644,7 @@ function renderFullTable(data, competitorName) {
   const tbody = document.querySelector('#fullTable tbody');
 
   if (!items.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:24px;">Không tìm thấy kết quả</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;padding:24px;">Không tìm thấy kết quả</td></tr>';
     document.getElementById('tableCount').textContent = '';
     return;
   }
@@ -640,6 +662,8 @@ function renderFullTable(data, competitorName) {
       ? `<del style="color:#64748b;font-size:11px">${formatVND(c.longvan_price_original)}</del><br>${formatVND(c.longvan_price)}`
       : formatVND(c.longvan_price);
 
+    const deepLink = getCompetitorDeepLink(compKey, c.tld);
+
     return `<tr>
       <td><strong>${c.tld}</strong></td>
       <td>${c.field}</td>
@@ -648,6 +672,11 @@ function renderFullTable(data, competitorName) {
       <td class="${statusClass}">${c.diff_amount > 0 ? '+' : ''}${formatVND(c.diff_amount)}</td>
       <td class="${statusClass}">${formatPct(c.diff_pct)}</td>
       <td class="${statusClass}">${statusText}</td>
+      <td style="text-align: center;">
+        <a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Nhấp để tự động cuộn tô vàng vị trí ${c.tld} trên web ${competitorName}">
+          🔗 ${competitorName} (${c.tld}) ↗
+        </a>
+      </td>
     </tr>`;
   }).join('');
 
