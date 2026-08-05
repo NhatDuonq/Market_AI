@@ -87,15 +87,37 @@ function getCompetitorName() {
 // ============================================================
 
 async function fetchJSON(url, options = {}) {
-  const token = localStorage.getItem('authToken');
+  let token = localStorage.getItem('authToken');
   const headers = options.headers || {};
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
   try {
-    const res = await fetch(url, { ...options, headers });
+    let res = await fetch(url, { ...options, headers });
+
+    // Auto-refresh Access Token via Refresh Token on 401/403
     if (res.status === 401 || res.status === 403) {
-      if (typeof showAuthModal === 'function') showAuthModal();
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (refreshToken) {
+        const refreshRes = await fetch('/api/auth/refresh', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ refreshToken })
+        });
+
+        if (refreshRes.ok) {
+          const refreshData = await refreshRes.json();
+          if (refreshData && refreshData.accessToken) {
+            localStorage.setItem('authToken', refreshData.accessToken);
+            headers['Authorization'] = `Bearer ${refreshData.accessToken}`;
+            res = await fetch(url, { ...options, headers });
+          }
+        } else {
+          if (typeof showAuthModal === 'function') showAuthModal();
+        }
+      } else {
+        if (typeof showAuthModal === 'function') showAuthModal();
+      }
     }
     return await res.json();
   } catch (e) {
@@ -788,7 +810,8 @@ async function handleLogin() {
   });
 
   if (res && res.token) {
-    localStorage.setItem('authToken', res.token);
+    localStorage.setItem('authToken', res.accessToken || res.token);
+    if (res.refreshToken) localStorage.setItem('refreshToken', res.refreshToken);
     localStorage.setItem('authUser', JSON.stringify(res.user));
     hideAuthModal();
     checkUserSession();
@@ -834,7 +857,8 @@ async function handleVerifyOtp() {
   });
 
   if (res && res.token) {
-    localStorage.setItem('authToken', res.token);
+    localStorage.setItem('authToken', res.accessToken || res.token);
+    if (res.refreshToken) localStorage.setItem('refreshToken', res.refreshToken);
     localStorage.setItem('authUser', JSON.stringify(res.user));
     hideAuthModal();
     showToast('🎉 Xác thực tài khoản thành công!', 'success');
@@ -980,7 +1004,16 @@ function checkUserSession() {
 }
 
 function handleLogout() {
+  const refreshToken = localStorage.getItem('refreshToken');
+  if (refreshToken) {
+    fetch('/api/auth/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken })
+    });
+  }
   localStorage.removeItem('authToken');
+  localStorage.removeItem('refreshToken');
   localStorage.removeItem('authUser');
   showToast('👋 Đã đăng xuất tài khoản!', 'info');
   checkUserSession();

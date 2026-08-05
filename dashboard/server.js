@@ -13,6 +13,7 @@ const SNAPSHOTS_DIR = path.join(STORAGE_DIR, 'snapshots');
 const SCREENSHOTS_DIR = path.join(STORAGE_DIR, 'screenshots');
 const CONFIG_PATH = path.join(__dirname, '..', 'config', 'crawler_targets.json');
 
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || 'LONGVAN_MARKET_AI_JWS_SECRET_2026';
 
@@ -22,7 +23,16 @@ function generateAccessToken(user) {
     email: user.email,
     full_name: user.full_name,
     role: user.role || 'user'
-  }, JWT_SECRET, { algorithm: 'HS256', expiresIn: '7d' });
+  }, JWT_SECRET, { algorithm: 'HS256', expiresIn: '15m' }); // Short-lived 15m
+}
+
+function generateRefreshToken(user) {
+  return jwt.sign({
+    id: user.id,
+    email: user.email,
+    type: 'refresh',
+    jti: crypto.randomBytes(16).toString('hex')
+  }, JWT_SECRET, { algorithm: 'HS256', expiresIn: '30d' }); // Long-lived 30d
 }
 
 function authenticateToken(req, res, next) {
@@ -81,7 +91,12 @@ app.post('/api/auth/verify-otp', (req, res) => {
     if (err || !result) return res.status(500).json({ error: 'Lỗi xác thực mã OTP.' });
     if (result.error) return res.status(400).json(result);
     if (result.user) {
-      result.token = generateAccessToken(result.user);
+      const accessToken = generateAccessToken(result.user);
+      const refreshToken = generateRefreshToken(result.user);
+      runAuthPy('save_refresh_token', { email: result.user.email, token: refreshToken }, () => {});
+      result.token = accessToken;
+      result.accessToken = accessToken;
+      result.refreshToken = refreshToken;
     }
     res.json(result);
   });
@@ -92,9 +107,48 @@ app.post('/api/auth/login', (req, res) => {
   runAuthPy('login', { email, password }, (err, result) => {
     if (err || !result) return res.status(500).json({ error: 'Lỗi hệ thống khi đăng nhập.' });
     if (result.error) return res.status(400).json(result);
-    result.token = generateAccessToken(result.user);
+    const accessToken = generateAccessToken(result.user);
+    const refreshToken = generateRefreshToken(result.user);
+    runAuthPy('save_refresh_token', { email: result.user.email, token: refreshToken }, () => {});
+    result.token = accessToken;
+    result.accessToken = accessToken;
+    result.refreshToken = refreshToken;
     res.json(result);
   });
+});
+
+app.post('/api/auth/refresh', (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) {
+    return res.status(401).json({ error: 'Thiếu Refresh Token' });
+  }
+
+  jwt.verify(refreshToken, JWT_SECRET, { algorithms: ['HS256'] }, (err, decoded) => {
+    if (err || decoded.type !== 'refresh') {
+      return res.status(403).json({ error: 'Refresh Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại.' });
+    }
+
+    runAuthPy('verify_refresh_token', { token: refreshToken }, (pyErr, result) => {
+      if (pyErr || !result || result.error) {
+        return res.status(403).json({ error: result?.error || 'Refresh Token bị thu hồi.' });
+      }
+
+      const newAccessToken = generateAccessToken(result.user);
+      res.json({
+        accessToken: newAccessToken,
+        token: newAccessToken,
+        user: result.user
+      });
+    });
+  });
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  const { refreshToken } = req.body;
+  if (refreshToken) {
+    runAuthPy('revoke_refresh_token', { token: refreshToken }, () => {});
+  }
+  res.json({ success: true, message: 'Đã đăng xuất thành công' });
 });
 
 app.post('/api/auth/forgot-password', (req, res) => {

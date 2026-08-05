@@ -24,6 +24,7 @@ STORAGE_DIR = os.path.join(project_root, "storage", "users_db")
 os.makedirs(STORAGE_DIR, exist_ok=True)
 USERS_FILE = os.path.join(STORAGE_DIR, "users.json")
 OTPS_FILE = os.path.join(STORAGE_DIR, "otps.json")
+REFRESH_TOKENS_FILE = os.path.join(STORAGE_DIR, "refresh_tokens.json")
 
 
 class AuthService:
@@ -32,6 +33,7 @@ class AuthService:
     - Đăng ký & OTP xác thực qua Email
     - Đăng nhập & Mã hóa Password
     - Quên mật khẩu & Đặt lại qua OTP
+    - Quản lý Access Token & Refresh Token (Dual Token Architecture)
     - Hỗ trợ lưu vết siêu bền vững (PostgreSQL / Dual-Storage JSON Fallback)
     """
     def __init__(self):
@@ -45,6 +47,67 @@ class AuthService:
         if not os.path.exists(OTPS_FILE):
             with open(OTPS_FILE, 'w', encoding='utf-8') as f:
                 json.dump([], f, ensure_ascii=False, indent=2)
+        if not os.path.exists(REFRESH_TOKENS_FILE):
+            with open(REFRESH_TOKENS_FILE, 'w', encoding='utf-8') as f:
+                json.dump([], f, ensure_ascii=False, indent=2)
+
+    def _load_refresh_tokens(self) -> list:
+        try:
+            with open(REFRESH_TOKENS_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return []
+
+    def _save_refresh_tokens(self, tokens: list):
+        with open(REFRESH_TOKENS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(tokens, f, ensure_ascii=False, indent=2)
+
+    def save_refresh_token(self, email: str, token: str, expires_in_days: int = 30) -> dict:
+        tokens = self._load_refresh_tokens()
+        now_str = get_vn_now().strftime("%Y-%m-%d %H:%M:%S")
+        expires_at = (datetime.now() + timedelta(days=expires_in_days)).strftime("%Y-%m-%d %H:%M:%S")
+        
+        tokens.append({
+            "email": email.strip().lower(),
+            "token": token,
+            "expires_at": expires_at,
+            "revoked": False,
+            "created_at": now_str
+        })
+        self._save_refresh_tokens(tokens)
+        return {"success": True}
+
+    def verify_refresh_token(self, token: str) -> dict:
+        tokens = self._load_refresh_tokens()
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        for t in reversed(tokens):
+            if t["token"] == token and not t.get("revoked"):
+                if t.get("expires_at", "") > now_str:
+                    users = self._load_users()
+                    user = next((u for u in users if u["email"].lower() == t["email"].lower()), None)
+                    if user:
+                        return {
+                            "success": True,
+                            "user": {
+                                "id": user["id"],
+                                "email": user["email"],
+                                "full_name": user["full_name"],
+                                "role": user.get("role", "user")
+                            }
+                        }
+                else:
+                    return {"error": "Refresh Token đã hết hạn. Vui lòng đăng nhập lại."}
+
+        return {"error": "Refresh Token không hợp lệ hoặc đã bị thu hồi."}
+
+    def revoke_refresh_token(self, token: str) -> dict:
+        tokens = self._load_refresh_tokens()
+        for t in tokens:
+            if t["token"] == token:
+                t["revoked"] = True
+        self._save_refresh_tokens(tokens)
+        return {"success": True}
 
     def _load_users(self) -> list:
         try:
