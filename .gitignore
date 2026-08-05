@@ -17,6 +17,7 @@ npm-debug.log*
 storage/screenshots/*.png
 storage/snapshots/history/*.json
 storage/ai_cache/*.json
+storage/users_db/*.json
 logs/
 *.log
 
