@@ -29,6 +29,7 @@ const METRIC_FIELDS = {
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  initSidebarState();
   setupNavigation();
   setupCompetitorSelect();
   setupMetricSelect();
@@ -43,6 +44,54 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================================
+// SIDEBAR COLLAPSE & MOBILE DRAWER LOGIC
+// ============================================================
+
+function initSidebarState() {
+  const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+  if (isCollapsed) {
+    document.body.classList.add('sidebar-collapsed');
+    updateSidebarIcon(true);
+  }
+}
+
+function toggleSidebar() {
+  const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+  localStorage.setItem('sidebarCollapsed', isCollapsed ? 'true' : 'false');
+  updateSidebarIcon(isCollapsed);
+}
+
+function updateSidebarIcon(isCollapsed) {
+  const icon = document.getElementById('sidebarToggleIcon');
+  if (icon) {
+    icon.textContent = isCollapsed ? '▶' : '◀';
+  }
+}
+
+function toggleMobileSidebar(show) {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  
+  const isOpen = (show !== undefined) ? show : !sidebar.classList.contains('mobile-open');
+
+  if (isOpen) {
+    sidebar.classList.add('mobile-open');
+    if (backdrop) backdrop.classList.add('show');
+  } else {
+    sidebar.classList.remove('mobile-open');
+    if (backdrop) backdrop.classList.remove('show');
+  }
+}
+
+function debounce(fn, delay = 250) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+// ============================================================
 // NAVIGATION
 // ============================================================
 
@@ -55,6 +104,9 @@ function setupNavigation() {
       const pageId = item.dataset.page;
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(`page-${pageId}`).classList.add('active');
+
+      // Close mobile sidebar on page navigation
+      toggleMobileSidebar(false);
 
       // Load page-specific data
       if (pageId === 'screenshots') loadScreenshots();
@@ -157,7 +209,19 @@ async function loadDashboard() {
   // Update header
   document.getElementById('headerCompetitorName').textContent = competitorName;
 
-  const data = await fetchJSON(`/api/compare/${competitor}`);
+  const aiContainer = document.getElementById('aiSummary');
+  if (aiContainer && !aiAnalysisCache[competitor]) {
+    aiContainer.innerHTML = '<p style="color:#94a3b8; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
+  }
+
+  // PARALLEL ASYNC FETCHING FOR MAXIMUM SPEED ⚡
+  const [data, aiRes] = await Promise.all([
+    fetchJSON(`/api/compare/${competitor}`),
+    aiAnalysisCache[competitor]
+      ? Promise.resolve({ analysis: aiAnalysisCache[competitor] })
+      : fetchJSON(`/api/ai-analysis/${competitor}`)
+  ]);
+
   if (!data) return;
   currentData = data;
 
@@ -179,8 +243,13 @@ async function loadDashboard() {
   renderTLDPage(data, competitorName);
   renderFullTable(data, competitorName);
 
-  // Load AI Strategic Analysis
-  loadAiSummary(competitor);
+  // Render AI Strategic Analysis Result
+  if (aiRes && aiRes.analysis) {
+    aiAnalysisCache[competitor] = aiRes.analysis;
+    if (aiContainer) renderAiAnalysisHTML(aiContainer, aiRes.analysis);
+  } else if (aiContainer && !aiAnalysisCache[competitor]) {
+    aiContainer.innerHTML = '<p style="color:#ef4444; font-size:13px;">⚠️ Chưa thể lấy phân tích AI lúc này.</p>';
+  }
 }
 
 // In-memory Frontend AI Cache Map (lưu cache đánh giá AI theo từng đối thủ trên trình duyệt)

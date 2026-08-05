@@ -10,13 +10,33 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+  <!-- MOBILE TOPBAR -->
+  <div id="mobileTopbar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button type="button" id="mobileMenuBtn" onclick="toggleMobileSidebar()" class="sidebar-toggle-btn">
+        <span>☰</span>
+      </button>
+      <span style="font-weight: 800; font-size: 15px; color: #38bdf8;">Market AI</span>
+    </div>
+    <button type="button" onclick="showAuthModal()" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;">
+      🔑 Tài khoản
+    </button>
+  </div>
+
+  <!-- MOBILE BACKDROP -->
+  <div id="sidebarBackdrop" onclick="toggleMobileSidebar(false)"></div>
+
   <!-- SIDEBAR -->
   <nav id="sidebar">
-    <div class="sidebar-header">
-      <img src="/assets/logo.svg" alt="Long Vân" class="logo">
-      <h2>Market AI</h2>
-      <span class="subtitle">Giám Sát Cạnh Tranh</span>
+    <div class="sidebar-header" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+      <div style="flex: 1; text-align: left;">
+        <img src="/assets/logo.svg" alt="Long Vân" class="logo" style="max-width: 120px;">
+        <h2>Market AI</h2>
+        <span class="subtitle">Giám Sát Cạnh Tranh</span>
+      </div>
+      <button type="button" id="btnToggleSidebar" onclick="toggleSidebar()" class="sidebar-toggle-btn" title="Thu gọn / Mở rộng Sidebar">
+        <span id="sidebarToggleIcon">◀</span>
+      </button>
     </div>
 
     <div class="sidebar-section">
@@ -471,6 +491,6 @@
 
   <!-- LIBRARIES FOR PDF EXPORT & APP JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="/js/app.js?v=2.6&t=20260805"></script>
+  <script src="/js/app.js?v=3.0"></script>
 </body>
 </html>
