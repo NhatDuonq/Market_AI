@@ -566,10 +566,10 @@ tr:hover td { background: var(--bg-card-hover); }
    RESPONSIVE
    ============================================================ */
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .charts-row { grid-template-columns: 1fr; }
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  .page-header-top { flex-direction: column; gap: 12px; }
+  .page-header-top { flex-wrap: wrap; gap: 14px; }
 }
 
 @media (max-width: 768px) {
@@ -577,7 +577,7 @@ tr:hover td { background: var(--bg-card-hover); }
   #main-content { margin-left: 220px; padding: 20px; }
   .tld-columns { grid-template-columns: 1fr; }
   .info-grid { grid-template-columns: 1fr; }
-  .action-buttons { flex-direction: column; }
+  .action-buttons { flex-wrap: wrap; }
 }
 
 /* ============================================================
@@ -587,14 +587,16 @@ tr:hover td { background: var(--bg-card-hover); }
 .page-header-top {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .action-buttons {
   display: flex;
   gap: 10px;
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .btn {
