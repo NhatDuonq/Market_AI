@@ -5,6 +5,7 @@ import requests
 import time
 import random
 import logging
+from typing import Any, Optional
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -39,21 +40,17 @@ class AIAnalyzer:
     def _get_cache_path(self, data_hash: str) -> str:
         return os.path.join(CACHE_DIR, f"{data_hash}.json")
 
-    def _generate_data_hash(self, provider_name: str, product_type: str, changes: dict) -> str:
+    def _generate_data_hash(self, changes: dict) -> str:
         """Tạo MD5 hash dựa trên dữ liệu đối soát ổn định (bỏ qua timestamp/url linh hoạt)"""
+        if not isinstance(changes, dict):
+            changes = {}
         stable_changes = {
             "cheaper_count": len(changes.get("longvan_summary", {}).get("cheaper_items", [])),
             "expensive_count": len(changes.get("longvan_summary", {}).get("expensive_items", [])),
             "price_changes": [{"tld": c.get("tld"), "old_price": c.get("old_price"), "new_price": c.get("new_price")} for c in changes.get("price_changes", [])],
             "longvan_comparison": [{"tld": c.get("tld"), "field": c.get("field"), "comp_p": c.get("competitor_price"), "lv_p": c.get("longvan_price")} for c in changes.get("longvan_comparison", [])]
         }
-        cache_input = {
-            "provider": provider_name.lower().strip(),
-            "product_type": product_type.lower().strip(),
-            "data": stable_changes,
-            "v": "v4_stable"
-        }
-        data_str = json.dumps(cache_input, sort_keys=True)
+        data_str = json.dumps(stable_changes, sort_keys=True)
         return hashlib.md5(data_str.encode('utf-8')).hexdigest()
 
     def analyze_domain_changes(self, provider_name: str, changes: dict, force_refresh: bool = False) -> str:
@@ -69,7 +66,7 @@ class AIAnalyzer:
         longvan_comparison = changes.get("longvan_comparison", [])
 
         # 1. Kiểm tra Cache chuẩn (nếu không ép buộc làm mới)
-        data_hash = self._generate_data_hash(provider_name, product_type, changes)
+        data_hash = self._generate_data_hash(changes)
         cache_path = self._get_cache_path(data_hash)
         if not force_refresh and os.path.exists(cache_path):
             try:
@@ -215,16 +212,16 @@ YÊU CẦU: Trả về JSON chứa đúng 4 trường được yêu cầu, phân
     def _format_ai_response(self, ai_json: dict, provider_name: str) -> str:
         lines = []
         lines.append(f"🎯 *ĐÁNH GIÁ TÌNH HUỐNG THỊ TRƯỜNG ({provider_name.upper()}):*")
-        lines.append(ai_json.get("danh_gia_tinh_huong", ""))
+        lines.append(ai_json.get("danh_gia_tinh_huong") or ai_json.get("ket_luan_chung") or "")
 
         lines.append("\n⚖️ *VỊ THẾ CẠNH TRANH CỦA LONG VÂN:*")
-        lines.append(ai_json.get("vi_the_canh_tranh", ""))
+        lines.append(ai_json.get("vi_the_canh_tranh") or ai_json.get("so_sanh_vi_the") or "")
 
         lines.append("\n🗺️ *KẾ HOẠCH TỔNG THỂ & HƯỚNG ĐI TỪNG BƯỚC:*")
-        steps = ai_json.get("ke_hoach_hanh_dong_tung_buoc", [])
+        steps = ai_json.get("ke_hoach_hanh_dong_tung_buoc") or ai_json.get("tu_van_huong_di") or []
         if isinstance(steps, list):
-            for step in steps:
-                lines.append(f"• {step}")
+            for idx, step in enumerate(steps, 1):
+                lines.append(f"{idx}. {step}")
         else:
             lines.append(str(steps))
 
