@@ -67,13 +67,17 @@ class EmailNotifier:
                             logger.warning(f"Không thể đính kèm ảnh {path}: {e}")
 
             # Send
-            with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
+            if self.smtp_port == 465:
+                server = smtplib.SMTP_SSL(self.smtp_host, self.smtp_port, timeout=20)
+            else:
+                server = smtplib.SMTP(self.smtp_host, self.smtp_port, timeout=20)
                 server.starttls()
+
+            with server:
                 server.login(self.smtp_user, self.smtp_password)
                 server.sendmail(self.from_email, all_to_send, msg.as_string())
 
             logger.info(f"[EmailNotifier] Đã gửi email đến {', '.join(recipients)} (CC: {', '.join(cc_list)})")
-            return True
             return True
         except Exception as e:
             logger.error(f"[EmailNotifier] Lỗi gửi email: {e}")
