@@ -1219,8 +1219,30 @@ async function exportExecutivePdf() {
     };
 
     if (window.html2pdf) {
-      await html2pdf().set(opt).from(element).save();
-      showToast('🎉 Đã xuất báo cáo PDF thành công!', 'success');
+      const fileName = `Market_AI_Bao_Cao_${getSelectedCompetitor()}_${new Date().toISOString().slice(0, 10)}.pdf`;
+
+      if (isMobile) {
+        // Generate PDF Blob to bypass mobile download blocking
+        const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
+        const blobUrl = URL.createObjectURL(pdfBlob);
+
+        // Create explicit download link
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        
+        // Open PDF in new tab for iOS Safari & Android Chrome
+        setTimeout(() => {
+          window.open(blobUrl, '_blank');
+        }, 200);
+
+        showToast('🎉 Đã xuất & mở Báo cáo PDF trên tab mới! Bạn có thể xem và lưu file.', 'success');
+      } else {
+        await html2pdf().set(opt).from(element).save();
+        showToast('🎉 Đã xuất báo cáo PDF thành công!', 'success');
+      }
     } else {
       showToast('⚠️ Thư viện PDF đang tải, vui lòng thử lại sau 2 giây.', 'warning');
     }
