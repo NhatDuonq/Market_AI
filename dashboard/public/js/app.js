@@ -1046,29 +1046,19 @@ async function exportExecutivePdf() {
             </div>
           </div>
 
-          <!-- EXECUTIVE SUMMARY HIGHLIGHTS -->
-          <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-left: 5px solid #0284c7; border-radius: 8px; padding: 14px; margin-bottom: 20px;">
-            <h3 style="color: #0369a1; font-size: 13px; font-weight: 700; margin: 0 0 8px 0;">
-              🧠 Tóm Tắt Khuyến Nghị Chiến Lược Từ Gemini AI
-            </h3>
-            <ul style="margin: 0; padding-left: 18px; font-size: 11px; line-height: 1.6; color: #0c4a6e;">
-              ${aiLines.length ? aiLines.map(line => `<li>${line}</li>`).join('') : '<li>Hệ thống đang tích lũy dữ liệu lịch sử để xuất khuyến nghị chiến lược tiếp theo.</li>'}
-            </ul>
-          </div>
-
           <!-- HIGH RESOLUTION CHARTS -->
-          <h3 style="font-size: 13px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 12px;">
+          <h3 style="font-size: 13px; font-weight: 700; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 14px;">
             📊 Biểu Đồ So Sánh Trực Quan High-DPI
           </h3>
           
-          <div style="margin-bottom: 16px; text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; background: #fafafa;">
-            <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 8px;">So Sánh Chi Phí 2 Năm (Long Vân vs ${competitorName})</div>
-            ${barImg ? `<img src="${barImg}" style="width: 100%; max-height: 260px; object-fit: contain;">` : ''}
+          <div style="margin-bottom: 18px; text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; background: #fafafa;">
+            <div style="font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 10px;">So Sánh Chi Phí 2 Năm (Long Vân vs ${competitorName})</div>
+            ${barImg ? `<img src="${barImg}" style="width: 100%; max-height: 280px; object-fit: contain;">` : ''}
           </div>
 
-          <div style="text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; background: #fafafa;">
-            <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 8px;">Biểu Đồ Vị Thế Cạnh Tranh Market Share</div>
-            ${donutImg ? `<img src="${donutImg}" style="width: 100%; max-height: 200px; object-fit: contain;">` : ''}
+          <div style="text-align: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; background: #fafafa;">
+            <div style="font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 10px;">Biểu Đồ Vị Thế Cạnh Tranh Market Share</div>
+            ${donutImg ? `<img src="${donutImg}" style="width: 100%; max-height: 240px; object-fit: contain;">` : ''}
           </div>
         </div>
 
@@ -1082,7 +1072,7 @@ async function exportExecutivePdf() {
       <!-- PAGE BREAK -->
       <div style="page-break-before: always;"></div>
 
-      <!-- PAGE 2: DETAILED OVERVIEW COMPARISON TABLE -->
+      <!-- PAGE 2: DETAILED OVERVIEW COMPARISON TABLE & AI INSIGHTS -->
       <div style="padding: 36px 40px; min-height: 1060px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
         <div>
           <!-- PAGE 2 HEADER -->
@@ -1092,7 +1082,7 @@ async function exportExecutivePdf() {
           </div>
 
           <!-- COMPARISON TABLE -->
-          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 18px; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden;">
             <thead>
               <tr style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 700; text-align: left;">
                 <th style="padding: 8px 10px;">Tên TLD</th>
@@ -1108,11 +1098,17 @@ async function exportExecutivePdf() {
           </table>
 
           <!-- NOTES CARD -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-size: 10px; color: #475569;">
-            <strong>📌 Ghi chú nghiệp vụ:</strong>
-            <ul style="margin: 4px 0 0 0; padding-left: 16px; line-height: 1.5;">
-              <li>Tất cả đơn giá đã bao gồm các khoản thuế VAT và phí dịch vụ nhà nước theo quy định hiện hành.</li>
-              <li>Vị thế giá được tính toán dựa trên tổng chi phí sở hữu 2 năm (Giá năm 1 + Giá năm 2).</li>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 10px; color: #475569; margin-bottom: 18px;">
+            <strong>📌 Ghi chú nghiệp vụ:</strong> Tất cả đơn giá đã bao gồm thuế VAT & phí nhà nước. Vị thế dựa trên tổng chi phí sở hữu 2 năm.
+          </div>
+
+          <!-- EXECUTIVE SUMMARY HIGHLIGHTS (MOVED TO BOTTOM OF PAGE 2) -->
+          <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-left: 5px solid #0284c7; border-radius: 8px; padding: 14px;">
+            <h3 style="color: #0369a1; font-size: 13px; font-weight: 700; margin: 0 0 8px 0;">
+              🧠 Tóm Tắt Khuyến Nghị Chiến Lược Từ Gemini AI
+            </h3>
+            <ul style="margin: 0; padding-left: 18px; font-size: 11px; line-height: 1.6; color: #0c4a6e;">
+              ${aiLines.length ? aiLines.map(line => `<li>${line}</li>`).join('') : '<li>Hệ thống đang tích lũy dữ liệu lịch sử để xuất khuyến nghị chiến lược tiếp theo.</li>'}
             </ul>
           </div>
         </div>

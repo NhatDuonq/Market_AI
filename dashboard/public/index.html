@@ -143,38 +143,6 @@
       </div>
       <div class="kpi-sublabel" id="kpiMetricSublabel">(Tiêu chí: Tổng Chi Phí 2 Năm)</div>
 
-      <!-- INSIGHTS CARD (AI RECOMMENDATIONS) -->
-      <style>
-        @keyframes spinIcon {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .spinning-icon {
-          animation: spinIcon 1s linear infinite;
-          display: inline-block;
-        }
-      </style>
-      <div class="card ai-card">
-        <div class="card-header-ai" style="display: flex; justify-content: space-between; align-items: center;">
-          <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="toggleAiSummary()">
-            <h3 style="margin: 0;">🧠 Phân Tích & Đề Xuất Chiến Lược Từ Gemini AI</h3>
-            <span class="badge-ai">AI Insights</span>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <button id="btnRefreshAi" type="button" onclick="forceRefreshAi(event)" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;" title="Bỏ qua Cache và yêu cầu Gemini AI phân tích lại tươi mới">
-              <span id="aiRefreshIcon" style="display: inline-block;">🔄</span>
-              <span id="aiRefreshText">Phân tích lại</span>
-            </button>
-            <button id="btnToggleAi" type="button" onclick="toggleAiSummary()" style="background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); padding: 5px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
-              👁️ Thu gọn
-            </button>
-          </div>
-        </div>
-        <div id="aiSummary" class="ai-body" style="margin-top: 14px;">
-          <p class="text-muted">Đang tải phân tích AI...</p>
-        </div>
-      </div>
-
       <p class="update-time" id="updateTime"></p>
 
       <!-- CHARTS ROW -->
@@ -207,6 +175,38 @@
             </thead>
             <tbody></tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- INSIGHTS CARD (AI RECOMMENDATIONS - MOVED TO BOTTOM) -->
+      <style>
+        @keyframes spinIcon {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .spinning-icon {
+          animation: spinIcon 1s linear infinite;
+          display: inline-block;
+        }
+      </style>
+      <div class="card ai-card" style="margin-top: 24px;">
+        <div class="card-header-ai" style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="toggleAiSummary()">
+            <h3 style="margin: 0;">🧠 Phân Tích & Đề Xuất Chiến Lược Từ Gemini AI</h3>
+            <span class="badge-ai">AI Insights</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button id="btnRefreshAi" type="button" onclick="forceRefreshAi(event)" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px;" title="Bỏ qua Cache và yêu cầu Gemini AI phân tích lại tươi mới">
+              <span id="aiRefreshIcon" style="display: inline-block;">🔄</span>
+              <span id="aiRefreshText">Phân tích lại</span>
+            </button>
+            <button id="btnToggleAi" type="button" onclick="toggleAiSummary()" style="background: rgba(255,255,255,0.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15); padding: 5px 12px; font-size: 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
+              👁️ Thu gọn
+            </button>
+          </div>
+        </div>
+        <div id="aiSummary" class="ai-body" style="margin-top: 14px;">
+          <p class="text-muted">Đang tải phân tích AI...</p>
         </div>
       </div>
     </section>
@@ -491,6 +491,6 @@
 
   <!-- LIBRARIES FOR PDF EXPORT & APP JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="/js/app.js?v=3.5"></script>
+  <script src="/js/app.js?v=4.0"></script>
 </body>
 </html>
