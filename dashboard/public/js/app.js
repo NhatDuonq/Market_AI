@@ -547,8 +547,9 @@ const PROVIDER_BASE_URLS = {
 function getCompetitorDeepLink(providerKey, tld = '') {
   const baseUrl = PROVIDER_BASE_URLS[providerKey] || PROVIDER_BASE_URLS.matbao;
   if (!tld) return baseUrl;
-  // W3C Text Fragment URL: #:~:text=.vn or #:~:text=.com.vn
-  return `${baseUrl}#:~:text=${encodeURIComponent(tld)}`;
+  // W3C Text Fragment Range URL: #:~:text=.tld,đ
+  // Highlights the ENTIRE row from TLD name to price unit 'đ'!
+  return `${baseUrl}#:~:text=${encodeURIComponent(tld)},%C4%91`;
 }
 
 // ============================================================
