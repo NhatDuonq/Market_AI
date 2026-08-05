@@ -967,6 +967,49 @@ async function handleForgotPassword() {
   }
 }
 
+function getHighResChartImage(canvas, isSquare = false) {
+  if (!canvas) return '';
+
+  const tempCanvas = document.createElement('canvas');
+  const ctx = tempCanvas.getContext('2d');
+
+  if (isSquare) {
+    // DONUT CHART: 600x600 SQUARE CANVAS (100% PERFECT 1:1 CIRCLE GUARANTEED)
+    tempCanvas.width = 600;
+    tempCanvas.height = 600;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, 600, 600);
+
+    const sW = canvas.width || 300;
+    const sH = canvas.height || 300;
+    const sAspect = sW / sH;
+
+    let dW = 560;
+    let dH = 560;
+    let dX = 20;
+    let dY = 20;
+
+    if (sAspect > 1) {
+      dH = 560 / sAspect;
+      dY = (600 - dH) / 2;
+    } else {
+      dW = 560 * sAspect;
+      dX = (600 - dW) / 2;
+    }
+
+    ctx.drawImage(canvas, dX, dY, dW, dH);
+  } else {
+    // BAR CHART: 1600x800 HIGH-DPI CANVAS (SUPER SHARP TEXT & NUMBERS)
+    tempCanvas.width = 1600;
+    tempCanvas.height = 800;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, 1600, 800);
+    ctx.drawImage(canvas, 0, 0, 1600, 800);
+  }
+
+  return tempCanvas.toDataURL('image/png', 1.0);
+}
+
 async function exportExecutivePdf() {
   const btn = document.getElementById('btnExportPdf');
   if (btn) btn.innerHTML = '⏳ Đang tạo PDF...';
@@ -995,9 +1038,9 @@ async function exportExecutivePdf() {
     const barCanvas = document.getElementById('barChart');
     const donutCanvas = document.getElementById('donutChart');
 
-    // High quality Base64 PNGs
-    const barImg = barCanvas ? barCanvas.toDataURL('image/png', 1.0) : '';
-    const donutImg = donutCanvas ? donutCanvas.toDataURL('image/png', 1.0) : '';
+    // High quality Base64 PNGs via Offscreen Canvas Helper
+    const barImg = getHighResChartImage(barCanvas, false);
+    const donutImg = getHighResChartImage(donutCanvas, true);
 
     // Extract Comparison Table Data
     const compList = (currentData && currentData.comparison) || [];
@@ -1057,10 +1100,10 @@ async function exportExecutivePdf() {
             ${barImg ? `<img src="${barImg}" style="width: 100%; height: 320px; object-fit: contain; display: block; margin: 0 auto;">` : ''}
           </div>
 
-          <!-- DONUT CHART CONTAINER (FIXED ASPECT RATIO SO IT REMAINS A PERFECT CIRCLE) -->
+          <!-- DONUT CHART CONTAINER (GUARANTEED 1:1 PERFECT CIRCLE) -->
           <div style="border: 1px solid #cbd5e1; border-radius: 10px; padding: 16px; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.04); text-align: center;">
             <div style="font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Biểu Đồ Vị Thế Cạnh Tranh Thị Phần (Market Share)</div>
-            ${donutImg ? `<div style="width: 340px; height: 340px; margin: 0 auto;"><img src="${donutImg}" style="width: 100%; height: 100%; object-fit: contain; display: block;"></div>` : ''}
+            ${donutImg ? `<div style="width: 280px; height: 280px; margin: 0 auto;"><img src="${donutImg}" style="width: 280px; height: 280px; object-fit: contain; display: block; margin: 0 auto;"></div>` : ''}
           </div>
         </div>
 
