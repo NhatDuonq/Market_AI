@@ -546,7 +546,7 @@ function renderDonutChart(data, metric) {
 const PROVIDER_BASE_URLS = {
   matbao: 'https://www.matbao.net/ten-mien/bang-gia-ten-mien.html',
   pavietnam: 'https://www.pavietnam.vn/vn/bang-gia-ten-mien.html',
-  longvan: 'https://longvan.net/ten-mien-viet-nam.html',
+  longvan: 'https://longvan.net/domain',
 };
 
 function getCompetitorDeepLink(providerKey, tld = '') {
@@ -555,6 +555,13 @@ function getCompetitorDeepLink(providerKey, tld = '') {
   // W3C Text Fragment Range URL: #:~:text=.tld,đ
   // Highlights the ENTIRE row from TLD name to price unit 'đ'!
   return `${baseUrl}#:~:text=${encodeURIComponent(tld)},%C4%91`;
+}
+
+function getLongvanDeepLink(tld = '') {
+  const baseUrl = PROVIDER_BASE_URLS.longvan;
+  if (!tld) return baseUrl;
+  // Long Vân dùng text fragment đơn (không range) để highlight chính xác TLD
+  return `${baseUrl}#:~:text=${encodeURIComponent(tld)}`;
 }
 
 // ============================================================
@@ -576,12 +583,13 @@ function renderRiskTable(data, competitorName) {
 
   tbody.innerHTML = risks.map(r => {
     const deepLink = getCompetitorDeepLink(compKey, r.tld);
+    const lvDeepLink = getLongvanDeepLink(r.tld);
     return `
     <tr>
       <td><strong>${r.tld}</strong></td>
       <td>${r.field}</td>
       <td><a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="color:#f87171; text-decoration:underline; font-weight:700;" title="Nhấp để tự động cuộn tô vàng vị trí ${r.tld} trên web ${competitorName}">${formatVND(r.competitor_price)} ↗</a></td>
-      <td>${formatVND(r.longvan_price)}</td>
+      <td><a href="${lvDeepLink}" target="_blank" rel="noopener noreferrer" style="color:#34d399; text-decoration:underline; font-weight:700;" title="Nhấp để xem vị trí ${r.tld} trên web Long Vân">${formatVND(r.longvan_price)} ↗</a></td>
       <td class="status-cheaper">${formatVND(r.diff_amount)}</td>
       <td class="status-cheaper">${formatPct(r.diff_pct)}</td>
     </tr>
@@ -650,15 +658,13 @@ function renderFullTable(data, competitorName) {
   const tbody = document.querySelector('#fullTable tbody');
 
   if (!items.length) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;padding:24px;">Không tìm thấy kết quả</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:24px;">Không tìm thấy kết quả</td></tr>';
     document.getElementById('tableCount').textContent = '';
     return;
   }
 
   tbody.innerHTML = items.map(c => {
     const statusClass = c.status === 'CHEAPER' ? 'status-cheaper' : (c.status === 'EXPENSIVE' ? 'status-expensive' : 'status-equal');
-    const statusText = c.status === 'CHEAPER' ? '⚠️ Đối thủ giá thấp hơn'
-      : (c.status === 'EXPENSIVE' ? '✅ LV giá thấp hơn' : '⚖️ Bằng giá');
 
     const fmtComp = c.competitor_price_original && c.competitor_price_original !== c.competitor_price
       ? `<del style="color:#64748b;font-size:11px">${formatVND(c.competitor_price_original)}</del><br>${formatVND(c.competitor_price)}`
@@ -669,6 +675,7 @@ function renderFullTable(data, competitorName) {
       : formatVND(c.longvan_price);
 
     const deepLink = getCompetitorDeepLink(compKey, c.tld);
+    const lvDeepLink = getLongvanDeepLink(c.tld);
 
     return `<tr>
       <td><strong>${c.tld}</strong></td>
@@ -677,10 +684,12 @@ function renderFullTable(data, competitorName) {
       <td>${fmtLV}</td>
       <td class="${statusClass}">${c.diff_amount > 0 ? '+' : ''}${formatVND(c.diff_amount)}</td>
       <td class="${statusClass}">${formatPct(c.diff_pct)}</td>
-      <td class="${statusClass}">${statusText}</td>
       <td style="text-align: center;">
-        <a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Nhấp để tự động cuộn tô vàng vị trí ${c.tld} trên web ${competitorName}">
+        <a href="${deepLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(2, 132, 199, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 4px;" title="Nhấp để tự động cuộn tô vàng vị trí ${c.tld} trên web ${competitorName}">
           🔗 ${competitorName} (${c.tld}) ↗
+        </a>
+        <a href="${lvDeepLink}" target="_blank" rel="noopener noreferrer" style="background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Nhấp để xem vị trí ${c.tld} trên web Long Vân">
+          🏢 Long Vân (${c.tld}) ↗
         </a>
       </td>
     </tr>`;
@@ -969,13 +978,11 @@ async function handleVerifyOtp() {
     body: JSON.stringify({ email, otp_code, otp_type: 'REGISTRATION' })
   });
 
-  if (res && res.token) {
-    localStorage.setItem('authToken', res.accessToken || res.token);
-    if (res.refreshToken) localStorage.setItem('refreshToken', res.refreshToken);
-    localStorage.setItem('authUser', JSON.stringify(res.user));
-    hideAuthModal();
-    showToast('🎉 Xác thực tài khoản thành công!', 'success');
-    loadDashboard();
+  if ((res && res.token) || (res && res.success)) {
+    // Sau khi xác thực OTP đăng ký thành công → ép quay lại form Đăng Nhập
+    // KHÔNG tự động đăng nhập để đảm bảo quy trình bảo mật
+    showToast('🎉 Xác thực tài khoản thành công! Vui lòng đăng nhập để tiếp tục.', 'success');
+    switchAuthForm('login');
   } else if (res && res.error) {
     showToast(`⚠️ ${res.error}`, 'error');
   }
