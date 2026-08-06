@@ -24,8 +24,6 @@ crawl_lock = threading.Lock()
 
 def execute_run_all_job(force_notify=True, ignore_toggle=True):
     global is_crawling
-    with crawl_lock:
-        is_crawling = True
     try:
         run_all(force_notify=force_notify, ignore_toggle=ignore_toggle)
     finally:
@@ -39,18 +37,24 @@ def get_status():
 @app.route("/trigger/all", methods=["POST"])
 def trigger_all():
     """Trigger quét tất cả ngay lập tức (chạy ngầm trong thread riêng)"""
-    if is_crawling:
-        return jsonify({"status": "running", "message": "Crawler đang chạy..."}), 429
+    global is_crawling
+    with crawl_lock:
+        if is_crawling:
+            return jsonify({"status": "running", "message": "Crawler đang chạy..."}), 429
+        is_crawling = True
     threading.Thread(target=execute_run_all_job, kwargs={"force_notify": True, "ignore_toggle": True}).start()
     return jsonify({"status": "success", "message": "Đã kích hoạt quét tất cả mục tiêu."}), 200
 
 @app.route("/trigger/<provider>/<product>", methods=["POST"])
 def trigger_specific(provider, product):
     """Trigger quét mục tiêu cụ thể ngay lập tức"""
+    global is_crawling
+    with crawl_lock:
+        if is_crawling:
+            return jsonify({"status": "running", "message": "Crawler đang chạy..."}), 429
+        is_crawling = True
     def _task():
         global is_crawling
-        with crawl_lock:
-            is_crawling = True
         try:
             run_specific(provider, product, ignore_toggle=True, force_notify=True)
         finally:

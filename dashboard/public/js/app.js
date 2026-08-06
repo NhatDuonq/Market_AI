@@ -819,7 +819,7 @@ async function triggerCrawl() {
   const btn = document.getElementById('btnCrawl');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Đang cào...';
-  showToast('Đang chạy crawler, vui lòng chờ...', 'info');
+  showToast('Đang chạy crawler, vui lòng chờ (khoảng 15-30 giây)...', 'info');
 
   try {
     const res = await fetch('/api/crawl', { method: 'POST' });
@@ -832,25 +832,40 @@ async function triggerCrawl() {
       return;
     }
 
-    // Poll for completion
+    let hasStartedRunning = false;
+    const startTime = Date.now();
+
+    // Poll for completion every 2 seconds
     const pollInterval = setInterval(async () => {
-      const status = await fetchJSON('/api/crawl/status');
-      if (status && !status.running) {
+      const status = await fetchJSON(`/api/crawl/status?_t=${Date.now()}`);
+      const elapsedTime = Date.now() - startTime;
+
+      if (status && status.running) {
+        hasStartedRunning = true;
+      }
+
+      // Finished if (1) it was running and now stopped, or (2) 8 seconds elapsed and status is not running
+      const isFinished = (hasStartedRunning && status && !status.running) ||
+                         (!hasStartedRunning && elapsedTime > 8000 && status && !status.running);
+
+      if (isFinished) {
         clearInterval(pollInterval);
         btn.disabled = false;
         btn.innerHTML = 'Crawler Ngay';
-        showToast('Crawler hoàn tất! Đang cập nhật dữ liệu...', 'success');
-        // Force refresh dashboard data and clear AI cache
+        showToast('Crawler hoàn tất! Đang cập nhật dữ liệu mới...', 'success');
+        
+        // Clear AI cache for current competitor and force reload dashboard with fresh timestamp immediately
         delete aiAnalysisCache[getSelectedCompetitor()];
         await loadDashboard(true);
       }
-    }, 3000);
+    }, 2000);
 
     // Safety timeout: 5 minutes max
     setTimeout(() => {
       clearInterval(pollInterval);
       btn.disabled = false;
       btn.innerHTML = 'Crawler Ngay';
+      loadDashboard(true);
     }, 300000);
 
   } catch (e) {
