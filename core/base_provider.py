@@ -152,7 +152,10 @@ class BaseProvider:
         ua = get_random_user_agent()
         print(f"[{self.provider_name}] 🕵️ UA: {ua[:50]}...")
 
-        browser = playwright.chromium.launch(headless=True)
+        browser = playwright.chromium.launch(
+            headless=True,
+            args=['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
+        )
         context = browser.new_context(
             user_agent=ua,
             locale="vi-VN",
