@@ -826,33 +826,32 @@ async function triggerCrawl() {
     const data = await res.json();
 
     if (res.status === 429) {
-      showToast('Crawler đang chạy, vui lòng đợi!', 'error');
-      btn.disabled = false;
-      btn.innerHTML = 'Crawler Ngay';
-      return;
+      showToast('Crawler đang chạy ngầm, tự động đồng bộ khi hoàn tất...', 'info');
     }
 
-    let hasStartedRunning = false;
+    let hasBeenRunning = false;
     const startTime = Date.now();
 
-    // Poll for completion every 2 seconds
+    // Poll for completion every 2 seconds until crawler finishes completely
     const pollInterval = setInterval(async () => {
       const status = await fetchJSON(`/api/crawl/status?_t=${Date.now()}`);
       const elapsedTime = Date.now() - startTime;
 
       if (status && status.running) {
-        hasStartedRunning = true;
+        hasBeenRunning = true;
       }
 
-      // Finished if (1) it was running and now stopped, or (2) 8 seconds elapsed and status is not running
-      const isFinished = (hasStartedRunning && status && !status.running) ||
-                         (!hasStartedRunning && elapsedTime > 8000 && status && !status.running);
+      // Only finish if:
+      // (1) We observed status.running === true, and now status.running === false (crawl completed!)
+      // OR (2) At least 15 seconds have passed and status.running is false (ensures Playwright had time to execute)
+      const isFinished = (hasBeenRunning && status && !status.running) ||
+                         (elapsedTime >= 15000 && status && !status.running);
 
       if (isFinished) {
         clearInterval(pollInterval);
         btn.disabled = false;
         btn.innerHTML = 'Crawler Ngay';
-        showToast('Crawler hoàn tất! Đang cập nhật dữ liệu mới...', 'success');
+        showToast('✅ Crawler hoàn tất! Đã cập nhật dữ liệu và thời gian mới.', 'success');
         
         // Clear AI cache for current competitor and force reload dashboard with fresh timestamp immediately
         delete aiAnalysisCache[getSelectedCompetitor()];

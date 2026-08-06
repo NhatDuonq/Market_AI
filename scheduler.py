@@ -82,7 +82,6 @@ def start_scheduled_loop():
         id="run_all_job",
         name="Quét tất cả nhà cung cấp định kỳ (Silent Mode)",
         replace_existing=True,
-        next_run_time=datetime.now(), # Lần đầu chạy ngay
         **job_kwargs
     )
 

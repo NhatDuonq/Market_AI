@@ -480,112 +480,86 @@ app.get('/api/history/:provider', authenticateToken, (req, res) => {
 
 const http = require('http');
 
-function postScheduler(host, port, pathStr) {
+function callScheduler(method, pathStr) {
   return new Promise((resolve, reject) => {
+    const host = process.env.SCHEDULER_HOST || '127.0.0.1';
     const req = http.request({
       hostname: host,
-      port: port,
+      port: 5001,
       path: pathStr,
-      method: 'POST',
-      timeout: 5000,
+      method: method,
+      timeout: 2000,
       headers: { 'Content-Type': 'application/json' }
     }, (res) => {
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
-        if (res.statusCode === 200) resolve(body);
-        else reject(new Error(`Status ${res.statusCode}: ${body}`));
+        if (res.statusCode === 200 || res.statusCode === 429) {
+          try { resolve(JSON.parse(body)); } catch (e) { resolve({ status: 'ok' }); }
+        } else {
+          reject(new Error(`Scheduler API error ${res.statusCode}`));
+        }
       });
     });
-    req.on('error', reject);
+    req.on('error', (err) => {
+      const altHost = host === '127.0.0.1' ? 'scheduler' : '127.0.0.1';
+      const req2 = http.request({
+        hostname: altHost,
+        port: 5001,
+        path: pathStr,
+        method: method,
+        timeout: 2000,
+        headers: { 'Content-Type': 'application/json' }
+      }, (res2) => {
+        let body2 = '';
+        res2.on('data', chunk => body2 += chunk);
+        res2.on('end', () => {
+          try { resolve(JSON.parse(body2)); } catch (e) { resolve({ status: 'ok' }); }
+        });
+      });
+      req2.on('error', reject);
+      req2.on('timeout', () => { req2.destroy(); reject(err); });
+      req2.end();
+    });
     req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
     req.end();
   });
 }
 
-function getSchedulerStatus(host, port) {
-  return new Promise((resolve, reject) => {
-    const req = http.get({
-      hostname: host,
-      port: port,
-      path: '/status',
-      timeout: 3000
-    }, (res) => {
-      let body = '';
-      res.on('data', chunk => body += chunk);
-      res.on('end', () => {
-        try {
-          resolve(JSON.parse(body));
-        } catch (e) {
-          reject(e);
-        }
-      });
-    });
-    req.on('error', reject);
-    req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
-  });
-}
-
 // Trigger crawler
-let crawlRunning = false;
 app.post('/api/crawl', authenticateToken, async (req, res) => {
-  if (crawlRunning) {
-    return res.status(429).json({ error: 'Crawler đang chạy, vui lòng đợi...' });
-  }
-
-  crawlRunning = true;
-  let triggered = false;
-
-  const hosts = [process.env.SCHEDULER_HOST || 'scheduler', '127.0.0.1', 'localhost'];
-  for (const h of hosts) {
-    try {
-      await postScheduler(h, 5001, '/trigger/all');
-      triggered = true;
-      console.log(`[Dashboard] Kích hoạt cào dữ liệu qua Scheduler API (${h}:5001) thành công.`);
-      break;
-    } catch (e) {
-      // Continue to next host fallback
-    }
-  }
-
-  if (triggered) {
+  try {
+    const result = await callScheduler('POST', '/trigger/all');
+    console.log('[Dashboard] Đã kích hoạt cào dữ liệu qua Scheduler API thành công:', result);
     return res.json({ status: 'started', message: 'Đã kích hoạt cào dữ liệu qua Scheduler!' });
+  } catch (e) {
+    console.warn('[Dashboard] Scheduler API không khả dụng, chuyển sang chạy trực tiếp main.py:', e.message);
+    const { exec } = require('child_process');
+    const mainScript = path.join(__dirname, '..', 'main.py');
+    const cmd = `python3 "${mainScript}" --all --force || python "${mainScript}" --all --force`;
+
+    res.json({ status: 'started', message: 'Đang chạy crawler cho tất cả nhà cung cấp...' });
+
+    exec(cmd, {
+      cwd: path.join(__dirname, '..'),
+      timeout: 300000,
+      env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+    }, (error, stdout) => {
+      if (error) console.error(`Crawler exec error: ${error.message}`);
+      else console.log(`Crawler completed:\n${stdout}`);
+    });
   }
-
-  console.log('[Dashboard] Trực tiếp thực thi main.py bằng child_process exec...');
-  const { exec } = require('child_process');
-  const mainScript = path.join(__dirname, '..', 'main.py');
-  const cmd = `python3 "${mainScript}" --all --force || python "${mainScript}" --all --force`;
-
-  res.json({ status: 'started', message: 'Đang chạy crawler cho tất cả nhà cung cấp...' });
-
-  exec(cmd, {
-    cwd: path.join(__dirname, '..'),
-    timeout: 300000,
-    env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
-  }, (error, stdout, stderr) => {
-    crawlRunning = false;
-    if (error) console.error(`Crawler exec error: ${error.message}`);
-    else console.log(`Crawler completed:\n${stdout}`);
-  });
 });
 
 // Crawler status (check if running)
 app.get('/api/crawl/status', authenticateToken, async (req, res) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  const hosts = [process.env.SCHEDULER_HOST || 'scheduler', '127.0.0.1', 'localhost'];
-  for (const h of hosts) {
-    try {
-      const statusData = await getSchedulerStatus(h, 5001);
-      if (statusData && typeof statusData.running === 'boolean') {
-        crawlRunning = statusData.running;
-        return res.json({ running: statusData.running });
-      }
-    } catch (e) {
-      // Continue to fallback
-    }
+  try {
+    const statusData = await callScheduler('GET', '/status');
+    return res.json({ running: !!(statusData && statusData.running) });
+  } catch (e) {
+    return res.json({ running: false });
   }
-  res.json({ running: crawlRunning });
 });
 
 // SPA fallback
