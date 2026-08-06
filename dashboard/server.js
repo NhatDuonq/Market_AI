@@ -478,77 +478,113 @@ app.get('/api/history/:provider', authenticateToken, (req, res) => {
   }
 });
 
+const http = require('http');
+
+function postScheduler(host, port, pathStr) {
+  return new Promise((resolve, reject) => {
+    const req = http.request({
+      hostname: host,
+      port: port,
+      path: pathStr,
+      method: 'POST',
+      timeout: 5000,
+      headers: { 'Content-Type': 'application/json' }
+    }, (res) => {
+      let body = '';
+      res.on('data', chunk => body += chunk);
+      res.on('end', () => {
+        if (res.statusCode === 200) resolve(body);
+        else reject(new Error(`Status ${res.statusCode}: ${body}`));
+      });
+    });
+    req.on('error', reject);
+    req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
+    req.end();
+  });
+}
+
+function getSchedulerStatus(host, port) {
+  return new Promise((resolve, reject) => {
+    const req = http.get({
+      hostname: host,
+      port: port,
+      path: '/status',
+      timeout: 3000
+    }, (res) => {
+      let body = '';
+      res.on('data', chunk => body += chunk);
+      res.on('end', () => {
+        try {
+          resolve(JSON.parse(body));
+        } catch (e) {
+          reject(e);
+        }
+      });
+    });
+    req.on('error', reject);
+    req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
+  });
+}
+
 // Trigger crawler
 let crawlRunning = false;
-app.post('/api/crawl', authenticateToken, (req, res) => {
+app.post('/api/crawl', authenticateToken, async (req, res) => {
   if (crawlRunning) {
     return res.status(429).json({ error: 'Crawler đang chạy, vui lòng đợi...' });
   }
+
   crawlRunning = true;
+  let triggered = false;
+
+  const hosts = [process.env.SCHEDULER_HOST || 'scheduler', '127.0.0.1', 'localhost'];
+  for (const h of hosts) {
+    try {
+      await postScheduler(h, 5001, '/trigger/all');
+      triggered = true;
+      console.log(`[Dashboard] Kích hoạt cào dữ liệu qua Scheduler API (${h}:5001) thành công.`);
+      break;
+    } catch (e) {
+      // Continue to next host fallback
+    }
+  }
+
+  if (triggered) {
+    return res.json({ status: 'started', message: 'Đã kích hoạt cào dữ liệu qua Scheduler!' });
+  }
+
+  console.log('[Dashboard] Trực tiếp thực thi main.py bằng child_process exec...');
   const { exec } = require('child_process');
   const mainScript = path.join(__dirname, '..', 'main.py');
   const cmd = `python3 "${mainScript}" --all --force || python "${mainScript}" --all --force`;
 
-  res.json({ status: 'started', message: 'Đang chạy crawler cho tất cả nhà cung cấp (bao gồm Long Vân)...' });
+  res.json({ status: 'started', message: 'Đang chạy crawler cho tất cả nhà cung cấp...' });
 
   exec(cmd, {
     cwd: path.join(__dirname, '..'),
-    timeout: 300000, // 5 minutes max
+    timeout: 300000,
     env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
   }, (error, stdout, stderr) => {
     crawlRunning = false;
-    if (error) {
-      console.error(`Crawler error: ${error.message}`);
-    } else {
-      console.log(`Crawler completed:\n${stdout}`);
-    }
-  });
-});
-
-// Send report via Telegram and Email (Smart Dispatch)
-app.post('/api/send-report', authenticateToken, (req, res) => {
-  const { exec } = require('child_process');
-  const sendReportScript = path.join(__dirname, '..', 'scripts', 'send_report.py');
-
-  const channel = req.body.channel || 'all';
-  const cc_emails = req.body.cc_emails || [];
-  const target_email = (req.user && req.user.email) || '';
-
-  const payloadObj = {
-    channel,
-    target_email,
-    cc_emails
-  };
-  const base64Payload = Buffer.from(JSON.stringify(payloadObj), 'utf-8').toString('base64');
-  const cmd = `python3 -X utf8 "${sendReportScript}" --payload "${base64Payload}" || python -X utf8 "${sendReportScript}" --payload "${base64Payload}"`;
-
-  exec(cmd, {
-    cwd: path.join(__dirname, '..'),
-    timeout: 60000,
-    env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
-  }, (error, stdout, stderr) => {
-    if (error && !stdout) {
-      console.error(`Send report error: ${error.message}, stderr: ${stderr}`);
-      return res.status(500).json({ error: `Lỗi gửi báo cáo: ${error.message}` });
-    }
-    try {
-      const jsonLine = (stdout || '').trim().split('\n').filter(l => l.trim().startsWith('{')).pop();
-      if (jsonLine) {
-        const result = JSON.parse(jsonLine.trim());
-        if (result.error) {
-          return res.status(400).json({ error: result.error });
-        }
-        return res.json(result);
-      }
-      res.json({ success: true, message: 'Đã gửi báo cáo thị trường thành công!' });
-    } catch (e) {
-      res.json({ success: true, message: 'Đã gửi báo cáo thị trường thành công!' });
-    }
+    if (error) console.error(`Crawler exec error: ${error.message}`);
+    else console.log(`Crawler completed:\n${stdout}`);
   });
 });
 
 // Crawler status (check if running)
-app.get('/api/crawl/status', authenticateToken, (req, res) => {
+app.get('/api/crawl/status', authenticateToken, async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  const hosts = [process.env.SCHEDULER_HOST || 'scheduler', '127.0.0.1', 'localhost'];
+  for (const h of hosts) {
+    try {
+      const statusData = await getSchedulerStatus(h, 5001);
+      if (statusData && typeof statusData.running === 'boolean') {
+        crawlRunning = statusData.running;
+        return res.json({ running: statusData.running });
+      }
+    } catch (e) {
+      // Continue to fallback
+    }
+  }
   res.json({ running: crawlRunning });
 });
 

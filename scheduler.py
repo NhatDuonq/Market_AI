@@ -19,21 +19,49 @@ INTERVAL_SECONDS = int(os.getenv("CRAWL_INTERVAL_SECONDS", "0"))
 app = Flask(__name__)
 scheduler = BackgroundScheduler()
 
+is_crawling = False
+crawl_lock = threading.Lock()
+
+def execute_run_all_job(force_notify=True, ignore_toggle=True):
+    global is_crawling
+    with crawl_lock:
+        is_crawling = True
+    try:
+        run_all(force_notify=force_notify, ignore_toggle=ignore_toggle)
+    finally:
+        with crawl_lock:
+            is_crawling = False
+
+@app.route("/status", methods=["GET"])
+def get_status():
+    return jsonify({"running": is_crawling}), 200
+
 @app.route("/trigger/all", methods=["POST"])
 def trigger_all():
     """Trigger quét tất cả ngay lập tức (chạy ngầm trong thread riêng)"""
-    threading.Thread(target=run_all).start()
+    if is_crawling:
+        return jsonify({"status": "running", "message": "Crawler đang chạy..."}), 429
+    threading.Thread(target=execute_run_all_job, kwargs={"force_notify": True, "ignore_toggle": True}).start()
     return jsonify({"status": "success", "message": "Đã kích hoạt quét tất cả mục tiêu."}), 200
 
 @app.route("/trigger/<provider>/<product>", methods=["POST"])
 def trigger_specific(provider, product):
     """Trigger quét mục tiêu cụ thể ngay lập tức"""
-    threading.Thread(target=run_specific, args=(provider, product)).start()
+    def _task():
+        global is_crawling
+        with crawl_lock:
+            is_crawling = True
+        try:
+            run_specific(provider, product, ignore_toggle=True, force_notify=True)
+        finally:
+            with crawl_lock:
+                is_crawling = False
+    threading.Thread(target=_task).start()
     return jsonify({"status": "success", "message": f"Đã kích hoạt quét {provider} - {product}."}), 200
 
 def run_morning_report():
     print("☀️ [BẢN TIN SÁNG 8H00] Bắt đầu lượt quét và phát báo cáo sáng cho ban quản trị...")
-    run_all(force_notify=True)
+    execute_run_all_job(force_notify=True, ignore_toggle=True)
 
 def start_scheduled_loop():
     print(f"🚀 [MARKET-AI SCHEDULER] Đã khởi chạy bằng APScheduler.")
