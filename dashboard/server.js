@@ -374,6 +374,9 @@ function compareDomainData(providerKey) {
 
 // Get comparison data for a competitor
 app.get('/api/compare/:provider', authenticateToken, (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   const providerKey = `${req.params.provider}_domain`;
   const result = compareDomainData(providerKey);
   res.json(result);

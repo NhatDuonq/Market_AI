@@ -207,24 +207,29 @@ function showToast(message, type = 'info') {
 // DASHBOARD PAGE
 // ============================================================
 
-async function loadDashboard() {
+async function loadDashboard(forceRefresh = false) {
   const competitor = getSelectedCompetitor();
   const competitorName = getCompetitorName();
 
   // Update header
   document.getElementById('headerCompetitorName').textContent = competitorName;
 
+  if (forceRefresh) {
+    delete aiAnalysisCache[competitor];
+  }
+
   const aiContainer = document.getElementById('aiSummary');
   if (aiContainer && !aiAnalysisCache[competitor]) {
     aiContainer.innerHTML = '<p style="color:#94a3b8; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
   }
 
-  // PARALLEL ASYNC FETCHING FOR MAXIMUM SPEED ⚡
+  // PARALLEL ASYNC FETCHING FOR MAXIMUM SPEED ⚡ (with cache-busting timestamp)
+  const cacheBust = `_t=${Date.now()}`;
   const [data, aiRes] = await Promise.all([
-    fetchJSON(`/api/compare/${competitor}`),
+    fetchJSON(`/api/compare/${competitor}?${cacheBust}`),
     aiAnalysisCache[competitor]
       ? Promise.resolve({ analysis: aiAnalysisCache[competitor] })
-      : fetchJSON(`/api/ai-analysis/${competitor}`)
+      : fetchJSON(`/api/ai-analysis/${competitor}${forceRefresh ? '?force=true' : ''}`)
   ]);
 
   if (!data) return;
@@ -835,8 +840,9 @@ async function triggerCrawl() {
         btn.disabled = false;
         btn.innerHTML = 'Crawler Ngay';
         showToast('Crawler hoàn tất! Đang cập nhật dữ liệu...', 'success');
-        // Auto-refresh dashboard
-        await loadDashboard();
+        // Force refresh dashboard data and clear AI cache
+        delete aiAnalysisCache[getSelectedCompetitor()];
+        await loadDashboard(true);
       }
     }, 3000);
 

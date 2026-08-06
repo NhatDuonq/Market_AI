@@ -63,13 +63,13 @@ def _run_single_target(p: str, prod: str, cls, force_notify: bool = False):
     except Exception as e:
         print(f"❌ Lỗi khi chạy [{p} - {prod}]: {e}")
 
-def run_all(force_notify: bool = False):
-    print(f"🚀 Bắt đầu lượt quét cho TẤT CẢ nhà cung cấp (force_notify={force_notify})...")
+def run_all(force_notify: bool = False, ignore_toggle: bool = False):
+    print(f"🚀 Bắt đầu lượt quét cho TẤT CẢ nhà cung cấp (force_notify={force_notify}, ignore_toggle={ignore_toggle})...")
     import concurrent.futures
 
     # QUAN TRỌNG: Chạy Long Vân (Benchmark) TRƯỚC để cập nhật snapshot chuẩn
     lv_key = ("longvan", "domain")
-    if lv_key in PROVIDERS_REGISTRY and is_target_enabled("longvan", "domain"):
+    if lv_key in PROVIDERS_REGISTRY and (ignore_toggle or is_target_enabled("longvan", "domain")):
         print("📌 [BENCHMARK] Chạy cào Long Vân trước để cập nhật dữ liệu chuẩn...")
         _run_single_target("longvan", "domain", PROVIDERS_REGISTRY[lv_key], force_notify=force_notify)
     
@@ -78,7 +78,7 @@ def run_all(force_notify: bool = False):
     for (p, prod), cls in PROVIDERS_REGISTRY.items():
         if p == "longvan":
             continue  # Đã chạy ở trên
-        if not is_target_enabled(p, prod):
+        if not ignore_toggle and not is_target_enabled(p, prod):
             print(f"⏸️ [SKIP] Bỏ qua [{p.upper()} - {prod.upper()}] (Công tắc cào: TẮT)")
             continue
         tasks.append((p, prod, cls))
@@ -102,8 +102,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.all or (not args.provider and not args.product):
-        run_all()
+        run_all(force_notify=args.force, ignore_toggle=args.force)
     elif args.provider and args.product:
-        run_specific(args.provider, args.product, ignore_toggle=args.force)
+        run_specific(args.provider, args.product, ignore_toggle=args.force, force_notify=args.force)
     else:
         print("⚠️ Vui lòng chỉ định cả --provider và --product (Ví dụ: python main.py -p matbao -prod domain), hoặc dùng --all.")
