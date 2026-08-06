@@ -552,7 +552,7 @@ app.post('/api/crawl', authenticateToken, async (req, res) => {
 });
 
 // Crawler status (check if running)
-app.get('/api/crawl/status', authenticateToken, async (req, res) => {
+app.get('/api/crawl/status', async (req, res) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   try {
     const statusData = await callScheduler('GET', '/status');

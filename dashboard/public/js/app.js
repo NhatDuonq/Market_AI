@@ -154,7 +154,7 @@ async function fetchJSON(url, options = {}) {
     headers['Authorization'] = `Bearer ${token}`;
   }
   try {
-    let res = await fetch(url, { ...options, headers });
+    let res = await fetch(url, { cache: 'no-store', ...options, headers });
 
     // Auto-refresh Access Token via Refresh Token on 401/403
     if (res.status === 401 || res.status === 403) {
@@ -822,7 +822,14 @@ async function triggerCrawl() {
   showToast('Đang chạy crawler, vui lòng chờ (khoảng 15-30 giây)...', 'info');
 
   try {
-    const res = await fetch('/api/crawl', { method: 'POST' });
+    const token = localStorage.getItem('authToken') || '';
+    const res = await fetch('/api/crawl', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     const data = await res.json();
 
     if (res.status === 429) {
@@ -837,15 +844,12 @@ async function triggerCrawl() {
       const status = await fetchJSON(`/api/crawl/status?_t=${Date.now()}`);
       const elapsedTime = Date.now() - startTime;
 
-      if (status && status.running) {
+      if (status && status.running === true) {
         hasBeenRunning = true;
       }
 
-      // Only finish if:
-      // (1) We observed status.running === true, and now status.running === false (crawl completed!)
-      // OR (2) At least 15 seconds have passed and status.running is false (ensures Playwright had time to execute)
-      const isFinished = (hasBeenRunning && status && !status.running) ||
-                         (elapsedTime >= 15000 && status && !status.running);
+      // Strictly check status.running === false (boolean false, not undefined or error object)
+      const isFinished = status && status.running === false && (hasBeenRunning || elapsedTime >= 15000);
 
       if (isFinished) {
         clearInterval(pollInterval);
@@ -853,8 +857,18 @@ async function triggerCrawl() {
         btn.innerHTML = 'Crawler Ngay';
         showToast('✅ Crawler hoàn tất! Đã cập nhật dữ liệu và thời gian mới.', 'success');
         
-        // Clear AI cache for current competitor and force reload dashboard with fresh timestamp immediately
+        // Clear AI cache for current competitor and immediately force update updateTime DOM text
         delete aiAnalysisCache[getSelectedCompetitor()];
+        const fresh = await fetchJSON(`/api/compare/${getSelectedCompetitor()}?_t=${Date.now()}`);
+        if (fresh) {
+          const compName = getCompetitorName();
+          const times = [];
+          if (fresh.competitor_updated_at) times.push(`${compName}: ${fresh.competitor_updated_at}`);
+          if (fresh.longvan_updated_at) times.push(`Long Vân: ${fresh.longvan_updated_at}`);
+          const el = document.getElementById('updateTime');
+          if (el) el.textContent = times.length ? `🕐 Cập nhật: ${times.join(' | ')}` : '';
+        }
+
         await loadDashboard(true);
       }
     }, 2000);
