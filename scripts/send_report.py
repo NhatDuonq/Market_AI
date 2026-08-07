@@ -57,7 +57,7 @@ def main():
     sent_channels = []
     providers = ["matbao", "pavietnam"]
     ss_dir = os.path.join(project_root, "storage", "screenshots")
-    dashboard_url = os.getenv("DASHBOARD_URL", "https://khangthost.io.vn")
+    dashboard_url = os.getenv("DASHBOARD_URL", "https://thitruong.longvan.net")
 
     for p in providers:
         pkey = f"{p}_domain"

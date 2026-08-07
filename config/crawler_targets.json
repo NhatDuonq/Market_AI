@@ -28,5 +28,15 @@
         "enabled": true
       }
     }
+  },
+  "vietnix": {
+    "name": "Vietnix (Vietnix.vn)",
+    "products": {
+      "domain": {
+        "name": "Tên miền",
+        "url": "https://vietnix.vn/bang-gia-ten-mien/",
+        "enabled": true
+      }
+    }
   }
 }

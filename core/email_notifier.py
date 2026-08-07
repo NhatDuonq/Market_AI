@@ -256,7 +256,7 @@ class EmailNotifier:
             """
 
         # DASHBOARD BUTTON & LINK
-        dashboard_url = os.getenv("DASHBOARD_URL", "https://khangthost.io.vn")
+        dashboard_url = os.getenv("DASHBOARD_URL", "https://thitruong.longvan.net")
         html += f"""
                         <div style="text-align:center; margin-top:28px; margin-bottom:12px;">
                             <a href="{dashboard_url}" style="background-color:#2563eb; color:#ffffff; text-decoration:none; padding:12px 28px; border-radius:6px; font-size:14px; font-weight:700; display:inline-block;">🌐 Mở Live Dashboard Xem Chi Tiết</a>

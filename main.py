@@ -13,11 +13,13 @@ import json
 from providers.matbao.domain import MatBaoDomainProvider
 from providers.pavietnam.domain import PaVietnamDomainProvider
 from providers.longvan.domain import LongVanDomainProvider
+from providers.vietnix.domain import VietnixDomainProvider
 
 PROVIDERS_REGISTRY = {
     ("longvan", "domain"): LongVanDomainProvider,
     ("matbao", "domain"): MatBaoDomainProvider,
     ("pavietnam", "domain"): PaVietnamDomainProvider,
+    ("vietnix", "domain"): VietnixDomainProvider,
 }
 
 CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config", "crawler_targets.json")

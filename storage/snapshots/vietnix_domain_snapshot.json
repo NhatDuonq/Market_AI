@@ -1,0 +1,390 @@
+{
+  "updated_at": "2026-08-07 11:37:56",
+  "url": "https://vietnix.vn/bang-gia-ten-mien/",
+  "items": [
+    {
+      "tld": ".vn",
+      "register_price": 558000.0,
+      "renew_price": 458000.0,
+      "transfer_price": 558000.0,
+      "promo_note": "",
+      "register_price_original": 666000.0
+    },
+    {
+      "tld": ".com.vn",
+      "register_price": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 458000.0,
+      "promo_note": "",
+      "register_price_original": 566000.0
+    },
+    {
+      "tld": ".net.vn",
+      "register_price": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 458000.0,
+      "promo_note": "",
+      "register_price_original": 566000.0
+    },
+    {
+      "tld": ".biz.vn",
+      "register_price": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 458000.0,
+      "promo_note": "",
+      "register_price_original": 566000.0
+    },
+    {
+      "tld": ".ai.vn",
+      "register_price": 458000.0,
+      "renew_price": 358000.0,
+      "transfer_price": 458000.0,
+      "promo_note": "",
+      "register_price_original": 566000.0
+    },
+    {
+      "tld": ".org.vn",
+      "register_price": 204000.0,
+      "renew_price": 208000.0,
+      "transfer_price": 204000.0,
+      "promo_note": "",
+      "register_price_original": 366000.0
+    },
+    {
+      "tld": ".edu.vn",
+      "register_price": 204000.0,
+      "renew_price": 208000.0,
+      "transfer_price": 204000.0,
+      "promo_note": "",
+      "register_price_original": 366000.0
+    },
+    {
+      "tld": ".ac.vn",
+      "register_price": 204000.0,
+      "renew_price": 208000.0,
+      "transfer_price": 204000.0,
+      "promo_note": "",
+      "register_price_original": 366000.0
+    },
+    {
+      "tld": ".health.vn",
+      "register_price": 204000.0,
+      "renew_price": 208000.0,
+      "transfer_price": 204000.0,
+      "promo_note": "",
+      "register_price_original": 366000.0
+    },
+    {
+      "tld": ".int.vn",
+      "register_price": 204000.0,
+      "renew_price": 208000.0,
+      "transfer_price": 204000.0,
+      "promo_note": "",
+      "register_price_original": 366000.0
+    },
+    {
+      "tld": ".info.vn",
+      "register_price": 81600.0,
+      "renew_price": 104000.0,
+      "transfer_price": 81600.0,
+      "promo_note": "",
+      "register_price_original": 168000.0
+    },
+    {
+      "tld": ".pro.vn",
+      "register_price": 81600.0,
+      "renew_price": 104000.0,
+      "transfer_price": 81600.0,
+      "promo_note": "",
+      "register_price_original": 168000.0
+    },
+    {
+      "tld": ".id.vn",
+      "register_price": 81600.0,
+      "renew_price": 104000.0,
+      "transfer_price": 81600.0,
+      "promo_note": "",
+      "register_price_original": 168000.0
+    },
+    {
+      "tld": ".name.vn",
+      "register_price": 51600.0,
+      "renew_price": 41600.0,
+      "transfer_price": 51600.0,
+      "promo_note": "",
+      "register_price_original": 55728.0
+    },
+    {
+      "tld": ".io.vn",
+      "register_price": 51600.0,
+      "renew_price": 41600.0,
+      "transfer_price": 51600.0,
+      "promo_note": "",
+      "register_price_original": 55728.0
+    },
+    {
+      "tld": ".com",
+      "register_price": 253800.0,
+      "renew_price": 345600.0,
+      "transfer_price": 253800.0,
+      "promo_note": "",
+      "register_price_original": 300000.0
+    },
+    {
+      "tld": ".net",
+      "register_price": 302400.0,
+      "renew_price": 356400.0,
+      "transfer_price": 302400.0,
+      "promo_note": "",
+      "register_price_original": 330000.0
+    },
+    {
+      "tld": ".info",
+      "register_price": 216000.0,
+      "renew_price": 540000.0,
+      "transfer_price": 216000.0,
+      "promo_note": "",
+      "register_price_original": 500000.0
+    },
+    {
+      "tld": ".org",
+      "register_price": 302400.0,
+      "renew_price": 378000.0,
+      "transfer_price": 302400.0,
+      "promo_note": "",
+      "register_price_original": 350000.0
+    },
+    {
+      "tld": ".biz",
+      "register_price": 410400.0,
+      "renew_price": 432000.0,
+      "transfer_price": 410400.0,
+      "promo_note": "",
+      "register_price_original": 432000.0
+    },
+    {
+      "tld": ".co",
+      "register_price": 648000.0,
+      "renew_price": 702000.0,
+      "transfer_price": 648000.0,
+      "promo_note": "",
+      "register_price_original": 650000.0
+    },
+    {
+      "tld": ".site",
+      "register_price": 108000.0,
+      "renew_price": 810000.0,
+      "transfer_price": 108000.0,
+      "promo_note": "",
+      "register_price_original": 750000.0
+    },
+    {
+      "tld": ".fun",
+      "register_price": 108000.0,
+      "renew_price": 810000.0,
+      "transfer_price": 108000.0,
+      "promo_note": "",
+      "register_price_original": 750000.0
+    },
+    {
+      "tld": ".online",
+      "register_price": 108000.0,
+      "renew_price": 810000.0,
+      "transfer_price": 108000.0,
+      "promo_note": "",
+      "register_price_original": 750000.0
+    },
+    {
+      "tld": ".tech",
+      "register_price": 1188000.0,
+      "renew_price": 1458000.0,
+      "transfer_price": 1188000.0,
+      "promo_note": "",
+      "register_price_original": 1350000.0
+    },
+    {
+      "tld": ".store",
+      "register_price": 1188000.0,
+      "renew_price": 1350000.0,
+      "transfer_price": 1188000.0,
+      "promo_note": "",
+      "register_price_original": 1250000.0
+    },
+    {
+      "tld": ".xyz",
+      "register_price": 108000.0,
+      "renew_price": 378000.0,
+      "transfer_price": 108000.0,
+      "promo_note": "",
+      "register_price_original": 350000.0
+    },
+    {
+      "tld": ".top",
+      "register_price": 108000.0,
+      "renew_price": 313200.0,
+      "transfer_price": 108000.0,
+      "promo_note": "",
+      "register_price_original": 290000.0
+    },
+    {
+      "tld": ".website",
+      "register_price": 108000.0,
+      "renew_price": 702000.0,
+      "transfer_price": 108000.0,
+      "promo_note": "",
+      "register_price_original": 650000.0
+    },
+    {
+      "tld": ".space",
+      "register_price": 108000.0,
+      "renew_price": 734400.0,
+      "transfer_price": 108000.0,
+      "promo_note": "",
+      "register_price_original": 680000.0
+    },
+    {
+      "tld": ".host",
+      "register_price": 216000.0,
+      "renew_price": 2430000.0,
+      "transfer_price": 216000.0,
+      "promo_note": "",
+      "register_price_original": 2250000.0
+    },
+    {
+      "tld": ".press",
+      "register_price": 216000.0,
+      "renew_price": 1890000.0,
+      "transfer_price": 216000.0,
+      "promo_note": "",
+      "register_price_original": 1750000.0
+    },
+    {
+      "tld": ".asia",
+      "register_price": 432000.0,
+      "renew_price": 486000.0,
+      "transfer_price": 432000.0,
+      "promo_note": "",
+      "register_price_original": 450000.0
+    },
+    {
+      "tld": ".pro",
+      "register_price": 669600.0,
+      "renew_price": 669600.0,
+      "transfer_price": 669600.0,
+      "promo_note": "",
+      "register_price_original": 723000.0
+    },
+    {
+      "tld": ".in",
+      "register_price": 702000.0,
+      "renew_price": 702000.0,
+      "transfer_price": 702000.0,
+      "promo_note": "",
+      "register_price_original": 758000.0
+    },
+    {
+      "tld": ".mobi",
+      "register_price": 702000.0,
+      "renew_price": 702000.0,
+      "transfer_price": 702000.0,
+      "promo_note": "",
+      "register_price_original": 758000.0
+    },
+    {
+      "tld": ".tv",
+      "register_price": 864000.0,
+      "renew_price": 864000.0,
+      "transfer_price": 864000.0,
+      "promo_note": "",
+      "register_price_original": 933000.0
+    },
+    {
+      "tld": ".in.net",
+      "register_price": 313200.0,
+      "renew_price": 313200.0,
+      "transfer_price": 313200.0,
+      "promo_note": "",
+      "register_price_original": 338000.0
+    },
+    {
+      "tld": ".com.co",
+      "register_price": 313200.0,
+      "renew_price": 313200.0,
+      "transfer_price": 313200.0,
+      "promo_note": "",
+      "register_price_original": 338000.0
+    },
+    {
+      "tld": ".me",
+      "register_price": 702000.0,
+      "renew_price": 702000.0,
+      "transfer_price": 702000.0,
+      "promo_note": "",
+      "register_price_original": 758000.0
+    },
+    {
+      "tld": ".ltd",
+      "register_price": 626400.0,
+      "renew_price": 626400.0,
+      "transfer_price": 626400.0,
+      "promo_note": "",
+      "register_price_original": 676000.0
+    },
+    {
+      "tld": ".club",
+      "register_price": 410400.0,
+      "renew_price": 410400.0,
+      "transfer_price": 410400.0,
+      "promo_note": "",
+      "register_price_original": 443000.0
+    },
+    {
+      "tld": ".world",
+      "register_price": 788400.0,
+      "renew_price": 788400.0,
+      "transfer_price": 788400.0,
+      "promo_note": "",
+      "register_price_original": 851000.0
+    },
+    {
+      "tld": ".cloud",
+      "register_price": 496800.0,
+      "renew_price": 496800.0,
+      "transfer_price": 496800.0,
+      "promo_note": "",
+      "register_price_original": 536000.0
+    },
+    {
+      "tld": ".vip",
+      "register_price": 453600.0,
+      "renew_price": 453600.0,
+      "transfer_price": 453600.0,
+      "promo_note": "",
+      "register_price_original": 489000.0
+    },
+    {
+      "tld": ".blog",
+      "register_price": 864000.0,
+      "renew_price": 864000.0,
+      "transfer_price": 864000.0,
+      "promo_note": "",
+      "register_price_original": 933000.0
+    },
+    {
+      "tld": ".dev",
+      "register_price": 529200.0,
+      "renew_price": 529200.0,
+      "transfer_price": 529200.0,
+      "promo_note": "",
+      "register_price_original": 571000.0
+    },
+    {
+      "tld": ".io",
+      "register_price": 1555200.0,
+      "renew_price": 1555200.0,
+      "transfer_price": 1555200.0,
+      "promo_note": "",
+      "register_price_original": 1679000.0
+    }
+  ]
+}

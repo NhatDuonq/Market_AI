@@ -5,6 +5,7 @@
 const COMPETITOR_NAMES = {
   matbao: 'Mắt Bão',
   pavietnam: 'PA Việt Nam',
+  vietnix: 'Vietnix',
 };
 
 let currentData = null;
@@ -551,15 +552,20 @@ function renderDonutChart(data, metric) {
 const PROVIDER_BASE_URLS = {
   matbao: 'https://www.matbao.net/ten-mien/bang-gia-ten-mien.html',
   pavietnam: 'https://www.pavietnam.vn/vn/bang-gia-ten-mien.html',
+  vietnix: 'https://vietnix.vn/bang-gia-ten-mien/',
   longvan: 'https://longvan.net/domain',
 };
 
 function getCompetitorDeepLink(providerKey, tld = '') {
   const baseUrl = PROVIDER_BASE_URLS[providerKey] || PROVIDER_BASE_URLS.matbao;
   if (!tld) return baseUrl;
+  
+  // Vietnix renders TLD labels in UPPERCASE (.VN, .COM.VN, .COM) in the HTML table
+  const formattedTld = providerKey === 'vietnix' ? tld.toUpperCase() : tld.toLowerCase();
+  
   // W3C Text Fragment Range URL: #:~:text=.tld,đ
   // Highlights the ENTIRE row from TLD name to price unit 'đ'!
-  return `${baseUrl}#:~:text=${encodeURIComponent(tld)},%C4%91`;
+  return `${baseUrl}#:~:text=${encodeURIComponent(formattedTld)},%C4%91`;
 }
 
 function getLongvanDeepLink(tld = '') {
@@ -1187,7 +1193,7 @@ async function exportExecutivePdf() {
 
         <!-- FOOTER PAGE 1 -->
         <div style="border-top: 1px solid #cbd5e1; padding-top: 12px; font-size: 11px; color: #64748b; font-weight: 600; display: flex; justify-content: space-between;">
-          <span>Market AI Engine &bull; Long Vân Cloud Solution (https://khangthost.io.vn)</span>
+          <span>Market AI Engine &bull; Long Vân Cloud Solution (https://thitruong.longvan.net)</span>
           <span>Trang 1 / 2</span>
         </div>
       </div>
@@ -1238,7 +1244,7 @@ async function exportExecutivePdf() {
 
         <!-- FOOTER PAGE 2 -->
         <div style="border-top: 1px solid #cbd5e1; padding-top: 12px; font-size: 11px; color: #64748b; font-weight: 600; display: flex; justify-content: space-between;">
-          <span>Xác thực bởi Market AI Engine &bull; https://khangthost.io.vn</span>
+          <span>Xác thực bởi Market AI Engine &bull; https://thitruong.longvan.net</span>
           <span>Trang 2 / 2</span>
         </div>
       </div>

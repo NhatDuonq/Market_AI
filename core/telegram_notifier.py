@@ -113,7 +113,7 @@ class TelegramNotifier:
         """
         lines = []
         clean_pname = provider_name.split("(")[0].strip().upper()
-        dashboard_url = os.getenv("DASHBOARD_URL", "https://khangthost.io.vn")
+        dashboard_url = os.getenv("DASHBOARD_URL", "https://thitruong.longvan.net")
 
         if is_demo:
             lines.append("⚠️ *[BẢN TIN GIẢ LẬP DEMO]*")
