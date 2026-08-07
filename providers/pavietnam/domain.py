@@ -157,10 +157,14 @@ class PaVietnamDomainProvider(BaseProvider):
                 page.goto(self.base_url, timeout=45000, wait_until="domcontentloaded")
                 page.wait_for_timeout(random.randint(3000, 5000))
 
-                # Chụp screenshot
+                # Chụp screenshot ngay tại vị trí Bảng Giá Tên Miền
                 try:
+                    table_loc = page.locator("table").first
+                    if table_loc.count() > 0:
+                        table_loc.scroll_into_view_if_needed()
+                        page.wait_for_timeout(500)
                     page.screenshot(path=screenshot_path, full_page=False)
-                    print(f"📸 Đã chụp ảnh màn hình giao diện: {screenshot_path}")
+                    print(f"📸 Đã chụp ảnh màn hình giao diện bảng giá: {screenshot_path}")
                 except Exception as e_ss:
                     print(f"⚠️ Không thể chụp screenshot: {e_ss}")
 

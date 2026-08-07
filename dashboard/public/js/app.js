@@ -559,12 +559,17 @@ function getCompetitorDeepLink(providerKey, tld = '') {
   const baseUrl = PROVIDER_BASE_URLS[providerKey] || PROVIDER_BASE_URLS.matbao;
   if (!tld) return baseUrl;
   
-  // Vietnix renders TLD labels in UPPERCASE (.VN, .COM.VN, .COM) in the HTML table
-  const formattedTld = providerKey === 'vietnix' ? tld.toUpperCase() : tld.toLowerCase();
+  const cleanTld = tld.toLowerCase();
+  
+  if (providerKey === 'vietnix') {
+    // W3C Text Fragment Range URL for Vietnix: #:~:text=.tld,Mi%E1%BB%85n%20ph%C3%AD
+    // Matches from '.vn' to 'Miễn phí' at end of Vietnix pricing table row!
+    return `${baseUrl}#:~:text=${encodeURIComponent(cleanTld)},Mi%E1%BB%85n%20ph%C3%AD`;
+  }
   
   // W3C Text Fragment Range URL: #:~:text=.tld,đ
   // Highlights the ENTIRE row from TLD name to price unit 'đ'!
-  return `${baseUrl}#:~:text=${encodeURIComponent(formattedTld)},%C4%91`;
+  return `${baseUrl}#:~:text=${encodeURIComponent(cleanTld)},%C4%91`;
 }
 
 function getLongvanDeepLink(tld = '') {
