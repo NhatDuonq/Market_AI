@@ -71,6 +71,12 @@ function runAuthPy(method, argsObj, cb) {
   });
 }
 
+// Favicon fallback
+app.get('/favicon.ico', (req, res) => {
+  res.setHeader('Content-Type', 'image/svg+xml');
+  res.sendFile(path.join(__dirname, 'public', 'favicon.svg'));
+});
+
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
