@@ -1,6 +1,6 @@
 # 🚀 Market AI Engine — Competitive Market Intelligence & Pricing Tracker
 
-**Market AI Engine** là hệ thống tự động hóa toàn diện giúp giám sát, phân tích biến động giá và đối soát chiến lược giá tên miền 3 chiều giữa **LONG VÂN CLOUD (Benchmark)** và các đối thủ trực tiếp (**Mắt Bão**, **PA Việt Nam**). 
+**Market AI Engine** là hệ thống tự động hóa toàn diện giúp giám sát, phân tích biến động giá và đối soát chiến lược giá tên miền 3 chiều giữa **LONG VÂN CLOUD (Benchmark)** và các đối thủ trực tiếp (**Vietnix**, **PA Việt Nam**, **Mắt Bão**). 
 
 Hệ thống tích hợp trí tuệ nhân tạo **Gemini 2.5 Flash AI**, công nghệ cào dữ liệu tự động **Playwright Anti-Detect Headless**, giao diện **Dashboard trực quan (Express/REST API)** và hệ thống **Cảnh báo Kép Đa Kênh (Email Light Theme + Telegram Bot)**.
 
@@ -23,7 +23,7 @@ Hệ thống tích hợp trí tuệ nhân tạo **Gemini 2.5 Flash AI**, công n
 
 ## ✨ TÍNH NĂNG CỐT LÕI
 
-- 🕷️ **Playwright Anti-Detect Scraping**: Giả lập trình duyệt Chromium thực tế, bóc tách chính xác 100% các ô bảng giá phức tạp, giá khuyến mãi năm 1, phí gia hạn ẩn trong Tooltipster (`512.000đ` PA Việt Nam) và tự động chụp ảnh màn hình làm bằng chứng đối soát.
+- 🕷️ **Playwright Anti-Detect Scraping**: Giả lập trình duyệt Chromium thực tế, bóc tách chính xác 100% các ô bảng giá phức tạp, giá gốc gạch ngang (`register_price_original`), giá khuyến mãi thực tế (`register_price`), phí gia hạn ẩn trong Tooltipster (`512.000đ` PA Việt Nam) và tự động cuộn chụp ảnh màn hình bảng giá làm bằng chứng đối soát.
 - 📐 **Động cơ Đối soát 3 Chiều (3-Way Diff Engine)**:
   - **Giá Đăng Ký (Năm 1)**.
   - **Giá Gia Hạn Hàng Năm (Từ năm 2)**.
@@ -33,7 +33,8 @@ Hệ thống tích hợp trí tuệ nhân tạo **Gemini 2.5 Flash AI**, công n
 - 📬 **Cảnh Báo Kép Thông Minh (Hybrid Multi-Channel)**:
   - ☀️ **Bản tin sáng 8h00**: Phát báo cáo tổng quan vị thế toàn thị trường + xác nhận hệ thống sống khỏe 24/7.
   - 🚨 **Cảnh báo tức thì 24/7 (Silent Mode)**: Quét ngầm mỗi 30 phút. Chỉ phát tin báo về Email & Telegram ngay khi có đối thủ điều chỉnh giá hoặc ra mắt TLD mới.
-- 💻 **Dashboard Quản Trị Đa Tiêu Chí**: Giao diện sáng chuẩn Doanh nghiệp, chọn bộ lọc tiêu chí so sánh, xem biểu đồ vị thế, chi tiết từng TLD và nút trigger cào dữ liệu/gửi báo cáo tức thì.
+- 💻 **Dashboard Quản Trị Đa Tiêu Chí (<20ms Instant UI)**: Giao diện tối màu chuẩn Doanh nghiệp, chọn bộ lọc tiêu chí so sánh, xem biểu đồ vị thế, chi tiết từng TLD, xem ảnh đối soát bằng cửa sổ **Lightbox Zoom** và nút trigger cào dữ liệu/gửi báo cáo tức thì.
+- 🎯 **W3C Deep Link Text Fragment**: Tự động cuộn đến chính xác dòng tên miền và tô vàng rực rỡ khi nhấp vào link đối thủ (`vietnix.vn`, `pavietnam.vn`, `matbao.net`).
 - 🐳 **Đóng Gói Docker & CI/CD**: Hỗ trợ Docker Compose kép (Python + Node.js) và tự động Deploy lên VPS thông qua GitHub Actions.
 
 ---
@@ -44,8 +45,8 @@ Hệ thống tích hợp trí tuệ nhân tạo **Gemini 2.5 Flash AI**, công n
 graph TD
     A[Scheduler / APScheduler] -->|30 Phút/lần| B[Python Scraper Engine]
     A -->|Cron 08:00 AM| B
-    B -->|Playwright Chromium| C[Web Đối Thủ: PA Việt Nam, Mắt Bão, Long Vân]
-    C -->|Extract HTML & Tooltips| D[Snapshot Storage & History]
+    B -->|Playwright Chromium| C[Web Đối Thủ: Vietnix, PA Việt Nam, Mắt Bão, Long Vân]
+    C -->|Extract HTML & Screenshots| D[Snapshot Storage & History]
     D --> E[Diff Engine 3-Way Comparison]
     E --> F[Gemini 2.5 Flash AI Engine]
     F -->|Xuất Kế Hoạch 4 Bước| G{Smart Notification Router}
@@ -82,14 +83,15 @@ Hệ thống không chỉ so sánh giá năm đầu (vốn thường bị làm m
 $$\text{Tổng chi phí 2 năm} = \text{Giá Đăng Ký Năm 1} + \text{Giá Gia Hạn Từ Năm 2}$$
 
 Ví dụ thực tế TLD `.vn`:
+* **Vietnix**: Đăng ký 558.000đ (Giá gốc 666.000đ) + Gia hạn 458.000đ = **1.016.000đ / 2 năm**.
 * **PA Việt Nam**: Đăng ký 450.000đ + Gia hạn 512.000đ = **962.000đ / 2 năm**.
 * **Long Vân**: Đăng ký 450.000đ + Gia hạn 460.000đ = **910.000đ / 2 năm**.
-* ➔ **Vị thế**: Long Vân tiết kiệm hơn PA Việt Nam **52.000đ/năm**.
+* ➔ **Vị thế**: Long Vân tiết kiệm hơn Vietnix **106.000đ / 2 năm**.
 
 ### 2. Kế hoạch Hành động 4 Bước của AI (Step-by-Step Action Plan)
 Gemini AI nhận dữ liệu đối soát và trả về JSON chứa kế hoạch hành động:
 * **Bước 1 [Chính sách Giá đối ứng]**: Đề xuất mức voucher / giảm giá cho nhóm TLD bị đối thủ ép giá.
-* **Bước 2 [Chiến dịch Marketing]**: Đưa ra thông điệp truyền thông cốt lõi (Ví dụ: *"Gia hạn .vn tại Long Vân giá thấp hơn đối thủ 52.000đ/năm"*).
+* **Bước 2 [Chiến dịch Marketing]**: Đưa ra thông điệp truyền thông cốt lõi.
 * **Bước 3 [Đóng gói Combo Dịch vụ]**: Tặng kèm Voucher Cloud Hosting / Email Server Pro 1GB.
 * **Bước 4 [Đo lường & Kiểm soát]**: Thời gian đánh giá tỷ lệ chuyển đổi sau 14 - 30 ngày.
 
@@ -108,7 +110,7 @@ market-ai/
 ├── main.py                     # CLI Orchestrator cào dữ liệu
 ├── scheduler.py                # Service APScheduler chạy ngầm 24/7 & 8h sáng
 ├── config/
-│   └── crawler_targets.json    # Công tắc bật/tắt mục tiêu cào
+│   └── crawler_targets.json    # Công tắc bật/tắt mục tiêu cào (longvan, matbao, pavietnam, vietnix)
 ├── core/
 │   ├── base_provider.py        # Lớp cơ sở Playwright Anti-Detect Browser
 │   ├── diff_engine.py          # Lõi so sánh 3-way & TLD availability
@@ -118,16 +120,19 @@ market-ai/
 ├── providers/
 │   ├── longvan/domain.py       # Scraper Benchmark Long Vân
 │   ├── matbao/domain.py        # Scraper đối thủ Mắt Bão
-│   └── pavietnam/domain.py     # Scraper đối thủ PA Việt Nam (Bóc tách Tooltipster API)
+│   ├── pavietnam/domain.py     # Scraper đối thủ PA Việt Nam
+│   └── vietnix/domain.py       # Scraper đối thủ Vietnix (Tách giá gốc & giá KM)
 ├── dashboard/
 │   ├── server.js               # Node.js Express REST API Server
 │   └── public/                 # Giao diện Web Dashboard (HTML5, Vanilla CSS, JS)
-├── storage/                    # Persistent Storage Volume
-│   ├── snapshots/              # File lưu giá JSON hiện tại & lịch sử
-│   ├── screenshots/            # Ảnh chụp bằng chứng giao diện đối thủ
-│   └── ai_cache/               # Cache câu trả lời AI
-└── .github/workflows/
-    └── deploy.yml              # Pipeline CI/CD tự động Deploy VPS
+├── tests/
+│   └── test_phase1_e2e.py      # Bộ kiểm thử tự động E2E toàn bộ hệ thống Phase 1
+├── scripts/
+│   └── send_report.py          # CLI phát báo cáo khẩn cấp qua Email & Telegram
+└── storage/                    # Persistent Storage Volume
+    ├── snapshots/              # File lưu giá JSON hiện tại & lịch sử
+    ├── screenshots/            # Ảnh chụp bằng chứng giao diện đối thủ
+    └── ai_cache/               # Cache câu trả lời AI
 ```
 
 ---
@@ -137,6 +142,9 @@ market-ai/
 Tạo file `.env` ở thư mục gốc từ `.env.example`:
 
 ```env
+# DÀNH CHO DASHBOARD & NOTIFIER
+DASHBOARD_URL=https://thitruong.longvan.net
+
 # MÚI GIỜ
 TZ=Asia/Ho_Chi_Minh
 
@@ -157,12 +165,6 @@ GEMINI_API_KEY=your_gemini_api_key
 
 # TẦN SUẤT QUÉT
 CRAWL_INTERVAL_MINUTES=30
-CRAWL_INTERVAL_SECONDS=0    # Đặt > 0 khi cần TEST cào 30 giây/lần
-
-# POSTGRESQL DATABASE (Tùy chọn)
-POSTGRES_DB=market_ai
-POSTGRES_USER=market
-POSTGRES_PASSWORD=your_password
 ```
 
 ---
@@ -184,8 +186,8 @@ npm install
 # Quét tất cả nhà cung cấp
 python main.py --all
 
-# Quét riêng PA Việt Nam
-python main.py -p pavietnam -prod domain
+# Quét riêng Vietnix
+python main.py -p vietnix -prod domain --force
 ```
 
 ### 3. Khởi chạy Dashboard Server
@@ -194,40 +196,33 @@ node dashboard/server.js
 ```
 *Truy cập Dashboard tại:* `http://localhost:3000`
 
-### 4. Khởi chạy Scheduler ngầm
+### 4. Chạy bộ thử nghiệm tự động E2E
 ```bash
-python scheduler.py
+python tests/test_phase1_e2e.py
 ```
 
 ---
 
 ## 🐳 HƯỚNG DẪN TRIỂN KHAI LÊN VPS & CLOUDFLARE
 
-### 1. Đề xuất cấu hình VPS (Ví dụ: Long Vân Cloud Server)
+### 1. Đề xuất cấu hình VPS (Long Vân Cloud Server)
 - **CPU**: 2 vCPU
 - **RAM**: 4 GB RAM (Tối thiểu 2GB RAM + 2GB Swap File)
 - **SSD**: 30 GB SSD
 - **OS**: Ubuntu 22.04 LTS
 
-### 2. Triển khai bằng Docker Compose
+### 2. Lệnh Cập Nhật Nhanh VPS
 ```bash
-# Clone code về VPS
-git clone https://github.com/NhatDuonq/Market_AI.git /var/www/market-ai
 cd /var/www/market-ai
-
-# Tạo file .env
-cp .env.example .env
-nano .env  # Điền API Key và Mật khẩu thực tế
-
-# Khởi chạy Docker
-docker compose up -d --build
+git fetch origin main && git reset --hard origin/main
+pm2 restart all   # (hoặc: docker compose up -d --build)
 ```
 
-### 3. Cấu hình Nginx Reverse Proxy & SSL Miễn phí
+### 3. Cấu hình Nginx Reverse Proxy & SSL Miễn phí (`thitruong.longvan.net`)
 Tạo file `/etc/nginx/sites-available/market-ai`:
 ```nginx
 server {
-    server_name eluto.io.vn www.eluto.io.vn;
+    server_name thitruong.longvan.net;
 
     location / {
         proxy_pass http://localhost:3000;
@@ -243,20 +238,8 @@ Kích hoạt HTTPS SSL qua Certbot:
 ```bash
 sudo ln -s /etc/nginx/sites-available/market-ai /etc/nginx/sites-enabled/
 sudo systemctl reload nginx
-sudo certbot --nginx -d eluto.io.vn -d www.eluto.io.vn
+sudo certbot --nginx -d thitruong.longvan.net
 ```
-
----
-
-## ⚡ CẤU HÌNH CI/CD GITHUB ACTIONS
-
-File `.github/workflows/deploy.yml` đã được thiết lập tự động. Mỗi khi push code lên nhánh `main`, GitHub Actions sẽ tự động SSH vào VPS, pull code mới nhất và rebuild Docker containers.
-
-**Cần thêm 4 Repository Secrets trên GitHub Settings:**
-- `VPS_HOST`: IP máy chủ VPS.
-- `VPS_USERNAME`: Username SSH (VD: `root`).
-- `VPS_SSH_KEY`: Nội dung Private Key SSH (`cat ~/.ssh/id_rsa`).
-- `VPS_PROJECT_PATH`: `/var/www/market-ai`.
 
 ---
 
@@ -264,22 +247,23 @@ File `.github/workflows/deploy.yml` đã được thiết lập tự động. M�
 
 | Method | Endpoint | Mô tả |
 | :--- | :--- | :--- |
-| **`GET`** | `/api/compare/:provider` | Lấy dữ liệu đối soát 3 chiều giữa Long Vân và `:provider` (`pavietnam`, `matbao`). |
-| **`POST`** | `/api/trigger/all` | Kích hoạt lượt cào tất cả nhà cung cấp ngay lập tức. |
-| **`POST`** | `/api/trigger/:provider/:product` | Kích hoạt cào nhà cung cấp cụ thể. |
+| **`GET`** | `/api/compare/:provider` | Lấy dữ liệu đối soát 3 chiều giữa Long Vân và `:provider` (`vietnix`, `pavietnam`, `matbao`). |
+| **`GET`** | `/api/ai-analysis/:provider` | Lấy phân tích & đề xuất chiến lược từ Gemini AI cho đối thủ cụ thể. |
 | **`POST`** | `/api/send-report` | Kích hoạt tổng hợp báo cáo và gửi về Email & Telegram ngay lập tức. |
+| **`GET`** | `/api/screenshots` | Danh sách các tệp ảnh chụp màn hình đối soát Playwright. |
+| **`POST`** | `/api/crawl` | Kích hoạt lượt cào tất cả nhà cung cấp ngay lập tức. |
 | **`GET`** | `/api/crawl/status` | Lấy trạng thái công tắc cào dữ liệu của từng nhà cung cấp. |
 
 ---
 
 ## 🔧 XỬ LÝ LỖI & TROUBLESHOOTING
 
-1. **Lỗi Playwright không chạy được trên VPS**:
-   - Chạy lệnh cài đặt OS dependencies: `npx playwright install-deps` hoặc dùng Docker container đi kèm.
+1. **Lỗi `git pull` bị hủy trên VPS**:
+   - Chạy lệnh ép đồng bộ: `git fetch origin main && git reset --hard origin/main`.
 2. **Lỗi Email Gmail bị từ chối đăng nhập (SMTPAuthenticationError)**:
    - Phải sử dụng **App Password (Mật khẩu ứng dụng 16 ký tự)** của Gmail, không dùng mật khẩu Gmail chính. Lấy tại: `https://myaccount.google.com/apppasswords`.
 3. **Tràn bộ nhớ RAM trên VPS 2GB**:
-   - Thêm Swap file 2GB: `sudo fallocate -l 2G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile`.
+   - Thêm Swap file 2GB: `sudo fallocate -l 2G /swapfile && sudo chmod 600 /swapfile && sudo swapon /swapfile`.
 
 ---
 
