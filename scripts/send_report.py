@@ -55,7 +55,7 @@ def main():
         sys.exit(1)
 
     sent_channels = []
-    providers = ["matbao", "pavietnam"]
+    providers = ["matbao", "pavietnam", "vietnix"]
     ss_dir = os.path.join(project_root, "storage", "screenshots")
     dashboard_url = os.getenv("DASHBOARD_URL", "https://thitruong.longvan.net")
 

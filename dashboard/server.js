@@ -436,6 +436,33 @@ app.get('/api/screenshots', authenticateToken, (req, res) => {
   }
 });
 
+// Dispatch send report (Email & Telegram)
+app.post('/api/send-report', authenticateToken, (req, res) => {
+  const { channel, cc_emails } = req.body || {};
+  const targetChannel = channel || 'all';
+  const ccList = (cc_emails || []).join(',');
+
+  const { exec } = require('child_process');
+  const sendScript = path.join(__dirname, '..', 'scripts', 'send_report.py');
+  const cmd = `python3 "${sendScript}" --channel ${targetChannel} --cc "${ccList}" || python "${sendScript}" --channel ${targetChannel} --cc "${ccList}"`;
+
+  exec(cmd, {
+    cwd: path.join(__dirname, '..'),
+    env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+  }, (err, stdout) => {
+    if (err) {
+      console.error('[Dashboard] Lỗi gửi báo cáo:', err);
+      return res.json({ success: false, error: 'Không thể gửi báo cáo lúc này. Vui lòng kiểm tra cấu hình SMTP/Telegram.' });
+    }
+    try {
+      const parsed = JSON.parse(stdout.trim());
+      res.json(parsed);
+    } catch (e) {
+      res.json({ success: true, message: 'Đã phát tin báo cáo thị trường thành công!' });
+    }
+  });
+});
+
 // Get crawler config
 app.get('/api/config', authenticateToken, (req, res) => {
   res.json(readJSON(CONFIG_PATH) || {});
