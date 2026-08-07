@@ -442,6 +442,45 @@ app.get('/api/screenshots', authenticateToken, (req, res) => {
   }
 });
 
+// Auto clean old screenshots (keep 5 newest per provider)
+app.post('/api/screenshots/clean-old', authenticateToken, (req, res) => {
+  try {
+    if (!fs.existsSync(SCREENSHOTS_DIR)) return res.json({ success: true, message: 'Thư mục ảnh trống.' });
+    const files = fs.readdirSync(SCREENSHOTS_DIR)
+      .filter(f => f.endsWith('.png') || f.endsWith('.jpg'))
+      .map(f => ({
+        filename: f,
+        path: path.join(SCREENSHOTS_DIR, f),
+        provider: f.split('_')[0],
+        created: fs.statSync(path.join(SCREENSHOTS_DIR, f)).mtime,
+      }))
+      .sort((a, b) => b.created - a.created);
+
+    const grouped = {};
+    files.forEach(f => {
+      if (!grouped[f.provider]) grouped[f.provider] = [];
+      grouped[f.provider].push(f);
+    });
+
+    let deletedCount = 0;
+    Object.keys(grouped).forEach(p => {
+      const pFiles = grouped[p];
+      if (pFiles.length > 5) {
+        pFiles.slice(5).forEach(f => {
+          if (fs.existsSync(f.path)) {
+            fs.unlinkSync(f.path);
+            deletedCount++;
+          }
+        });
+      }
+    });
+
+    res.json({ success: true, message: `Đã dọn dẹp ${deletedCount} ảnh đối soát cũ thành công!` });
+  } catch (e) {
+    res.status(500).json({ error: 'Lỗi khi dọn dẹp ảnh đối soát.' });
+  }
+});
+
 // Dispatch send report (Email & Telegram)
 app.post('/api/send-report', authenticateToken, (req, res) => {
   const { channel, cc_emails } = req.body || {};

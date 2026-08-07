@@ -319,7 +319,7 @@
         <h1>Ảnh Chụp Đối Soát</h1>
         <p class="page-subtitle">Ảnh được chụp tự động bằng Playwright mỗi lần crawler chạy</p>
       </div>
-      <div class="screenshots-filter">
+      <div class="screenshots-filter" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
         <select id="screenshotFilter" class="dropdown">
           <option value="all">Tất cả nguồn</option>
           <option value="longvan">Long Vân</option>
@@ -327,6 +327,9 @@
           <option value="pavietnam">PA Việt Nam</option>
           <option value="vietnix">Vietnix</option>
         </select>
+        <button type="button" class="btn btn-secondary" onclick="cleanOldScreenshots()" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); font-size: 13px;">
+          🧹 Dọn Dẹp Ảnh Cũ (Giữ 5 ảnh mới nhất)
+        </button>
       </div>
       <div class="screenshot-grid" id="screenshotGrid"></div>
     </section>

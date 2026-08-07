@@ -795,6 +795,19 @@ function setupScreenshotFilter() {
   document.getElementById('screenshotFilter').addEventListener('change', loadScreenshots);
 }
 
+async function cleanOldScreenshots() {
+  if (!confirm('Bạn có chắc chắn muốn dọn dẹp các ảnh đối soát cũ trên VPS không?\n(Hệ thống sẽ chỉ giữ lại 5 ảnh mới nhất cho mỗi nhà cung cấp)')) {
+    return;
+  }
+  const res = await fetchJSON('/api/screenshots/clean-old', { method: 'POST' });
+  if (res && res.message) {
+    showToast(res.message, 'success');
+    loadScreenshots();
+  } else {
+    showToast('⚠️ Không thể dọn dẹp ảnh lúc này.', 'error');
+  }
+}
+
 async function loadScreenshots() {
   const filter = document.getElementById('screenshotFilter').value;
   const screenshots = await fetchJSON('/api/screenshots');
