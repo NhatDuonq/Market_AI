@@ -743,7 +743,7 @@ async function loadScreenshots() {
     const providerLabel = COMPETITOR_NAMES[s.provider] || s.provider;
     const date = new Date(s.created).toLocaleString('vi-VN');
     return `
-      <div class="screenshot-item">
+      <div class="screenshot-item" onclick="openLightboxModal('${s.url}', '${providerLabel} - ${s.filename}')" style="cursor: pointer;" title="Nhấp để phóng to ảnh đối soát">
         <img src="${s.url}" alt="${s.filename}" loading="lazy">
         <div class="screenshot-info">
           <strong>${providerLabel}</strong><br>
@@ -825,7 +825,7 @@ async function triggerCrawl() {
   const btn = document.getElementById('btnCrawl');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Đang cào...';
-  showToast('Đang chạy crawler, vui lòng chờ (khoảng 15-30 giây)...', 'info');
+  showCrawlerOverlay('Đang khởi tạo Playwright crawler cho tất cả nhà cung cấp...', 10);
 
   try {
     const token = localStorage.getItem('authToken') || '';
@@ -845,24 +845,30 @@ async function triggerCrawl() {
     let hasBeenRunning = false;
     const startTime = Date.now();
 
-    // Poll for completion every 2 seconds until crawler finishes completely
+    // Poll for completion every 1.5 seconds until crawler finishes completely
     const pollInterval = setInterval(async () => {
       const status = await fetchJSON(`/api/crawl/status?_t=${Date.now()}`);
       const elapsedTime = Date.now() - startTime;
 
       if (status && status.running === true) {
         hasBeenRunning = true;
+        const pct = status.progress || Math.min(95, Math.floor((elapsedTime / 25000) * 100));
+        showCrawlerOverlay(status.message || 'Đang quét giá và chụp ảnh màn hình...', pct);
       }
 
-      // Strictly check status.running === false (boolean false, not undefined or error object)
-      const isFinished = status && status.running === false && (hasBeenRunning || elapsedTime >= 15000);
+      // Strictly check status.running === false
+      const isFinished = status && status.running === false && (hasBeenRunning || elapsedTime >= 12000);
 
       if (isFinished) {
         clearInterval(pollInterval);
-        btn.disabled = false;
-        btn.innerHTML = 'Crawler Ngay';
-        showToast('✅ Crawler hoàn tất! Đã cập nhật dữ liệu và thời gian mới.', 'success');
-        
+        showCrawlerOverlay('✅ Đã hoàn tất 100%! Đang cập nhật dữ liệu...', 100);
+        setTimeout(() => {
+          hideCrawlerOverlay();
+          btn.disabled = false;
+          btn.innerHTML = 'Crawler Ngay';
+          showToast('✅ Crawler hoàn tất! Đã cập nhật dữ liệu và thời gian mới.', 'success');
+        }, 800);
+
         // Clear AI cache for current competitor and immediately force update updateTime DOM text
         delete aiAnalysisCache[getSelectedCompetitor()];
         const fresh = await fetchJSON(`/api/compare/${getSelectedCompetitor()}?_t=${Date.now()}`);
@@ -877,7 +883,7 @@ async function triggerCrawl() {
 
         await loadDashboard(true);
       }
-    }, 2000);
+    }, 1500);
 
     // Safety timeout: 5 minutes max
     setTimeout(() => {
@@ -1456,3 +1462,76 @@ async function executeSendReportDispatch() {
     }
   }
 }
+
+// ============================================================
+// CRAWLER PROGRESS LOADING OVERLAY
+// ============================================================
+
+function showCrawlerOverlay(msg = 'Đang cào dữ liệu...', percent = 5) {
+  const overlay = document.getElementById('crawlerLoadingOverlay');
+  const bar = document.getElementById('crawlerProgressBar');
+  const txtPercent = document.getElementById('crawlerProgressPercent');
+  const txtMsg = document.getElementById('crawlerProgressMsg');
+
+  if (overlay) overlay.style.display = 'flex';
+  if (bar) bar.style.width = `${percent}%`;
+  if (txtPercent) txtPercent.textContent = `${percent}%`;
+  if (txtMsg) txtMsg.textContent = msg;
+}
+
+function hideCrawlerOverlay() {
+  const overlay = document.getElementById('crawlerLoadingOverlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+// ============================================================
+// IMAGE LIGHTBOX ZOOM MODAL
+// ============================================================
+
+let currentZoomScale = 1.0;
+
+function openLightboxModal(imgUrl, caption = '') {
+  const modal = document.getElementById('imageLightboxModal');
+  const img = document.getElementById('lightboxImage');
+  const cap = document.getElementById('lightboxCaption');
+
+  if (!modal || !img) return;
+
+  img.src = imgUrl;
+  if (cap) cap.textContent = `📸 ${caption || 'Ảnh Đối Soát Giao Diện Trình Duyệt'}`;
+
+  resetLightboxZoom();
+  modal.style.display = 'flex';
+}
+
+function closeLightboxModal() {
+  const modal = document.getElementById('imageLightboxModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function zoomLightbox(delta) {
+  currentZoomScale = Math.min(3.0, Math.max(0.5, currentZoomScale + delta));
+  const img = document.getElementById('lightboxImage');
+  if (img) {
+    img.style.transform = `scale(${currentZoomScale})`;
+  }
+}
+
+function resetLightboxZoom() {
+  currentZoomScale = 1.0;
+  const img = document.getElementById('lightboxImage');
+  if (img) {
+    img.style.transform = 'scale(1)';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const viewport = document.getElementById('lightboxViewport');
+  if (viewport) {
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.15 : -0.15;
+      zoomLightbox(delta);
+    });
+  }
+});

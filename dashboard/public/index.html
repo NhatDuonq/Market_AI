@@ -490,6 +490,43 @@
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="toast"></div>
 
+  <!-- CRAWLER PROGRESS LOADING OVERLAY -->
+  <div id="crawlerLoadingOverlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(8px); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
+    <div style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; padding: 32px 40px; max-width: 520px; width: 100%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+      <div style="font-size: 40px; margin-bottom: 16px; animation: spin 2s linear infinite;">⏳</div>
+      <h2 style="font-size: 20px; font-weight: 800; color: #f8fafc; margin: 0 0 10px 0;">Đang Cào Dữ Liệu Thị Trường</h2>
+      <p id="crawlerProgressMsg" style="font-size: 13px; color: #94a3b8; margin: 0 0 20px 0; font-weight: 600;">Hệ thống đang chạy Playwright để lấy giá mới nhất và chụp ảnh đối soát...</p>
+
+      <!-- PROGRESS BAR CONTAINER -->
+      <div style="width: 100%; height: 14px; background: #0f172a; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px; position: relative;">
+        <div id="crawlerProgressBar" style="width: 5%; height: 100%; background: linear-gradient(90deg, #0284c7 0%, #38bdf8 100%); transition: width 0.4s ease; border-radius: 10px;"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #38bdf8; font-weight: 700;">
+        <span>Tiến trình cào Playwright</span>
+        <span id="crawlerProgressPercent">5%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE LIGHTBOX ZOOM MODAL -->
+  <div id="imageLightboxModal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(10px); z-index: 10000; flex-direction: column; justify-content: space-between; padding: 20px;">
+    <!-- TOOLBAR -->
+    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.8); padding: 12px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+      <span id="lightboxCaption" style="color: #f8fafc; font-size: 14px; font-weight: 700;">📸 Ảnh Đối Soát Giao Diện Trình Duyệt</span>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" onclick="zoomLightbox(0.2)" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px;">🔍 Zoom In (+)</button>
+        <button type="button" onclick="zoomLightbox(-0.2)" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px;">🔎 Zoom Out (-)</button>
+        <button type="button" onclick="resetLightboxZoom()" style="background: #334155; color: #fff; border: 1px solid #475569; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px;">🔄 Reset</button>
+        <button type="button" onclick="closeLightboxModal()" style="background: #ef4444; color: #fff; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 14px;">❌ Đóng</button>
+      </div>
+    </div>
+
+    <!-- IMAGE CONTAINER WITH PAN & ZOOM -->
+    <div id="lightboxViewport" style="flex: 1; display: flex; justify-content: center; align-items: center; overflow: auto; cursor: grab; padding: 20px;">
+      <img id="lightboxImage" src="" style="max-width: 90%; max-height: 85vh; object-fit: contain; transition: transform 0.2s ease; transform-origin: center center; box-shadow: 0 10px 40px rgba(0,0,0,0.8); border-radius: 8px;">
+    </div>
+  </div>
+
   <!-- LIBRARIES FOR PDF EXPORT & APP JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="/js/app.js?v=11.0"></script>

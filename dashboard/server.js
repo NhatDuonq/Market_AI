@@ -526,6 +526,9 @@ function callScheduler(method, pathStr) {
   });
 }
 
+let isLocalCrawlRunning = false;
+let crawlStartTime = 0;
+
 // Trigger crawler
 app.post('/api/crawl', authenticateToken, async (req, res) => {
   try {
@@ -538,13 +541,17 @@ app.post('/api/crawl', authenticateToken, async (req, res) => {
     const mainScript = path.join(__dirname, '..', 'main.py');
     const cmd = `python3 "${mainScript}" --all --force || python "${mainScript}" --all --force`;
 
-    res.json({ status: 'started', message: 'Đang chạy crawler cho tất cả nhà cung cấp...' });
+    isLocalCrawlRunning = true;
+    crawlStartTime = Date.now();
+
+    res.json({ status: 'started', message: 'Đang chạy Playwright crawler cho tất cả nhà cung cấp...' });
 
     exec(cmd, {
       cwd: path.join(__dirname, '..'),
       timeout: 300000,
       env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
     }, (error, stdout) => {
+      isLocalCrawlRunning = false;
       if (error) console.error(`Crawler exec error: ${error.message}`);
       else console.log(`Crawler completed:\n${stdout}`);
     });
@@ -556,10 +563,22 @@ app.get('/api/crawl/status', async (req, res) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   try {
     const statusData = await callScheduler('GET', '/status');
-    return res.json({ running: !!(statusData && statusData.running) });
-  } catch (e) {
-    return res.json({ running: false });
+    if (statusData && statusData.running) {
+      return res.json({ running: true, progress: statusData.progress || 50, message: statusData.message || 'Đang cào dữ liệu thị trường...' });
+    }
+  } catch (e) {}
+
+  if (isLocalCrawlRunning) {
+    const elapsed = Math.floor((Date.now() - crawlStartTime) / 1000);
+    const estimatedProgress = Math.min(95, Math.floor((elapsed / 25) * 100));
+    return res.json({
+      running: true,
+      progress: estimatedProgress,
+      message: `Đang cào dữ liệu Playwright từ các nhà cung cấp (${elapsed}s)...`
+    });
   }
+
+  return res.json({ running: false, progress: 100, message: 'Hoàn tất' });
 });
 
 // SPA fallback

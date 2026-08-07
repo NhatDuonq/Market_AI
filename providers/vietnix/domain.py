@@ -124,8 +124,13 @@ class VietnixDomainProvider(BaseProvider):
                 page.wait_for_timeout(random.randint(2000, 3000))
 
                 try:
+                    # Scroll directly to pricing table so screenshot captures the table
+                    table_loc = page.locator("table.body_table, table").first
+                    if table_loc.count() > 0:
+                        table_loc.scroll_into_view_if_needed()
+                        page.wait_for_timeout(500)
                     page.screenshot(path=screenshot_path, full_page=False)
-                    print(f"📸 Đã chụp ảnh màn hình giao diện: {screenshot_path}")
+                    print(f"📸 Đã chụp ảnh màn hình giao diện bảng giá: {screenshot_path}")
                 except Exception as e_ss:
                     print(f"⚠️ Không thể chụp screenshot: {e_ss}")
 
