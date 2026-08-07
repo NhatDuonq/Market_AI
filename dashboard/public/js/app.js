@@ -212,31 +212,20 @@ async function loadDashboard(forceRefresh = false) {
   const competitor = getSelectedCompetitor();
   const competitorName = getCompetitorName();
 
-  // Update header
+  // 1. Update header immediately
   document.getElementById('headerCompetitorName').textContent = competitorName;
 
   if (forceRefresh) {
     delete aiAnalysisCache[competitor];
   }
 
-  const aiContainer = document.getElementById('aiSummary');
-  if (aiContainer && !aiAnalysisCache[competitor]) {
-    aiContainer.innerHTML = '<p style="color:#94a3b8; font-size:13px;">⏳ Đang phân tích dữ liệu chiến lược thị trường bằng Gemini AI...</p>';
-  }
-
-  // PARALLEL ASYNC FETCHING FOR MAXIMUM SPEED ⚡ (with cache-busting timestamp)
+  // 2. Fetch Comparison Data INSTANTLY (< 20ms)
   const cacheBust = `_t=${Date.now()}`;
-  const [data, aiRes] = await Promise.all([
-    fetchJSON(`/api/compare/${competitor}?${cacheBust}`),
-    aiAnalysisCache[competitor]
-      ? Promise.resolve({ analysis: aiAnalysisCache[competitor] })
-      : fetchJSON(`/api/ai-analysis/${competitor}${forceRefresh ? '?force=true' : ''}`)
-  ]);
-
+  const data = await fetchJSON(`/api/compare/${competitor}?${cacheBust}`);
   if (!data) return;
   currentData = data;
 
-  // Update time
+  // 3. Render all charts, tables & timestamps INSTANTLY for selected competitor!
   const times = [];
   if (data.competitor_updated_at) times.push(`${competitorName}: ${data.competitor_updated_at}`);
   if (data.longvan_updated_at) times.push(`Long Vân: ${data.longvan_updated_at}`);
@@ -254,12 +243,22 @@ async function loadDashboard(forceRefresh = false) {
   renderTLDPage(data, competitorName);
   renderFullTable(data, competitorName);
 
-  // Render AI Strategic Analysis Result
-  if (aiRes && aiRes.analysis) {
-    aiAnalysisCache[competitor] = aiRes.analysis;
-    if (aiContainer) renderAiAnalysisHTML(aiContainer, aiRes.analysis);
-  } else if (aiContainer && !aiAnalysisCache[competitor]) {
-    aiContainer.innerHTML = '<p style="color:#ef4444; font-size:13px;">⚠️ Chưa thể lấy phân tích AI lúc này.</p>';
+  // 4. Load Gemini AI Asynchronously in Background (Non-blocking!)
+  const aiContainer = document.getElementById('aiSummary');
+  if (aiContainer) {
+    if (aiAnalysisCache[competitor]) {
+      renderAiAnalysisHTML(aiContainer, aiAnalysisCache[competitor]);
+    } else {
+      aiContainer.innerHTML = `<p style="color:#94a3b8; font-size:13px;">⏳ Gemini AI đang phân tích chiến lược cho <strong style="color:#38bdf8">${competitorName}</strong>...</p>`;
+      
+      fetchJSON(`/api/ai-analysis/${competitor}${forceRefresh ? '?force=true' : ''}`).then(aiRes => {
+        // Ensure user hasn't switched to another competitor while AI was running
+        if (getSelectedCompetitor() === competitor && aiRes && aiRes.analysis) {
+          aiAnalysisCache[competitor] = aiRes.analysis;
+          renderAiAnalysisHTML(aiContainer, aiRes.analysis);
+        }
+      });
+    }
   }
 }
 
