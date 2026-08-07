@@ -646,18 +646,41 @@ function renderTLDPage(data, competitorName) {
 }
 
 // ============================================================
-// FULL COMPARISON TABLE
+// FULL COMPARISON TABLE WITH PAGINATION
 // ============================================================
+
+let tableCurrentPage = 1;
+let tablePageSize = 25;
 
 function setupTableFilters() {
   ['filterField', 'filterStatus', 'searchTLD'].forEach(id => {
-    document.getElementById(id).addEventListener('input', () => {
-      if (currentData) renderFullTable(currentData, getCompetitorName());
-    });
-    document.getElementById(id).addEventListener('change', () => {
-      if (currentData) renderFullTable(currentData, getCompetitorName());
-    });
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => {
+        tableCurrentPage = 1;
+        if (currentData) renderFullTable(currentData, getCompetitorName());
+      });
+      el.addEventListener('change', () => {
+        tableCurrentPage = 1;
+        if (currentData) renderFullTable(currentData, getCompetitorName());
+      });
+    }
   });
+
+  const psSelect = document.getElementById('pageSizeSelect');
+  if (psSelect) {
+    psSelect.addEventListener('change', () => {
+      const val = psSelect.value;
+      tablePageSize = val === 'all' ? 'all' : parseInt(val, 10);
+      tableCurrentPage = 1;
+      if (currentData) renderFullTable(currentData, getCompetitorName());
+    });
+  }
+}
+
+function changeTablePage(page) {
+  tableCurrentPage = page;
+  if (currentData) renderFullTable(currentData, getCompetitorName());
 }
 
 function renderFullTable(data, competitorName) {
@@ -673,14 +696,36 @@ function renderFullTable(data, competitorName) {
   if (search) items = items.filter(c => c.tld.toLowerCase().includes(search));
 
   const tbody = document.querySelector('#fullTable tbody');
+  const pagButtons = document.getElementById('paginationButtons');
 
   if (!items.length) {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#64748b;padding:24px;">Không tìm thấy kết quả</td></tr>';
-    document.getElementById('tableCount').textContent = '';
+    document.getElementById('tableCount').textContent = '0 kết quả';
+    if (pagButtons) pagButtons.innerHTML = '';
     return;
   }
 
-  tbody.innerHTML = items.map(c => {
+  const totalItems = items.length;
+  let pagedItems = items;
+  let totalPages = 1;
+
+  if (tablePageSize !== 'all') {
+    totalPages = Math.ceil(totalItems / tablePageSize);
+    if (tableCurrentPage > totalPages) tableCurrentPage = totalPages;
+    if (tableCurrentPage < 1) tableCurrentPage = 1;
+
+    const startIdx = (tableCurrentPage - 1) * tablePageSize;
+    const endIdx = startIdx + tablePageSize;
+    pagedItems = items.slice(startIdx, endIdx);
+
+    const startDisplay = startIdx + 1;
+    const endDisplay = Math.min(endIdx, totalItems);
+    document.getElementById('tableCount').textContent = `Hiển thị ${startDisplay} - ${endDisplay} trên tổng số ${totalItems} mục`;
+  } else {
+    document.getElementById('tableCount').textContent = `Hiển thị tất cả ${totalItems} mục`;
+  }
+
+  tbody.innerHTML = pagedItems.map(c => {
     const statusClass = c.status === 'CHEAPER' ? 'status-cheaper' : (c.status === 'EXPENSIVE' ? 'status-expensive' : 'status-equal');
 
     const fmtComp = c.competitor_price_original && c.competitor_price_original !== c.competitor_price
@@ -712,7 +757,34 @@ function renderFullTable(data, competitorName) {
     </tr>`;
   }).join('');
 
-  document.getElementById('tableCount').textContent = `Hiển thị ${items.length} / ${data.comparison.length} mục`;
+  // Render Pagination Buttons
+  if (pagButtons) {
+    if (tablePageSize === 'all' || totalPages <= 1) {
+      pagButtons.innerHTML = '';
+    } else {
+      let btnHtml = '';
+
+      // First & Prev
+      btnHtml += `<button type="button" onclick="changeTablePage(1)" class="btn btn-secondary" style="padding:4px 8px; font-size:12px;" ${tableCurrentPage === 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>⏮</button>`;
+      btnHtml += `<button type="button" onclick="changeTablePage(${tableCurrentPage - 1})" class="btn btn-secondary" style="padding:4px 10px; font-size:12px;" ${tableCurrentPage === 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>◀ Trước</button>`;
+
+      // Page numbers (max 5 page buttons)
+      let startP = Math.max(1, tableCurrentPage - 2);
+      let endP = Math.min(totalPages, startP + 4);
+      if (endP - startP < 4) startP = Math.max(1, endP - 4);
+
+      for (let p = startP; p <= endP; p++) {
+        const isActive = (p === tableCurrentPage);
+        btnHtml += `<button type="button" onclick="changeTablePage(${p})" class="btn ${isActive ? 'btn-primary' : 'btn-secondary'}" style="padding:4px 10px; font-size:12px; min-width:32px; ${isActive ? 'font-weight:bold; border-color:#38bdf8;' : ''}">${p}</button>`;
+      }
+
+      // Next & Last
+      btnHtml += `<button type="button" onclick="changeTablePage(${tableCurrentPage + 1})" class="btn btn-secondary" style="padding:4px 10px; font-size:12px;" ${tableCurrentPage === totalPages ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>Sau ▶</button>`;
+      btnHtml += `<button type="button" onclick="changeTablePage(${totalPages})" class="btn btn-secondary" style="padding:4px 8px; font-size:12px;" ${tableCurrentPage === totalPages ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}>⏭</button>`;
+
+      pagButtons.innerHTML = btnHtml;
+    }
+  }
 }
 
 // ============================================================
